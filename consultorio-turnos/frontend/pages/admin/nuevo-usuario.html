@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Usuario - Admin</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/forms.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar" style="border-top: 4px solid var(--color-danger);">
+        <div class="navbar-brand">
+            <span class="logo-icon">🏥</span> Consultorio Médico <span
+                style="font-size: 0.8rem; font-weight: normal; margin-left:10px; opacity:0.8;">[Módulo Admin]</span>
+        </div>
+        <div class="navbar-user">
+            <div class="user-name">Admin Principal</div>
+            <span class="badge badge-rol" style="background-color: var(--color-danger); color: white;">Admin</span>
+            <button class="btn btn-secundario" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Cerrar
+                sesión</button>
+        </div>
+    </nav>
+
+    <!-- Área de Notificaciones -->
+    <div id="notification-area" class="oculto"></div>
+
+    <!-- Spinner Global -->
+    <div id="loading-spinner" class="spinner oculto"></div>
+
+    <!-- Contenido Principal -->
+    <main class="container-center">
+        <div style="width: 100%; max-width: 600px;">
+            <div class="d-flex justify-content-between align-items-center mb-4" style="flex-wrap: wrap; gap: 1rem;">
+                <h1>Crear Usuario del Sistema (Staff)</h1>
+                <a href="usuarios.html" class="btn btn-secundario px-4" style="text-decoration: none;">← Volver</a>
+            </div>
+
+            <div class="card form-container">
+                <form id="form-nuevo-usuario-admin">
+                    <p class="texto-muted mb-4">Utiliza este formulario para dar de alta a Recepcionistas, otros
+                        Administradores, o pre-registrar Médicos (luego deberás completar el perfil del Médico en la
+                        sección respectiva).</p>
+
+                    <div class="form-grupo">
+                        <label for="input-nombre-usuario">Nombre completo *</label>
+                        <input type="text" id="input-nombre-usuario" class="form-control"
+                            placeholder="Ej: Dra. Valeria Gómez">
+                        <div class="error-campo oculto">Requerido.</div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-grupo">
+                            <label for="input-dni-usuario">DNI (Documento) *</label>
+                            <input type="text" id="input-dni-usuario" class="form-control" placeholder="Solo números">
+                            <div class="error-campo oculto">Requerido.</div>
+                        </div>
+                        <div class="form-grupo">
+                            <label for="input-rol-usuario">Rol en el sistema *</label>
+                            <select id="input-rol-usuario" class="form-control">
+                                <option value="" disabled selected>Seleccione un rol...</option>
+                                <option value="RECEPCIONISTA">Recepcionista</option>
+                                <option value="MEDICO">Médico (Solo acceso base)</option>
+                                <option value="ADMINISTRADOR">Administrador</option>
+                            </select>
+                            <div class="error-campo oculto">Requerido.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label for="input-email-usuario">Correo Electrónico (Para Login) *</label>
+                        <input type="email" id="input-email-usuario" class="form-control"
+                            placeholder="correo@consultorio.com">
+                        <div class="error-campo oculto">Requerido.</div>
+                    </div>
+
+                    <!-- Teléfono y Fecha Nacimiento se añaden para mantener formato de Usuario genérico pero sin ser obligatorios -->
+                    <div class="grid-2">
+                        <div class="form-grupo">
+                            <label for="input-telefono-usuario">Teléfono (Opcional)</label>
+                            <input type="tel" id="input-telefono-usuario" class="form-control">
+                        </div>
+                        <div class="form-grupo">
+                            <label for="input-fecha-nac-usuario">Fecha Nacimiento (Opcional)</label>
+                            <input type="date" id="input-fecha-nac-usuario" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="info-box mt-3 mb-4">
+                        <strong>Información:</strong> La contraseña inicial será el DNI ingresado. El sistema requerirá
+                        el cambio en el próximo inicio de sesión.
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2 pt-3"
+                        style="border-top: 1px solid var(--color-border);">
+                        <button type="button" id="btn-cancelar-alta" class="btn btn-secundario px-4">Cancelar</button>
+                        <button type="submit" id="btn-guardar-alta" class="btn btn-primario px-4">Crear Usuario</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+    </footer>
+
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/admin.js"></script>
+
+</body>
+
+</html>

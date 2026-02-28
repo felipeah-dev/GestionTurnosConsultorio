@@ -1,1 +1,146 @@
-<!-- mis-citas.html: Página donde el paciente visualiza sus citas activas actualizadas en tiempo real -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Citas Activas - Sistema de Gestión de Turnos</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/components.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <span class="logo-icon">🏥</span> Consultorio Médico
+        </div>
+        <div class="navbar-user">
+            <div class="user-name">Juan Pérez</div>
+            <span class="badge badge-rol">Paciente</span>
+            <button class="btn btn-secundario" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Cerrar
+                sesión</button>
+        </div>
+    </nav>
+
+    <!-- Área de Notificaciones -->
+    <div id="notification-area" class="oculto"></div>
+
+    <!-- Spinner Global -->
+    <div id="loading-spinner" class="spinner oculto"></div>
+
+    <!-- Contenido Principal -->
+    <main>
+        <div class="d-flex justify-content-between align-items-center mb-4" style="flex-wrap: wrap; gap: 1rem;">
+            <h1>Mis citas activas (<span id="contador-citas-activas">3</span>)</h1>
+            <a href="agendar.html" id="btn-nueva-cita" class="btn btn-primario" style="text-decoration: none;">Agendar
+                nueva cita</a>
+        </div>
+
+        <!-- Mensaje sin citas (Oculto) -->
+        <div id="empty-citas-activas" class="info-box texto-centro oculto">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">📅</div>
+            <h3>No tienes citas activas</h3>
+            <p>Tus próximas citas médicas aparecerán aquí.</p>
+        </div>
+
+        <!-- Grid de Citas -->
+        <div id="citas-activas-container" class="grid-3">
+
+            <!-- Cita Placeholder 1 -->
+            <div class="card cita-card" data-turno-id="9001">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="badge badge-estado badge-confirmada">Confirmada</span>
+                </div>
+                <h3 class="card-title mb-1">Cardiología</h3>
+                <p class="card-subtitle mb-2">Dr. Roberto Sánchez</p>
+
+                <div class="mb-2">
+                    <div class="d-flex align-items-center gap-1 mb-1">
+                        <span class="texto-muted">📅 <span class="cita-fecha">2026-04-15</span></span>
+                    </div>
+                    <div class="d-flex align-items-center gap-1">
+                        <span class="texto-muted">🕒 <span class="cita-hora">10:00</span></span>
+                    </div>
+                </div>
+
+                <div class="acciones mt-3 pt-3" style="border-top: 1px solid var(--color-border);">
+                    <button class="btn btn-peligro btn-cancelar-cita" data-turno-id="9001"
+                        style="flex: 1;">Cancelar</button>
+                    <button class="btn btn-secundario btn-reprogramar-cita" data-turno-id="9001"
+                        style="flex: 1;">Reprogramar</button>
+                </div>
+            </div>
+
+            <!-- Cita Placeholder 2 -->
+            <div class="card cita-card" data-turno-id="9002">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="badge badge-estado badge-confirmada">Confirmada</span>
+                </div>
+                <h3 class="card-title mb-1">Odontología</h3>
+                <p class="card-subtitle mb-2">Dra. Fernanda Rojas</p>
+
+                <div class="mb-2">
+                    <div class="d-flex align-items-center gap-1 mb-1">
+                        <span class="texto-muted">📅 <span class="cita-fecha">2026-04-18</span></span>
+                    </div>
+                    <div class="d-flex align-items-center gap-1">
+                        <span class="texto-muted">🕒 <span class="cita-hora">16:30</span></span>
+                    </div>
+                </div>
+
+                <div class="acciones mt-3 pt-3" style="border-top: 1px solid var(--color-border);">
+                    <button class="btn btn-peligro btn-cancelar-cita" data-turno-id="9002"
+                        style="flex: 1;">Cancelar</button>
+                    <button class="btn btn-secundario btn-reprogramar-cita" data-turno-id="9002"
+                        style="flex: 1;">Reprogramar</button>
+                </div>
+            </div>
+
+            <!-- Cita Placeholder 3 -->
+            <div class="card cita-card" data-turno-id="9003">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="badge badge-estado badge-pendiente">Pendiente de confirmación</span>
+                </div>
+                <h3 class="card-title mb-1">Neurología</h3>
+                <p class="card-subtitle mb-2">Dr. Luis Romero</p>
+
+                <div class="mb-2">
+                    <div class="d-flex align-items-center gap-1 mb-1">
+                        <span class="texto-muted">📅 <span class="cita-fecha">2026-05-02</span></span>
+                    </div>
+                    <div class="d-flex align-items-center gap-1">
+                        <span class="texto-muted">🕒 <span class="cita-hora">09:00</span></span>
+                    </div>
+                </div>
+
+                <div class="acciones mt-3 pt-3" style="border-top: 1px solid var(--color-border);">
+                    <button class="btn btn-peligro btn-cancelar-cita" data-turno-id="9003"
+                        style="flex: 1;">Cancelar</button>
+                    <button class="btn btn-secundario btn-reprogramar-cita" data-turno-id="9003"
+                        style="flex: 1;">Reprogramar</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+    </footer>
+
+    <!-- Scripts (Vacíos para la integración posterior de JS) -->
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/turnos.js"></script>
+
+</body>
+
+</html>

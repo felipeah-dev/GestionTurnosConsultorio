@@ -1,1 +1,222 @@
-<!-- usuarios.html: Página donde el administrador gestiona usuarios y asigna roles -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios - Admin</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/forms.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar" style="border-top: 4px solid var(--color-danger);">
+        <div class="navbar-brand">
+            <span class="logo-icon">🏥</span> Consultorio Médico <span
+                style="font-size: 0.8rem; font-weight: normal; margin-left:10px; opacity:0.8;">[Módulo Admin]</span>
+        </div>
+        <div class="navbar-user">
+            <div class="user-name">Admin Principal</div>
+            <span class="badge badge-rol" style="background-color: var(--color-danger); color: white;">Admin</span>
+            <button class="btn btn-secundario" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Cerrar
+                sesión</button>
+        </div>
+    </nav>
+
+    <!-- Área de Notificaciones -->
+    <div id="notification-area" class="oculto"></div>
+
+    <!-- Spinner Global -->
+    <div id="loading-spinner" class="spinner oculto"></div>
+
+    <!-- Contenido Principal -->
+    <main>
+        <div class="d-flex justify-content-between align-items-center mb-4" style="flex-wrap: wrap; gap: 1rem;">
+            <h1>Gestión de Usuarios</h1>
+            <a href="nuevo-usuario.html" class="btn btn-primario" style="text-decoration: none;">+ Nuevo Usuario del
+                Sistema</a>
+        </div>
+
+        <!-- Filtros -->
+        <div class="card mb-4" style="padding: 1rem;">
+            <div class="filtros-fila" style="margin: 0;">
+                <div class="form-grupo" style="flex: 2; margin-bottom: 0;">
+                    <label for="buscar-usuario" class="oculto">Buscar</label>
+                    <input type="text" id="buscar-usuario" class="form-control"
+                        placeholder="Buscar por DNI, Nombre o Email...">
+                </div>
+
+                <div class="form-grupo" style="margin-bottom: 0;">
+                    <label for="filter-rol" class="oculto">Filtrar Rol</label>
+                    <select id="filter-rol" class="form-control">
+                        <option value="todos">Todos los Roles</option>
+                        <option value="PACIENTE">Paciente</option>
+                        <option value="MEDICO">Médico</option>
+                        <option value="RECEPCIONISTA">Recepcionista</option>
+                        <option value="ADMINISTRADOR">Administrador</option>
+                    </select>
+                </div>
+
+                <div class="form-grupo" style="margin-bottom: 0;">
+                    <button class="btn btn-secundario w-100" style="height: 42px;">Aplicar Filtros</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla de Usuarios -->
+        <div class="tabla-container">
+            <table class="tabla">
+                <thead>
+                    <tr>
+                        <th>ID / DNI</th>
+                        <th>Nombre Completo</th>
+                        <th>Correo Electrónico</th>
+                        <th>Rol</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="usuarios-tabla-body">
+                    <!-- Fila 1 -->
+                    <tr class="usuario-row" data-usuario-id="1">
+                        <td>99999999</td>
+                        <td style="font-weight: 500;">Admin Principal</td>
+                        <td>admin@consultorio.com</td>
+                        <td><span class="badge"
+                                style="background-color: var(--color-danger); color: white;">Administrador</span></td>
+                        <td><span class="badge badge-success"
+                                style="background-color: var(--color-success); color: white;">Activo</span></td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <button class="btn btn-secundario btn-sm" disabled
+                                    style="padding: 0.25rem 0.5rem; font-size: 0.8rem;"
+                                    title="No se puede editar al admin principal">Editar</button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Fila 2 -->
+                    <tr class="usuario-row" data-usuario-id="15">
+                        <td>28987654</td>
+                        <td style="font-weight: 500;">Carla Rivera</td>
+                        <td>recepcion1@consultorio.com</td>
+                        <td><span class="badge badge-rol">Recepcionista</span></td>
+                        <td><span class="badge badge-success"
+                                style="background-color: var(--color-success); color: white;">Activo</span></td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <button class="btn btn-secundario btn-sm btn-editar-usuario" data-usuario-id="15"
+                                    style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Editar</button>
+                                <button class="btn btn-peligro btn-sm btn-estado-usuario" data-usuario-id="15"
+                                    data-accion="desactivar"
+                                    style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Desactivar</button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Fila 3 -->
+                    <tr class="usuario-row" data-usuario-id="101">
+                        <td>22333444</td>
+                        <td style="font-weight: 500;">Dr. Roberto Sánchez</td>
+                        <td>roberto.sanchez@consultorio.com</td>
+                        <td><span class="badge" style="background-color: var(--color-info); color: white;">Médico</span>
+                        </td>
+                        <td><span class="badge badge-success"
+                                style="background-color: var(--color-success); color: white;">Activo</span></td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <button class="btn btn-secundario btn-sm btn-editar-usuario" data-usuario-id="101"
+                                    style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Editar</button>
+                                <button class="btn btn-peligro btn-sm btn-estado-usuario" data-usuario-id="101"
+                                    data-accion="desactivar"
+                                    style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Desactivar</button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Fila 4 Inactiva -->
+                    <tr class="usuario-row" data-usuario-id="405">
+                        <td>31123456</td>
+                        <td style="font-weight: 500; color: var(--color-muted);">Paciente Antiguo</td>
+                        <td style="color: var(--color-muted);">viejo@email.com</td>
+                        <td><span class="badge badge-rol"
+                                style="background-color: var(--color-secondary);">Paciente</span></td>
+                        <td><span class="badge"
+                                style="background-color: var(--color-muted); color: white;">Inactivo</span></td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <button class="btn btn-secundario btn-sm btn-editar-usuario" data-usuario-id="405"
+                                    style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Editar</button>
+                                <button class="btn btn-primario btn-sm btn-estado-usuario" data-usuario-id="405"
+                                    data-accion="activar"
+                                    style="padding: 0.25rem 0.5rem; font-size: 0.8rem; background-color: var(--color-success);">Activar</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Paginación placeholder -->
+        <div id="paginacion-usuarios" class="d-flex justify-content-center gap-2 mt-4">
+            <button class="btn btn-secundario disabled" disabled>« Anterior</button>
+            <button class="btn btn-primario">1</button>
+            <button class="btn btn-secundario">2</button>
+            <button class="btn btn-secundario">3</button>
+            <button class="btn btn-secundario">Siguiente »</button>
+        </div>
+
+    </main>
+
+    <!-- Modal de Edición de Rol (Oculto, integrado con el requerimiento de Modal en components.css) -->
+    <div id="modal-editar-rol" class="modal-overlay oculto">
+        <div class="modal-contenido" style="max-width: 400px;">
+            <div class="modal-header d-flex justify-content-between align-items-center mb-3">
+                <h3 class="m-0">Modificar Usuario</h3>
+                <button type="button" class="btn-cerrar-modal"
+                    style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            </div>
+            <div class="modal-body" data-usuario-id="">
+                <p class="mb-3">Usuario: <strong id="modal-nombre-usuario">Carla Rivera</strong></p>
+                <div class="form-grupo">
+                    <label for="select-nuevo-rol">Cambiar Rol</label>
+                    <select id="select-nuevo-rol" class="form-control">
+                        <option value="PACIENTE">Paciente</option>
+                        <option value="MEDICO">Médico</option>
+                        <option value="RECEPCIONISTA">Recepcionista</option>
+                        <option value="ADMINISTRADOR">Administrador</option>
+                    </select>
+                </div>
+                <div class="form-grupo mt-4">
+                    <button id="btn-reset-password" class="btn btn-secundario w-100">Blanquear Contraseña</button>
+                    <p class="texto-muted mt-1" style="font-size: 0.8rem;">Restablece la contraseña al número de DNI.
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer d-flex gap-2 justify-content-end mt-4">
+                <button type="button" class="btn btn-secundario btn-cerrar-modal">Cancelar</button>
+                <button type="button" id="btn-guardar-rol" class="btn btn-primario">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+    </footer>
+
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/admin.js"></script>
+
+</body>
+
+</html>

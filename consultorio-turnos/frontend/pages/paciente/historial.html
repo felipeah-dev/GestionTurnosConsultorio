@@ -1,1 +1,156 @@
-<!-- historial.html: Página donde el paciente consulta su historial completo de citas pasadas y activas -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Citas - Sistema de Gestión de Turnos</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/forms.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <span class="logo-icon">🏥</span> Consultorio Médico
+        </div>
+        <div class="navbar-user">
+            <div class="user-name">Juan Pérez</div>
+            <span class="badge badge-rol">Paciente</span>
+            <button class="btn btn-secundario" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Cerrar
+                sesión</button>
+        </div>
+    </nav>
+
+    <!-- Área de Notificaciones -->
+    <div id="notification-area" class="oculto"></div>
+
+    <!-- Spinner Global -->
+    <div id="loading-spinner" class="spinner oculto"></div>
+
+    <!-- Contenido Principal -->
+    <main>
+        <h1 class="mb-4">Historial de citas</h1>
+
+        <!-- Filtros -->
+        <div class="filtros-fila">
+            <div class="form-grupo" style="flex: 2; min-width: 250px;">
+                <label for="filter-estado">Estado de la cita</label>
+                <select id="filter-estado" class="form-control">
+                    <option value="todas" selected>Todas las citas</option>
+                    <option value="confirmadas">Confirmadas</option>
+                    <option value="canceladas">Canceladas</option>
+                    <option value="completadas">Completadas</option>
+                    <option value="reprogramadas">Reprogramadas</option>
+                </select>
+            </div>
+
+            <div class="form-grupo">
+                <label for="filter-fecha-inicio">Fecha de inicio</label>
+                <input type="date" id="filter-fecha-inicio" class="form-control">
+            </div>
+
+            <div class="form-grupo">
+                <label for="filter-fecha-fin">Fecha de fin</label>
+                <input type="date" id="filter-fecha-fin" class="form-control">
+            </div>
+
+            <button id="btn-filtrar" class="btn btn-primario" style="height: 42px;">Filtrar resultados</button>
+        </div>
+
+        <!-- Tabla de Historial -->
+        <div class="tabla-container mb-4">
+            <table class="tabla">
+                <thead>
+                    <tr>
+                        <th>Especialidad</th>
+                        <th>Médico</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="historial-tabla-body">
+                    <!-- Fila Placeholder 1 (Completada) -->
+                    <tr class="historial-row" data-turno-id="9000">
+                        <td>Cardiología</td>
+                        <td>Dr. Roberto Sánchez</td>
+                        <td>2026-03-10</td>
+                        <td>10:00</td>
+                        <td><span class="badge badge-completada">Completada</span></td>
+                        <td>
+                            <button class="btn btn-secundario btn-sm w-100 btn-ver-detalle-historial"
+                                data-turno-id="9000" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Ver
+                                detalle</button>
+                        </td>
+                    </tr>
+
+                    <!-- Fila Placeholder 2 (Cancelada) -->
+                    <tr class="historial-row" data-turno-id="8995">
+                        <td>Neurología</td>
+                        <td>Dr. Luis Romero</td>
+                        <td>2026-02-14</td>
+                        <td>15:30</td>
+                        <td><span class="badge badge-cancelada">Cancelada</span></td>
+                        <td>
+                            <button class="btn btn-secundario btn-sm w-100 btn-ver-detalle-historial"
+                                data-turno-id="8995" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Ver
+                                detalle</button>
+                        </td>
+                    </tr>
+
+                    <!-- Fila Placeholder 3 (Reprogramada) -->
+                    <tr class="historial-row" data-turno-id="8990">
+                        <td>Cardiología</td>
+                        <td>Dr. Roberto Sánchez</td>
+                        <td>2025-11-05</td>
+                        <td>09:00</td>
+                        <td><span class="badge badge-reprogramada">Reprogramada</span></td>
+                        <td>
+                            <button class="btn btn-secundario btn-sm w-100 btn-ver-detalle-historial"
+                                data-turno-id="8990" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Ver
+                                detalle</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Mensaje vacío (Oculto) -->
+        <div id="empty-historial" class="info-box texto-centro oculto">
+            No se encontraron citas en tu historial con estos filtros.
+        </div>
+
+        <!-- Paginación Visual (Placeholder) -->
+        <div id="paginacion-container" class="d-flex justify-content-center gap-2 mt-4">
+            <button class="btn btn-secundario disabled" disabled>« Anterior</button>
+            <button class="btn btn-primario">1</button>
+            <button class="btn btn-secundario">2</button>
+            <button class="btn btn-secundario">3</button>
+            <button class="btn btn-secundario">Siguiente »</button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+    </footer>
+
+    <!-- Scripts (Vacíos para la integración posterior de JS) -->
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/turnos.js"></script>
+
+</body>
+
+</html>

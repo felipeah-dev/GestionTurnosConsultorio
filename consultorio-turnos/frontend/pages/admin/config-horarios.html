@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración de Horarios - Admin</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/forms.css">
+    <style>
+        .dia-horario-fila {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .dia-horario-fila:last-child {
+            border-bottom: none;
+        }
+
+        .dia-nombre {
+            flex: 0 0 120px;
+            font-weight: 500;
+        }
+
+        .dia-switch {
+            flex: 0 0 50px;
+        }
+
+        .horas-container {
+            flex: 1;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .horas-container input[type="time"] {
+            width: auto;
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar" style="border-top: 4px solid var(--color-danger);">
+        <div class="navbar-brand">
+            <span class="logo-icon">🏥</span> Consultorio Médico <span
+                style="font-size: 0.8rem; font-weight: normal; margin-left:10px; opacity:0.8;">[Módulo Admin]</span>
+        </div>
+        <div class="navbar-user">
+            <div class="user-name">Admin Principal</div>
+            <span class="badge badge-rol" style="background-color: var(--color-danger); color: white;">Admin</span>
+            <button class="btn btn-secundario" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Cerrar
+                sesión</button>
+        </div>
+    </nav>
+
+    <!-- Área de Notificaciones -->
+    <div id="notification-area" class="oculto"></div>
+
+    <!-- Spinner Global -->
+    <div id="loading-spinner" class="spinner oculto"></div>
+
+    <!-- Contenido Principal -->
+    <main class="container-center">
+        <div style="width: 100%; max-width: 800px;">
+            <div class="d-flex justify-content-between align-items-center mb-4" style="flex-wrap: wrap; gap: 1rem;">
+                <h1>Configuración de Horarios Base</h1>
+                <a href="medicos.html" class="btn btn-secundario px-4" style="text-decoration: none;">← Volver a
+                    Médicos</a>
+            </div>
+
+            <!-- Selector de Médico -->
+            <div class="card mb-4">
+                <div class="form-grupo" style="margin-bottom: 0;">
+                    <label for="select-medico-horarios">Médico a configurar</label>
+                    <select id="select-medico-horarios" class="form-control">
+                        <option value="101" selected>Dr. Roberto Sánchez (Cardiología)</option>
+                        <option value="102">Dra. María González (Cardiología)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Edición de Horario Semanal -->
+            <div class="card">
+                <h3 class="card-title mb-3 pb-3" style="border-bottom: 1px solid var(--color-border);">Disponibilidad
+                    Semanal Regulable</h3>
+                <form id="form-horarios-semanales">
+
+                    <!-- Lunes -->
+                    <div class="dia-horario-fila">
+                        <div class="dia-nombre">Lunes</div>
+                        <div class="dia-switch">
+                            <input type="checkbox" id="check-lunes" checked>
+                        </div>
+                        <div class="horas-container">
+                            <input type="time" id="lunes-inicio" class="form-control" value="09:00">
+                            <span>a</span>
+                            <input type="time" id="lunes-fin" class="form-control" value="15:00">
+                        </div>
+                    </div>
+
+                    <!-- Martes -->
+                    <div class="dia-horario-fila">
+                        <div class="dia-nombre">Martes</div>
+                        <div class="dia-switch">
+                            <input type="checkbox" id="check-martes" checked>
+                        </div>
+                        <div class="horas-container">
+                            <input type="time" id="martes-inicio" class="form-control" value="09:00">
+                            <span>a</span>
+                            <input type="time" id="martes-fin" class="form-control" value="15:00">
+                        </div>
+                    </div>
+
+                    <!-- Miércoles -->
+                    <div class="dia-horario-fila">
+                        <div class="dia-nombre">Miércoles</div>
+                        <div class="dia-switch">
+                            <input type="checkbox" id="check-miercoles">
+                        </div>
+                        <div class="horas-container" style="opacity: 0.5; pointer-events: none;">
+                            <input type="time" id="miercoles-inicio" class="form-control" disabled>
+                            <span>a</span>
+                            <input type="time" id="miercoles-fin" class="form-control" disabled>
+                        </div>
+                    </div>
+
+                    <!-- Jueves -->
+                    <div class="dia-horario-fila">
+                        <div class="dia-nombre">Jueves</div>
+                        <div class="dia-switch">
+                            <input type="checkbox" id="check-jueves" checked>
+                        </div>
+                        <div class="horas-container">
+                            <input type="time" id="jueves-inicio" class="form-control" value="13:00">
+                            <span>a</span>
+                            <input type="time" id="jueves-fin" class="form-control" value="19:00">
+                        </div>
+                    </div>
+
+                    <!-- Viernes -->
+                    <div class="dia-horario-fila">
+                        <div class="dia-nombre">Viernes</div>
+                        <div class="dia-switch">
+                            <input type="checkbox" id="check-viernes" checked>
+                        </div>
+                        <div class="horas-container">
+                            <input type="time" id="viernes-inicio" class="form-control" value="09:00">
+                            <span>a</span>
+                            <input type="time" id="viernes-fin" class="form-control" value="14:00">
+                        </div>
+                    </div>
+
+                    <!-- Sábado -->
+                    <div class="dia-horario-fila">
+                        <div class="dia-nombre">Sábado</div>
+                        <div class="dia-switch">
+                            <input type="checkbox" id="check-sabado">
+                        </div>
+                        <div class="horas-container" style="opacity: 0.5; pointer-events: none;">
+                            <input type="time" id="sabado-inicio" class="form-control" disabled>
+                            <span>a</span>
+                            <input type="time" id="sabado-fin" class="form-control" disabled>
+                        </div>
+                    </div>
+
+                    <div class="info-box mt-3 mb-4">
+                        <strong>Nota:</strong> Modificar los horarios no afectará a los turnos que ya se encuentren
+                        confirmados dentro o fuera de estos nuevos rangos.
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2 pt-3 mt-4"
+                        style="border-top: 1px solid var(--color-border);">
+                        <button type="button" class="btn btn-secundario px-4">Descartar</button>
+                        <button type="submit" id="btn-guardar-horarios" class="btn btn-primario px-4">Guardar Horario
+                            Semanal</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+    </footer>
+
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/admin.js"></script>
+
+</body>
+
+</html>

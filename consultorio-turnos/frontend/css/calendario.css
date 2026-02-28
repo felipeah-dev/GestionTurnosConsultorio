@@ -1,1 +1,200 @@
-/* calendario.css: Estilos específicos del calendario mensual y sus estados visuales */
+/* 
+ * calendario.css
+ * Estilos específicos para grid de calendario mensual y de disponibilidad
+ */
+
+.calendario-wrapper {
+    background-color: var(--color-bg-white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+    padding: 1.5rem;
+}
+
+/* Encabezado del Mes */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.calendar-header h3 {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: 1.25rem;
+}
+
+.btn-icon {
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    color: var(--color-text);
+    font-weight: bold;
+}
+
+.btn-icon:hover {
+    background-color: var(--color-bg);
+    border-color: var(--color-secondary);
+}
+
+/* Grid del calendario */
+.calendar-grid-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: 600;
+    color: var(--color-text-light);
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+.calendar-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.25rem;
+}
+
+/* Días */
+.calendar-day,
+.calendar-empty {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    position: relative;
+    font-weight: 500;
+}
+
+.calendar-day {
+    background-color: var(--color-bg-white);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.calendar-day:hover:not(.calendar-day-disabled) {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+    transform: scale(1.05);
+    z-index: 10;
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-md);
+}
+
+.calendar-day-active {
+    background-color: var(--color-primary);
+    color: var(--color-bg-white);
+    font-weight: 700;
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 10px rgba(11, 139, 154, 0.3);
+}
+
+.calendar-day-active:hover:not(.calendar-day-disabled) {
+    background-color: var(--color-primary-hover);
+    color: var(--color-bg-white);
+}
+
+.calendar-day-disabled {
+    background-color: transparent;
+    color: #CBD5E1;
+    cursor: not-allowed;
+}
+
+.calendar-day-today {
+    font-weight: 800;
+    color: var(--color-primary);
+}
+
+.calendar-day-today::after {
+    content: '';
+    position: absolute;
+    bottom: 10%;
+    width: 4px;
+    height: 4px;
+    background-color: var(--color-primary);
+    border-radius: 50%;
+}
+
+.calendar-day-active.calendar-day-today::after {
+    background-color: var(--color-bg-white);
+}
+
+/* Decoraciones en vista de médico (agenda) para indicar turnos */
+.day-has-turns::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-info);
+    border-radius: 50%;
+}
+
+/* Botones de selección de horario */
+.horarios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.horario-btn,
+.horario-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-primary);
+    background-color: var(--color-bg-white);
+    color: var(--color-primary);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.horario-btn:hover:not(.horario-btn-disabled) {
+    background-color: var(--color-primary);
+    color: var(--color-bg-white);
+}
+
+/* Horario seleccionado */
+.horario-btn.activo {
+    background-color: var(--color-primary);
+    color: var(--color-bg-white);
+}
+
+.horario-btn-disabled {
+    border-color: var(--color-border);
+    background-color: var(--color-bg);
+    color: var(--color-text-light);
+    cursor: not-allowed;
+    text-decoration: line-through;
+}
+
+/* Vista mensual de disponibilidad (Recepción) */
+.horario-disponible {
+    border-color: var(--color-success);
+    color: var(--color-success);
+}
+
+.horario-ocupado {
+    border-color: var(--color-error);
+    color: var(--color-error);
+    background-color: var(--color-error-bg);
+    cursor: not-allowed;
+    text-decoration: line-through;
+}
