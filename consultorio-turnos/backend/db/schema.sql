@@ -1,0 +1,1 @@
+-- schema.sql: DDL completo de PostgreSQL: todas las tablas, claves foráneas, restricciones UNIQUE y audit_log

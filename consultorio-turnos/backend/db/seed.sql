@@ -1,0 +1,1 @@
+-- seed.sql: Datos de prueba para desarrollo: usuarios de cada rol, médicos, especialidades y horarios de ejemplo
