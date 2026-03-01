@@ -4,17 +4,23 @@
  */
 
 .form-grupo {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
 }
 
 label {
     display: inline-block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
+    margin-bottom: 0.35rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+/* Labels dentro de cards/filtros: texto oscuro */
+.card label,
+.filtros-fila label,
+.modal-contenido label {
     color: var(--color-text);
-    font-size: 0.9rem;
 }
 
 .form-control,
@@ -28,16 +34,16 @@ select,
 textarea {
     display: block;
     width: 100%;
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
+    padding: 0.6rem 0.85rem;
+    font-size: 0.92rem;
     font-family: inherit;
     line-height: 1.5;
     color: var(--color-text);
     background-color: var(--color-bg-white);
     background-clip: padding-box;
-    border: 1px solid var(--color-border);
+    border: 1px solid #CBD5E1;
     border-radius: var(--radius-sm);
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02) inset;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) inset;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -52,8 +58,8 @@ input:focus,
 select:focus,
 textarea:focus {
     outline: 0;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 4px rgba(11, 139, 154, 0.15);
+    border-color: #0cebeb;
+    box-shadow: 0 0 0 3px rgba(12, 235, 235, 0.2);
     background-color: #FFFFFF;
 }
 
@@ -165,18 +171,19 @@ textarea.error:focus {
 .filtros-fila {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 0.85rem;
     align-items: flex-end;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     background-color: var(--color-bg-white);
-    padding: 1.25rem;
+    padding: 1rem;
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--color-border);
+    color: var(--color-text);
 }
 
 .filtros-fila .form-grupo {
     margin-bottom: 0;
     flex: 1;
-    min-width: 200px;
+    min-width: 180px;
 }
