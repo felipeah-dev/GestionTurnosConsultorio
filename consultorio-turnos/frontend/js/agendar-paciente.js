@@ -23,9 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedSlotId = null;
         btnConfirmar.disabled = true;
 
-        const medicoNombre = filterMedico.options[filterMedico.selectedIndex]?.text;
+        const medicoId = filterMedico.value;
 
-        if (!medicoNombre || filterMedico.value === "") {
+        if (!medicoId || filterMedico.value === "") {
             window.UI.showNotification("Por favor, selecciona un médico primero", "info");
             return;
         }
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Cargar horarios desde la API simulada
         window.UI.toggleSpinner(true);
         try {
-            const data = await window.API.fetchAvailability(fecha, medicoNombre);
+            const data = await window.API.fetchAvailability(fecha, medicoId);
             renderHorarios(data.horarios_libres);
         } catch (error) {
             window.UI.showNotification("Error al cargar horarios", "error");
@@ -103,16 +103,19 @@ document.addEventListener('DOMContentLoaded', () => {
     btnConfirmar.addEventListener('click', async () => {
         if (!selectedDate || !selectedSlotId) return;
 
-        const medicoNombre = filterMedico.options[filterMedico.selectedIndex].text;
+        const medicoOption = filterMedico.options[filterMedico.selectedIndex];
         const especialidadNombre = filterEspecialidad.options[filterEspecialidad.selectedIndex].text;
         const horaSeleccionada = document.querySelector('.slot-btn.btn-primario').textContent;
+
+        const medicoInfo = JSON.parse(medicoOption.dataset.info);
 
         window.UI.toggleSpinner(true);
         try {
             const result = await window.API.createAppointment({
                 fecha: selectedDate,
                 franja_id: selectedSlotId,
-                medico: medicoNombre,
+                medico_id: filterMedico.value,
+                medico_info: medicoInfo,
                 especialidad: especialidadNombre,
                 hora: horaSeleccionada
             });
@@ -137,18 +140,29 @@ document.addEventListener('DOMContentLoaded', () => {
             filterMedico.disabled = false;
             filterMedico.innerHTML = '<option value="" disabled selected>Selecciona médico</option>';
 
-            // Mock de médicos según especialidad
+            // Mock de médicos según especialidad (Sincronizado con seed.sql)
             const medicos = {
-                "1": ["Dr. Roberto Sánchez", "Dr. Luis Martínez"],
-                "2": ["Dra. Laura Montes", "Dr. Mario Garcés"],
-                "3": ["Dra. Elena Gómez"]
+                "1": [
+                    { id: 1, nombre: "Alberto", primer_apellido: "García", segundo_apellido: "Mora" },
+                    { id: 5, nombre: "Sergio", primer_apellido: "López", segundo_apellido: "Torres" }
+                ],
+                "2": [
+                    { id: 2, nombre: "Elena", primer_apellido: "Rodríguez", segundo_apellido: "Sanz" }
+                ],
+                "3": [
+                    { id: 3, nombre: "Carlos", primer_apellido: "Martínez", segundo_apellido: "Ruiz" }
+                ],
+                "4": [
+                    { id: 4, nombre: "Lucía", primer_apellido: "Fernández", segundo_apellido: "" }
+                ]
             };
 
             const lista = medicos[filterEspecialidad.value] || [];
-            lista.forEach((nombre, idx) => {
+            lista.forEach((m) => {
                 const opt = document.createElement('option');
-                opt.value = idx + 1;
-                opt.textContent = nombre;
+                opt.value = m.id;
+                opt.textContent = `Dr. ${m.nombre} ${m.primer_apellido}`;
+                opt.dataset.info = JSON.stringify(m);
                 filterMedico.appendChild(opt);
             });
         }

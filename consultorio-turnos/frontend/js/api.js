@@ -12,13 +12,10 @@ const delay = () => new Promise(resolve => setTimeout(resolve, API_SIMULATION_DE
 
 /**
  * Obtiene la disponibilidad para una fecha y médico específico.
- * @param {string} fecha - Formato YYYY-MM-DD
- * @param {string} medicoNombre - Nombre del médico
  */
-async function fetchAvailability(fecha, medicoNombre) {
+async function fetchAvailability(fecha, medicoId) {
     await delay();
 
-    // Todos los horarios posibles
     const todosLosHorarios = [
         { "franja_id": 1, "hora": "09:00 AM" },
         { "franja_id": 2, "hora": "10:00 AM" },
@@ -28,19 +25,18 @@ async function fetchAvailability(fecha, medicoNombre) {
         { "franja_id": 6, "hora": "05:00 PM" }
     ];
 
-    // Obtener citas guardadas para filtrar
     const citas = JSON.parse(localStorage.getItem('mis_citas') || '[]');
 
-    // Filtrar horarios que YA están ocupados para ESTE médico en ESTA fecha
+    // Filtrar por ID de médico para mayor precisión (Sigue siendo mock)
     const horariosOcupados = citas
-        .filter(c => c.fecha === fecha && c.medico === medicoNombre)
+        .filter(c => c.fecha === fecha && c.medico_id === medicoId)
         .map(c => c.hora);
 
     const disponibles = todosLosHorarios.filter(h => !horariosOcupados.includes(h.hora));
 
     return {
         "fecha": fecha,
-        "medico": medicoNombre,
+        "medico_id": medicoId,
         "horarios_libres": disponibles
     };
 }
@@ -56,11 +52,15 @@ async function fetchAppointments() {
         return JSON.parse(stored);
     }
 
-    // Datos iniciales si no hay nada guardado
+    // Datos iniciales con la nueva estructura de nombres
     const iniciales = [
         {
             "public_id": "uuid-123",
-            "medico": "Dr. Roberto Sánchez",
+            "medico": {
+                "nombre": "Alberto",
+                "primer_apellido": "García",
+                "segundo_apellido": "Mora"
+            },
             "especialidad": "Cardiología",
             "fecha": "2026-04-15",
             "hora": "10:00 AM",
@@ -78,16 +78,19 @@ async function fetchAppointments() {
 async function createAppointment(data) {
     await delay();
 
-    // Obtener citas actuales
     const citas = JSON.parse(localStorage.getItem('mis_citas') || '[]');
 
-    // Crear nueva cita mock
     const nuevaCita = {
         public_id: `uuid-${Math.random().toString(36).substr(2, 9)}`,
-        medico: data.medico || "Dr. Asignado", // En un flujo real esto viene del backend
+        medico_id: data.medico_id,
+        medico: data.medico_info || { // Objeto con el desglose de nombre
+            "nombre": "Dr.",
+            "primer_apellido": "Asignado",
+            "segundo_apellido": null
+        },
         especialidad: data.especialidad || "General",
         fecha: data.fecha,
-        hora: data.hora || "09:00 AM", // Esto debería venir del slot seleccionado
+        hora: data.hora || "09:00 AM",
         estado: "CONFIRMADO"
     };
 

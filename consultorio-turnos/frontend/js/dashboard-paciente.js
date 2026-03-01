@@ -52,7 +52,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </div>
                 </div>
                 <div class="cita-info">
-                    <h3 style="font-size: 1.4rem; margin-bottom: 0.4rem; letter-spacing: -0.02em; font-weight: 700;">${cita.medico}</h3>
+                    <h3 style="font-size: 1.4rem; margin-bottom: 0.4rem; letter-spacing: -0.02em; font-weight: 700;">
+                        Dr. ${cita.medico.nombre} ${cita.medico.primer_apellido} ${cita.medico.segundo_apellido || ''}
+                    </h3>
                     <p class="texto-primario" style="font-weight: 800; font-size: 0.9rem; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 1px;">${cita.especialidad}</p>
 
                     <div class="d-flex gap-4 mt-2 p-3 glass" 

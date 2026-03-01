@@ -6,6 +6,14 @@
 const mockDelay = (ms = 800) => new Promise(resolve => setTimeout(resolve, ms));
 
 document.addEventListener('DOMContentLoaded', () => {
+    // === AUTO-CONFIGURACIÓN DE FECHAS (Validación Básica de Front Inicial) ===
+    const inputFechaNac = document.getElementById('input-fecha-nac');
+    if (inputFechaNac) {
+        // Restringir que no se puedan seleccionar fechas futuras para el nacimiento
+        const today = new Date().toISOString().split('T')[0];
+        inputFechaNac.setAttribute('max', today);
+    }
+
     // === FORMULARIO DE LOGIN ===
     const formLogin = document.getElementById('form-login');
     if (formLogin) {
@@ -20,7 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 await mockDelay();
                 if (email && password) {
                     window.UI.showNotification("¡Bienvenido! Sesión iniciada correctamente.", "success");
+
+                    // Simular guardado de token e identidad del usuario
                     localStorage.setItem('user_token', 'mock_jwt_token_123');
+                    localStorage.setItem('user_identity', JSON.stringify({
+                        nombre: "Juan",
+                        primer_apellido: "Pérez",
+                        segundo_apellido: "García"
+                    }));
+
                     setTimeout(() => window.location.href = 'pages/paciente/dashboard.html', 1000);
                 } else {
                     window.UI.showNotification("Credenciales inválidas.", "error");
@@ -38,31 +54,76 @@ document.addEventListener('DOMContentLoaded', () => {
     if (formRegister) {
         const inputPass = document.getElementById('input-password');
         const inputConfirm = document.getElementById('input-confirm-password');
+        const inputEmail = document.getElementById('input-email');
+        const errorEmail = document.getElementById('error-email');
         const errorConfirm = document.getElementById('error-confirm-password');
 
         // Validación dinámica de coincidencia de contraseñas al escribir
         const validatePasswords = () => {
             if (inputConfirm.value && inputPass.value !== inputConfirm.value) {
-                errorConfirm.classList.remove('oculto');
+                if (errorConfirm) errorConfirm.classList.remove('oculto');
                 inputConfirm.style.borderColor = 'var(--color-peligro)';
                 return false;
             } else {
-                errorConfirm.classList.add('oculto');
+                if (errorConfirm) errorConfirm.classList.add('oculto');
                 inputConfirm.style.borderColor = '';
                 return true;
             }
         };
 
-        inputConfirm.addEventListener('input', validatePasswords);
-        inputPass.addEventListener('input', validatePasswords);
+        // Ocultar error de email al escribir si es válido
+        if (inputEmail) {
+            inputEmail.addEventListener('input', () => {
+                const val = inputEmail.value.trim();
+                const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+                if (isValid && errorEmail) errorEmail.classList.add('oculto');
+            });
+        }
+
+        if (inputConfirm) inputConfirm.addEventListener('input', validatePasswords);
+        if (inputPass) inputPass.addEventListener('input', validatePasswords);
 
         formRegister.addEventListener('submit', async (e) => {
             e.preventDefault();
 
+            // Capturar campos de nombre y apellidos
+            const nombre = document.getElementById('input-nombre').value.trim();
+            const primerApellido = document.getElementById('input-primer-apellido').value.trim();
+            const segundoApellido = document.getElementById('input-segundo-apellido').value.trim();
+
+            const email = inputEmail.value.trim();
+            const password = inputPass.value;
+            let telefono = document.getElementById('input-telefono').value.trim();
+
+            // Anteponer '+' si el usuario no lo puso (aunque ahora hay un prefijo visual)
+            if (telefono !== "" && !telefono.startsWith('+')) {
+                telefono = '+' + telefono;
+            }
+
             // Validar todo antes de enviar
             const isPasswordsMatch = validatePasswords();
-            const email = document.getElementById('input-email').value;
             const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+            // Regla de Contraseña: Mín 8 chars, 1 mayúscula, 1 número
+            const hasUpperCase = /[A-Z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            const isPassValid = password.length >= 8 && hasUpperCase && hasNumber;
+
+            // Regla de Teléfono: Internacional flexible (acepta +, espacios, guiones y entre 7-15 dígitos)
+            const isPhoneValid = telefono === "" || /^\+?[\d\s\-()]{7,15}$/.test(telefono);
+
+            if (!isPassValid) {
+                const errPass = document.getElementById('error-password');
+                if (errPass) {
+                    errPass.textContent = "Debe tener 8+ caracteres, una mayúscula y un número";
+                    errPass.classList.remove('oculto');
+                }
+                window.UI.showNotification("La contraseña debe tener 8+ caracteres, una mayúscula y un número", "error");
+                return;
+            } else {
+                const errPass = document.getElementById('error-password');
+                if (errPass) errPass.classList.add('oculto');
+            }
 
             if (!isPasswordsMatch) {
                 window.UI.showNotification("Las contraseñas no coinciden", "error");
@@ -70,15 +131,27 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (!isEmailValid) {
-                document.getElementById('error-email').classList.remove('oculto');
+                if (errorEmail) errorEmail.classList.remove('oculto');
                 window.UI.showNotification("Formato de correo inválido", "error");
                 return;
+            } else {
+                if (errorEmail) errorEmail.classList.add('oculto');
+            }
+
+            if (!isPhoneValid) {
+                const errTel = document.getElementById('error-telefono');
+                if (errTel) errTel.classList.remove('oculto');
+                window.UI.showNotification("Formato de teléfono inválido (Use + y números)", "error");
+                return;
+            } else {
+                const errTel = document.getElementById('error-telefono');
+                if (errTel) errTel.classList.add('oculto');
             }
 
             window.UI.toggleSpinner(true);
             try {
                 await mockDelay(1200);
-                window.UI.showNotification("Cuenta creada con éxito. Ya puedes iniciar sesión.", "success");
+                window.UI.showNotification(`Cuenta creada para ${nombre} ${primerApellido}. Ya puedes iniciar sesión.`, "success");
                 setTimeout(() => window.location.href = 'index.html', 2000);
             } catch (error) {
                 window.UI.showNotification("Error al procesar registro", "error");

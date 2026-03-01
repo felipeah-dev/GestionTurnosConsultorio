@@ -13,12 +13,12 @@ INSERT INTO especialidades (nombre, descripcion) VALUES
 ON CONFLICT (nombre) DO NOTHING;
 
 -- 3. MÉDICOS (Ejemplos)
-INSERT INTO medicos (nombre, especialidad_id, telefono, activo) VALUES 
-('Dr. Alberto García', 1, '555-0101', true),  -- Cardiología
-('Dra. Elena Rodríguez', 2, '555-0102', true), -- Neurología
-('Dr. Carlos Martínez', 3, '555-0103', true),  -- Pediatría
-('Dra. Lucía Fernández', 4, '555-0104', true), -- Odontología
-('Dr. Sergio López', 1, '555-0105', true)      -- Cardiología (segundo médico)
+INSERT INTO medicos (nombre, primer_apellido, segundo_apellido, especialidad_id, telefono, activo) VALUES 
+('Alberto', 'García', 'Mora', 1, '555-0101', true),      -- Cardiología
+('Elena', 'Rodríguez', 'Sanz', 2, '555-0102', true),    -- Neurología
+('Carlos', 'Martínez', 'Ruiz', 3, '555-0103', true),     -- Pediatría
+('Lucía', 'Fernández', NULL, 4, '555-0104', true),     -- Odontología
+('Sergio', 'López', 'Torres', 1, '555-0105', true)        -- Cardiología (segundo médico)
 ON CONFLICT DO NOTHING;
 
 -- 4. FRANJAS HORARIAS (Slots de 30 o 60 min)

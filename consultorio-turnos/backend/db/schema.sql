@@ -17,7 +17,11 @@ CREATE TABLE IF NOT EXISTS usuarios (
     public_id UUID DEFAULT gen_random_uuid() UNIQUE,
     email TEXT NOT NULL UNIQUE,
     password_hash TEXT NOT NULL,
-    nombre_completo TEXT NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    primer_apellido VARCHAR(100) NOT NULL,
+    segundo_apellido VARCHAR(100), -- Opcional
+    telefono VARCHAR(20),
+    fecha_nacimiento DATE,
     role_id BIGINT NOT NULL REFERENCES roles(role_id),
     created_at TIMESTAMPTZ DEFAULT now()
 );
@@ -33,6 +37,8 @@ CREATE TABLE IF NOT EXISTS especialidades (
 CREATE TABLE IF NOT EXISTS medicos (
     medico_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     nombre TEXT NOT NULL,
+    primer_apellido VARCHAR(100) NOT NULL,
+    segundo_apellido VARCHAR(100), -- Opcional
     especialidad_id BIGINT NOT NULL REFERENCES especialidades(especialidad_id),
     telefono TEXT,
     activo BOOLEAN DEFAULT TRUE
