@@ -1,1 +1,307 @@
-/* global.css: Estilos globales del proyecto: tipografía, colores, reset y utilidades generales */
+/* 
+ * global.css
+ * SISTEMA DE DISEÑO - CONSULTORIO MÉDICO (PREMIUM HEALTH)
+ * 
+ * - Color principal: Teal Vibrante (#0B8B9A) y variantes profundas
+ * - Color de fondo: Gris perla muy claro (#F8FAFA)
+ * - Color de texto: Azul oscuro casi negro (#1E293B)
+ * - Tipografía: Outfit (Títulos), Inter (Cuerpo)
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+    /* Paleta Premium Inspirada en la Imagen (Fluid Cyan/Teal) */
+    --color-primary: #0cebeb;
+    --color-primary-hover: #15a9c9;
+    --color-primary-light: #E0F7FA;
+    --color-secondary: #4A7C89;
+    --color-secondary-hover: #37636E;
+
+    /* Textos y fondos */
+    --color-text: #1E293B;
+    --color-text-light: #64748B;
+    --color-bg: #44808C;
+    --color-bg-white: #FFFFFF;
+    --color-border: #E2E8F0;
+
+    /* Estados */
+    --color-success: #10B981;
+    --color-success-bg: #D1FAE5;
+    --color-error: #EF4444;
+    --color-error-bg: #FEE2E2;
+    --color-warning: #F59E0B;
+    --color-warning-bg: #FEF3C7;
+    --color-info: #0cebeb;
+    --color-info-bg: #E0F7FA;
+
+    /* Sombras Elevadas y Micro-interacciones */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.18);
+    --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.22);
+    --shadow-float: 0 16px 32px rgba(0, 0, 0, 0.28);
+
+    /* Bordes Suaves */
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 22px;
+
+    /* Efectos transicionales */
+    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    /* Fondo con gradientes y blobs simulando la imagen proporcionada */
+    background-color: var(--color-bg);
+    background-image:
+        radial-gradient(ellipse at 80% 0%, #35D2D8 0%, transparent 40%),
+        radial-gradient(ellipse at 10% 80%, #2A5A66 0%, transparent 45%),
+        radial-gradient(ellipse at 30% 30%, #44A7B5 0%, transparent 50%),
+        linear-gradient(135deg, #44808C 0%, #1BABA9 100%);
+    background-attachment: fixed;
+    color: #FFFFFF;
+    /* Texto general en blanco para contrastar el fondo */
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    color: #0cebeb;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+a:hover {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Outfit', sans-serif;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* Estructura Principal */
+main {
+    flex: 1;
+    padding: 1.75rem 2rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.container-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 160px);
+}
+
+/* Navbar (Glassmorphism sutil para fondo colorido) */
+.navbar {
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 1rem 2.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: var(--transition);
+    color: #FFFFFF;
+}
+
+.navbar:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-brand {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.navbar-user {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.user-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+/* Footer */
+.footer {
+    background-color: rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 1.25rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: auto;
+}
+
+/* Clases Utilitarias */
+.oculto,
+.hidden {
+    display: none !important;
+}
+
+.texto-centro {
+    text-align: center;
+}
+
+.texto-derecha {
+    text-align: right;
+}
+
+.texto-primario {
+    color: var(--color-primary);
+}
+
+.texto-muted {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Dentro de cards/contenedores blancos, ajustar texto-muted a oscuro */
+.card .texto-muted,
+.tabla-container .texto-muted,
+.filtros-fila .texto-muted,
+.modal-contenido .texto-muted {
+    color: var(--color-text-light);
+}
+
+.mb-1 {
+    margin-bottom: 0.5rem;
+}
+
+.mb-2 {
+    margin-bottom: 1rem;
+}
+
+.mb-3 {
+    margin-bottom: 1.5rem;
+}
+
+.mb-4 {
+    margin-bottom: 2rem;
+}
+
+.mt-1 {
+    margin-top: 0.5rem;
+}
+
+.mt-2 {
+    margin-top: 1rem;
+}
+
+.mt-3 {
+    margin-top: 1.5rem;
+}
+
+.mt-4 {
+    margin-top: 2rem;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.gap-1 {
+    gap: 0.5rem;
+}
+
+.gap-2 {
+    gap: 1rem;
+}
+
+.gap-3 {
+    gap: 1.5rem;
+}
+
+/* Grid general */
+.grid-1 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Separador Visual */
+hr {
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    margin: 1.5rem 0;
+}
+
+/* Focus visible global para accesibilidad */
+.btn:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+    outline: 2px solid #0cebeb;
+    outline-offset: 2px;
+}

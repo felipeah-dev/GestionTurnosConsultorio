@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Médicos - Admin</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/forms.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar" style="border-top: 4px solid var(--color-danger);">
+        <div class="navbar-brand">
+            <span class="logo-icon">🏥</span> Consultorio Médico <span
+                style="font-size: 0.8rem; font-weight: normal; margin-left:10px; opacity:0.8;">[Módulo Admin]</span>
+        </div>
+        <div class="navbar-user">
+            <div class="user-name">Admin Principal</div>
+            <span class="badge badge-rol" style="background-color: var(--color-danger); color: white;">Admin</span>
+            <button class="btn btn-secundario" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Cerrar
+                sesión</button>
+        </div>
+    </nav>
+
+    <!-- Área de Notificaciones -->
+    <div id="notification-area" class="oculto"></div>
+
+    <!-- Spinner Global -->
+    <div id="loading-spinner" class="spinner oculto"></div>
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" style="padding: 0 2rem;">
+        <div class="breadcrumb">
+            <a href="dashboard.html">Inicio (Admin)</a>
+            <span class="breadcrumb-separator">&rsaquo;</span>
+            <span class="breadcrumb-active">Gestión de Médicos</span>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main>
+        <div class="d-flex justify-content-between align-items-center mb-4" style="flex-wrap: wrap; gap: 1rem;">
+            <h1>Perfiles Profesionales Médicos</h1>
+            <a href="nuevo-medico.html" class="btn btn-primario" style="text-decoration: none;">+ Nuevo Perfil
+                Médico</a>
+        </div>
+
+        <!-- Filtros -->
+        <div class="card mb-4" style="padding: 1rem;">
+            <div class="filtros-fila" style="margin: 0;">
+                <div class="form-grupo" style="flex: 2; margin-bottom: 0;">
+                    <label for="buscar-medico" class="oculto">Buscar</label>
+                    <input type="text" id="buscar-medico" class="form-control"
+                        placeholder="Buscar médico por nombre o matrícula...">
+                </div>
+
+                <div class="form-grupo" style="margin-bottom: 0;">
+                    <label for="filter-especialidad" class="oculto">Especialidad</label>
+                    <select id="filter-especialidad" class="form-control">
+                        <option value="todas">Todas las especialidades</option>
+                        <option value="1">Cardiología</option>
+                        <option value="2">Neurología</option>
+                        <option value="3">Odontología</option>
+                    </select>
+                </div>
+
+                <div class="form-grupo" style="margin-bottom: 0;">
+                    <button class="btn btn-secundario w-100" style="height: 42px;">Filtrar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla de Médicos -->
+        <div class="tabla-container">
+            <table class="tabla">
+                <thead>
+                    <tr>
+                        <th>ID Médico</th>
+                        <th>Nombre y Rol Sistema</th>
+                        <th>Especialidad Principal</th>
+                        <th>Matrícula</th>
+                        <th>Estado Agenda</th>
+                        <th>Configuración</th>
+                    </tr>
+                </thead>
+                <tbody id="medicos-tabla-body">
+                    <!-- Fila Médico 1 -->
+                    <tr class="medico-row" data-medico-id="101">
+                        <td>MED-101</td>
+                        <td>
+                            <strong style="display: block;">Dr. Roberto Sánchez</strong>
+                            <span class="texto-muted" style="font-size: 0.8rem;">Usuario asoc: u_22333444</span>
+                        </td>
+                        <td><span class="badge"
+                                style="background-color: var(--color-bg); color: var(--color-text);">Cardiología</span>
+                        </td>
+                        <td>MN-45678</td>
+                        <td><span class="badge badge-success"
+                                style="background-color: var(--color-success); color: white;">Acepta Turnos</span></td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <button class="btn btn-secundario btn-sm" data-medico-id="101"
+                                    style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Editar Perfil</button>
+                                <a href="config-horarios.html?medico=101" class="btn btn-primario btn-sm"
+                                    style="padding: 0.25rem 0.5rem; font-size: 0.8rem; text-decoration: none;">Horarios</a>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Fila Médico 2 -->
+                    <tr class="medico-row" data-medico-id="102">
+                        <td>MED-102</td>
+                        <td>
+                            <strong style="display: block;">Dra. María González</strong>
+                            <span class="texto-muted" style="font-size: 0.8rem;">Usuario asoc: u_33444555</span>
+                        </td>
+                        <td><span class="badge"
+                                style="background-color: var(--color-bg); color: var(--color-text);">Cardiología</span>
+                        </td>
+                        <td>MN-87654</td>
+                        <td><span class="badge badge-success"
+                                style="background-color: var(--color-success); color: white;">Acepta Turnos</span></td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <button class="btn btn-secundario btn-sm" data-medico-id="102"
+                                    style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Editar Perfil</button>
+                                <a href="config-horarios.html?medico=102" class="btn btn-primario btn-sm"
+                                    style="padding: 0.25rem 0.5rem; font-size: 0.8rem; text-decoration: none;">Horarios</a>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Fila Médico 3 (Inactivo) -->
+                    <tr class="medico-row" data-medico-id="103">
+                        <td>MED-103</td>
+                        <td>
+                            <strong style="display: block; color: var(--color-muted);">Dr. Luis Romero</strong>
+                            <span class="texto-muted" style="font-size: 0.8rem;">Usuario asoc: u_44555666</span>
+                        </td>
+                        <td><span class="badge"
+                                style="background-color: var(--color-bg); color: var(--color-text);">Neurología</span>
+                        </td>
+                        <td>MN-12345</td>
+                        <td><span class="badge" style="background-color: var(--color-muted); color: white;">Cuenta
+                                Inactiva</span></td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <button class="btn btn-secundario btn-sm" data-medico-id="103"
+                                    style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Editar Perfil</button>
+                                <button class="btn btn-secundario btn-sm" disabled
+                                    style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Horarios</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+    </footer>
+
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/admin.js"></script>
+
+</body>
+
+</html>

@@ -1,1 +1,106 @@
-<!-- dashboard.html: Panel principal del médico tras iniciar sesión -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Médico - Sistema de Gestión de Turnos</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/components.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <span class="logo-icon">🏥</span> Consultorio Médico
+        </div>
+        <div class="navbar-user">
+            <div class="user-name">Dr. Roberto Sánchez</div>
+            <span class="badge badge-rol">Médico</span>
+            <button class="btn btn-secundario" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Cerrar
+                sesión</button>
+        </div>
+    </nav>
+
+    <!-- Área de Notificaciones -->
+    <div id="notification-area" class="oculto"></div>
+
+    <!-- Spinner Global -->
+    <div id="loading-spinner" class="spinner oculto"></div>
+
+    <!-- Contenido Principal -->
+    <main>
+        <div class="mb-4">
+            <h1 id="saludo-medico">Bienvenido, Dr. Roberto Sánchez</h1>
+            <p class="texto-muted">Aquí puedes consultar tu agenda de hoy y gestionar tus citas.</p>
+        </div>
+
+        <!-- 3 Tarjetas de Resumen -->
+        <div class="grid-3 mb-4">
+            <!-- Citas para hoy -->
+            <div class="card card-resumen" id="card-citas-hoy">
+                <h3 class="card-title">Citas para hoy</h3>
+                <div class="valor">6</div>
+                <p class="texto-muted mt-1">Pacientes programados</p>
+            </div>
+
+            <!-- Citas esta semana -->
+            <div class="card card-resumen" id="card-citas-semana">
+                <h3 class="card-title">Citas esta semana</h3>
+                <div class="valor">18</div>
+                <p class="texto-muted mt-1">Próximos compromisos</p>
+            </div>
+
+            <!-- Horarios bloqueados -->
+            <div class="card card-resumen" id="card-horarios-bloqueados">
+                <h3 class="card-title">Horarios Bloqueados</h3>
+                <div class="valor" style="color: var(--color-warning);">2</div>
+                <p class="texto-muted mt-1">Excepciones activas</p>
+            </div>
+        </div>
+
+        <!-- Accesos Rápidos -->
+        <h2>Accesos Rápidos</h2>
+        <div class="grid-4 mt-3">
+            <a href="agenda.html" id="btn-ir-agenda" class="card card-resumen texto-primario"
+                style="text-decoration: none;">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">📅</div>
+                <span style="font-weight: 500;">Mi agenda</span>
+            </a>
+            <a href="citas.html" id="btn-ir-citas" class="card card-resumen texto-primario"
+                style="text-decoration: none;">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">👥</div>
+                <span style="font-weight: 500;">Listado de citas</span>
+            </a>
+            <a href="bloquear-horario.html" id="btn-ir-bloquear" class="card card-resumen texto-primario"
+                style="text-decoration: none;">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🚫</div>
+                <span style="font-weight: 500;">Bloquear horario</span>
+            </a>
+            <a href="estado-turno.html" class="card card-resumen texto-primario" style="text-decoration: none;">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">✔️</div>
+                <span style="font-weight: 500;">Estado de turno</span>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+    </footer>
+
+    <!-- Scripts (Vacíos para la integración posterior de JS) -->
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/auth.js"></script>
+
+</body>
+
+</html>

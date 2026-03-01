@@ -1,1 +1,141 @@
-<!-- medicos.html: Página donde el paciente consulta los médicos asociados a una especialidad seleccionada -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Médicos - Sistema de Gestión de Turnos</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/components.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <span class="logo-icon">🏥</span> Consultorio Médico
+        </div>
+        <div class="navbar-user">
+            <div class="user-name">Juan Pérez</div>
+            <span class="badge badge-rol">Paciente</span>
+            <button class="btn btn-secundario" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Cerrar
+                sesión</button>
+        </div>
+    </nav>
+
+    <!-- Área de Notificaciones -->
+    <div id="notification-area" class="oculto"></div>
+
+    <!-- Spinner Global -->
+    <div id="loading-spinner" class="spinner oculto"></div>
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" style="padding: 0 2rem;">
+        <div class="breadcrumb">
+            <a href="dashboard.html">Inicio (Paciente)</a>
+            <span class="breadcrumb-separator">&rsaquo;</span>
+            <span class="breadcrumb-active">Médicos</span>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main>
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="dashboard.html">Inicio</a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="especialidades.html">Especialidades</a>
+            <span class="breadcrumb-separator">/</span>
+            <span id="especialidad-label" style="color: var(--color-text); font-weight: 500;">Cardiología</span>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-4" style="flex-wrap: wrap; gap: 1rem;">
+            <h1>Médicos disponibles</h1>
+            <button id="btn-volver" class="btn btn-secundario">← Volver a especialidades</button>
+        </div>
+
+        <!-- Mensaje de no encontrado (Oculto) -->
+        <div id="empty-medicos" class="info-box texto-centro oculto">
+            No hay médicos disponibles para esta especialidad
+        </div>
+
+        <!-- Grid de Médicos -->
+        <div id="medicos-container" class="grid-3">
+
+            <!-- Médico Placeholder 1 -->
+            <div class="card medico-card" data-medico-id="101" data-especialidad-id="1">
+                <div style="font-size: 4rem; text-align: center; margin-bottom: 1rem;">👨‍⚕️</div>
+                <h3 class="card-title texto-centro">Dr. Roberto Sánchez</h3>
+                <p class="card-subtitle texto-centro">Cardiología</p>
+                <div class="texto-centro mb-3">
+                    <span class="badge badge-tipo">15 años de experiencia</span>
+                </div>
+                <div class="acciones">
+                    <button class="btn btn-primario btn-agendar-con-medico w-100" data-medico-id="101"
+                        style="width: 100%;">Agendar cita</button>
+                </div>
+            </div>
+
+            <!-- Médico Placeholder 2 -->
+            <div class="card medico-card" data-medico-id="102" data-especialidad-id="1">
+                <div style="font-size: 4rem; text-align: center; margin-bottom: 1rem;">👩‍⚕️</div>
+                <h3 class="card-title texto-centro">Dra. María González</h3>
+                <p class="card-subtitle texto-centro">Cardiología</p>
+                <div class="texto-centro mb-3">
+                    <span class="badge badge-tipo">Alta especialidad</span>
+                </div>
+                <div class="acciones">
+                    <button class="btn btn-primario btn-agendar-con-medico w-100" data-medico-id="102"
+                        style="width: 100%;">Agendar cita</button>
+                </div>
+            </div>
+
+            <!-- Médico Placeholder 3 -->
+            <div class="card medico-card" data-medico-id="103" data-especialidad-id="1">
+                <div style="font-size: 4rem; text-align: center; margin-bottom: 1rem;">👨‍⚕️</div>
+                <h3 class="card-title texto-centro">Dr. Carlos López</h3>
+                <p class="card-subtitle texto-centro">Cardiología</p>
+                <div class="texto-centro mb-3">
+                    <span class="badge badge-tipo">Ecocardiogramas</span>
+                </div>
+                <div class="acciones">
+                    <button class="btn btn-primario btn-agendar-con-medico w-100" data-medico-id="103"
+                        style="width: 100%;">Agendar cita</button>
+                </div>
+            </div>
+
+            <!-- Médico Placeholder 4 -->
+            <div class="card medico-card" data-medico-id="104" data-especialidad-id="1">
+                <div style="font-size: 4rem; text-align: center; margin-bottom: 1rem;">👩‍⚕️</div>
+                <h3 class="card-title texto-centro">Dra. Ana Martínez</h3>
+                <p class="card-subtitle texto-centro">Cardiología</p>
+                <div class="texto-centro mb-3">
+                    <span class="badge badge-tipo">Rehabilitación cardíaca</span>
+                </div>
+                <div class="acciones">
+                    <button class="btn btn-primario btn-agendar-con-medico w-100" data-medico-id="104"
+                        style="width: 100%;">Agendar cita</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+    </footer>
+
+    <!-- Scripts (Vacíos para la integración posterior de JS) -->
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/filtros.js"></script>
+
+</body>
+
+</html>

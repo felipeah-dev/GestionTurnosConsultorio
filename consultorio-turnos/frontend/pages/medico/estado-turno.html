@@ -1,1 +1,113 @@
-<!-- estado-turno.html: Página donde el médico marca el estado de un turno como atendido o no asistió -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estado de Cita - Sistema de Gestión de Turnos</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/forms.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <span class="logo-icon">🏥</span> Consultorio Médico
+        </div>
+        <div class="navbar-user">
+            <div class="user-name">Dr. Roberto Sánchez</div>
+            <span class="badge badge-rol">Médico</span>
+            <button class="btn btn-secundario" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Cerrar
+                sesión</button>
+        </div>
+    </nav>
+
+    <!-- Área de Notificaciones -->
+    <div id="notification-area" class="oculto"></div>
+
+    <!-- Spinner Global -->
+    <div id="loading-spinner" class="spinner oculto"></div>
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" style="padding: 0 2rem;">
+        <div class="breadcrumb">
+            <a href="dashboard.html">Inicio (MÃ©dico)</a>
+            <span class="breadcrumb-separator">&rsaquo;</span>
+            <span class="breadcrumb-active">Estado de Cita</span>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main class="container-center">
+        <div style="width: 100%; max-width: 600px;">
+            <h1 class="mb-4 texto-centro">Cambiar estado de cita</h1>
+
+            <!-- Card Info Cita -->
+            <div class="card mb-4" data-turno-id="9001">
+                <div class="mb-3 pb-3"
+                    style="border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div>
+                        <h3 class="card-title mb-1">Paciente: <span id="info-paciente">Juan Pérez</span></h3>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div>
+                        <p class="texto-muted mb-1" style="font-size: 0.9rem;">Fecha:</p>
+                        <p style="font-weight: 500;"><span id="info-fecha">2026-04-13</span></p>
+                    </div>
+                    <div>
+                        <p class="texto-muted mb-1" style="font-size: 0.9rem;">Hora:</p>
+                        <p style="font-weight: 500;"><span id="info-hora">09:30</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario Estado -->
+            <div class="card">
+                <form id="form-estado-cita">
+                    <div class="form-grupo">
+                        <label for="select-estado">Nuevo estado de la cita</label>
+                        <select id="select-estado" class="form-control">
+                            <option value="confirmada" selected>Confirmada (En espera / En curso)</option>
+                            <option value="completada">Completada (Atendido)</option>
+                            <option value="cancelada">Cancelada (Ausente o canceló)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label for="input-observaciones">Observaciones / Motivo (Opcional)</label>
+                        <textarea id="input-observaciones" class="form-control" rows="4"
+                            placeholder="Notas internas sobre la cancelación o sobre la consulta para su historial..."></textarea>
+                    </div>
+
+                    <div class="d-flex gap-2 justify-content-center mt-4">
+                        <button type="button" id="btn-volver" class="btn btn-secundario w-100">Cancelar</button>
+                        <button type="submit" id="btn-guardar-estado" class="btn btn-primario w-100">Guardar
+                            cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+    </footer>
+
+    <!-- Scripts (Vacíos para la integración posterior de JS) -->
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/agenda-medico.js"></script>
+
+</body>
+
+</html>

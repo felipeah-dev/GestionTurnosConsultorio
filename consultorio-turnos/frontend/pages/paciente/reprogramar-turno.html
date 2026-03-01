@@ -1,1 +1,197 @@
-<!-- reprogramar-turno.html: Página donde el paciente reprograma una cita activa propia eligiendo un nuevo horario -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reprogramar Cita - Sistema de Gestión de Turnos</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/calendario.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <span class="logo-icon">🏥</span> Consultorio Médico
+        </div>
+        <div class="navbar-user">
+            <div class="user-name">Juan Pérez</div>
+            <span class="badge badge-rol">Paciente</span>
+            <button class="btn btn-secundario" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Cerrar
+                sesión</button>
+        </div>
+    </nav>
+
+    <!-- Área de Notificaciones -->
+    <div id="notification-area" class="oculto"></div>
+
+    <!-- Spinner Global -->
+    <div id="loading-spinner" class="spinner oculto"></div>
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" style="padding: 0 2rem;">
+        <div class="breadcrumb">
+            <a href="dashboard.html">Inicio (Paciente)</a>
+            <span class="breadcrumb-separator">&rsaquo;</span>
+            <span class="breadcrumb-active">Reprogramar Cita</span>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main>
+        <h1 class="mb-4">Reprogramar cita</h1>
+
+        <!-- Detalles de la cita actual -->
+        <h2 class="mb-3">Cita actual</h2>
+        <div class="card mb-4 d-flex justify-content-between align-items-center" data-turno-id="9001"
+            style="flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <p class="texto-muted mb-1" style="font-size: 0.85rem;">Especialidad / Médico</p>
+                <p style="font-weight: 500;">
+                    <span id="cita-actual-especialidad">Cardiología</span> -
+                    <span id="cita-actual-medico">Dr. Roberto Sánchez</span>
+                </p>
+            </div>
+            <div>
+                <p class="texto-muted mb-1" style="font-size: 0.85rem;">Fecha asignada</p>
+                <p style="font-weight: 500;">
+                    📅 <span id="cita-actual-fecha">2026-04-15</span>
+                </p>
+            </div>
+            <div>
+                <p class="texto-muted mb-1" style="font-size: 0.85rem;">Hora asignada</p>
+                <p style="font-weight: 500;">
+                    🕒 <span id="cita-actual-hora">10:00</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Separador Visual -->
+        <hr>
+        <h2 class="mb-3">Selecciona nueva fecha y horario</h2>
+
+        <div class="grid-2">
+            <!-- Sección Calendario -->
+            <div class="calendario-wrapper">
+                <div class="calendar-header">
+                    <button id="calendar-prev" class="btn-icon" aria-label="Mes anterior">←</button>
+                    <h3 id="calendar-month-label">Abril 2026</h3>
+                    <button id="calendar-next" class="btn-icon" aria-label="Mes siguiente">→</button>
+                </div>
+
+                <div class="calendar-grid-header">
+                    <div>Dom</div>
+                    <div>Lun</div>
+                    <div>Mar</div>
+                    <div>Mié</div>
+                    <div>Jue</div>
+                    <div>Vie</div>
+                    <div>Sáb</div>
+                </div>
+
+                <div id="calendar-container" class="calendar-container">
+                    <!-- Días del mes (placeholders) -->
+                    <div class="calendar-empty">29</div>
+                    <div class="calendar-empty">30</div>
+                    <div class="calendar-empty">31</div>
+
+                    <div class="calendar-day calendar-day-disabled" data-fecha="2026-04-01">1</div>
+                    <div class="calendar-day calendar-day-disabled" data-fecha="2026-04-02">2</div>
+                    <div class="calendar-day calendar-day-disabled" data-fecha="2026-04-03">3</div>
+                    <div class="calendar-day calendar-day-disabled" data-fecha="2026-04-04">4</div>
+                    <div class="calendar-day calendar-day-disabled" data-fecha="2026-04-05">5</div>
+                    <div class="calendar-day calendar-day-disabled" data-fecha="2026-04-06">6</div>
+                    <div class="calendar-day calendar-day-disabled" data-fecha="2026-04-07">7</div>
+                    <div class="calendar-day calendar-day-disabled" data-fecha="2026-04-08">8</div>
+                    <div class="calendar-day calendar-day-disabled" data-fecha="2026-04-09">9</div>
+                    <div class="calendar-day calendar-day-today" data-fecha="2026-04-10">10</div>
+                    <div class="calendar-day" data-fecha="2026-04-11">11</div>
+                    <div class="calendar-day" data-fecha="2026-04-12">12</div>
+                    <div class="calendar-day calendar-day-active" data-fecha="2026-04-13">13</div>
+                    <div class="calendar-day" data-fecha="2026-04-14">14</div>
+                    <div class="calendar-day" data-fecha="2026-04-15">15</div> <!-- Nota: Día de la cita actual -->
+                    <!-- Resto del mes -->
+                    <div class="calendar-day" data-fecha="2026-04-16">16</div>
+                    <div class="calendar-day" data-fecha="2026-04-17">17</div>
+                    <div class="calendar-day" data-fecha="2026-04-18">18</div>
+                    <div class="calendar-day" data-fecha="2026-04-19">19</div>
+                    <div class="calendar-day" data-fecha="2026-04-20">20</div>
+                    <div class="calendar-day" data-fecha="2026-04-21">21</div>
+                    <div class="calendar-day" data-fecha="2026-04-22">22</div>
+                    <div class="calendar-empty">23</div>
+                    <div class="calendar-empty">24</div>
+                    <div class="calendar-empty">25</div>
+                </div>
+            </div>
+
+            <!-- Sección Horarios (Oculta por defecto inicialmente pero se muestra aquí visualmente) -->
+            <div id="nuevos-horarios-section" class="card">
+                <h3 class="card-title mb-3">Nuevos horarios para: <span class="texto-primario"
+                        id="nuevos-horarios-fecha-label">13 de Abril, 2026</span></h3>
+
+                <div id="empty-nuevos-horarios" class="info-box oculto">
+                    No hay nuevos horarios disponibles para esta fecha.
+                </div>
+
+                <div id="nuevos-horarios-container" class="horarios-grid mb-4">
+                    <!-- Horarios Placeholders -->
+                    <button class="horario-btn horario-btn-disabled" data-horario-id="5000" data-hora="09:00"
+                        data-medico-id="101" data-fecha="2026-04-13" disabled>
+                        09:00
+                    </button>
+                    <button class="horario-btn activo" data-horario-id="5001" data-hora="09:30" data-medico-id="101"
+                        data-fecha="2026-04-13">
+                        09:30
+                    </button>
+                    <button class="horario-btn" data-horario-id="5002" data-hora="10:00" data-medico-id="101"
+                        data-fecha="2026-04-13">
+                        10:00
+                    </button>
+                    <button class="horario-btn horario-btn-disabled" data-horario-id="5003" data-hora="10:30"
+                        data-medico-id="101" data-fecha="2026-04-13" disabled>
+                        10:30
+                    </button>
+                    <button class="horario-btn" data-horario-id="5004" data-hora="11:00" data-medico-id="101"
+                        data-fecha="2026-04-13">
+                        11:00
+                    </button>
+                </div>
+
+                <!-- Error reglas (Oculto) -->
+                <div id="mensaje-reglas" class="error-box oculto mb-3">
+                    No puedes reprogramar la cita para una fecha anterior o para el mismo horario que ya tienes
+                    asignado.
+                </div>
+
+                <!-- Acción Principal -->
+                <div class="d-flex gap-2">
+                    <button id="btn-confirmar-reprogramacion" class="btn btn-primario disabled w-100"
+                        style="width: 100%;" disabled>Confirmar reprogramación</button>
+                    <button id="btn-volver" class="btn btn-secundario">Volver</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+    </footer>
+
+    <!-- Scripts (Vacíos para la integración posterior de JS) -->
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/turnos.js"></script>
+    <script src="../../js/calendario.js"></script>
+
+</body>
+
+</html>

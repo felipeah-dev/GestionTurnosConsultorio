@@ -1,1 +1,146 @@
-<!-- agenda.html: Página donde el médico consulta su agenda por día, semana o mes -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Médica - Sistema de Gestión de Turnos</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/calendario.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <span class="logo-icon">🏥</span> Consultorio Médico
+        </div>
+        <div class="navbar-user">
+            <div class="user-name">Dr. Roberto Sánchez</div>
+            <span class="badge badge-rol">Médico</span>
+            <button class="btn btn-secundario" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Cerrar
+                sesión</button>
+        </div>
+    </nav>
+
+    <!-- Área de Notificaciones -->
+    <div id="notification-area" class="oculto"></div>
+
+    <!-- Spinner Global -->
+    <div id="loading-spinner" class="spinner oculto"></div>
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" style="padding: 0 2rem;">
+        <div class="breadcrumb">
+            <a href="dashboard.html">Inicio (MÃ©dico)</a>
+            <span class="breadcrumb-separator">&rsaquo;</span>
+            <span class="breadcrumb-active">Agenda Médica</span>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main>
+        <h1 class="mb-4">Mi agenda</h1>
+
+        <!-- Tabs de vista -->
+        <div class="tabs">
+            <button id="tab-dia" class="tab tab-activo">Día</button>
+            <button id="tab-semana" class="tab">Semana</button>
+            <button id="tab-mes" class="tab">Mes</button>
+        </div>
+
+        <!-- Barra de Navegación de Fecha -->
+        <div class="d-flex justify-content-between align-items-center mb-4"
+            style="background-color: var(--color-bg-white); padding: 1rem; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);">
+            <button id="agenda-prev" class="btn btn-secundario">← Anterior</button>
+            <h2 id="agenda-fecha-label" class="mb-0" style="margin-bottom: 0;">Hoy: 13 de Abril, 2026</h2>
+            <button id="agenda-next" class="btn btn-secundario">Siguiente →</button>
+        </div>
+
+        <!-- Contenedor Agenda (Vista Día por defecto) -->
+        <div id="agenda-container" class="grid-1">
+
+            <!-- Turno de Ejemplo 1 -->
+            <div class="card turno-item d-flex justify-content-between align-items-center" data-turno-id="9001"
+                style="flex-wrap: wrap; gap: 1rem;">
+                <div class="d-flex align-items-center" style="gap: 1.5rem; min-width: 200px;">
+                    <div style="font-size: 1.25rem; font-weight: 700; color: var(--color-primary); min-width: 80px;">
+                        09:30</div>
+                    <div>
+                        <h3 class="mb-1" style="font-size: 1.1rem;">Paciente: Juan Pérez</h3>
+                        <span class="badge badge-confirmada">Confirmada</span>
+                    </div>
+                </div>
+                <button class="btn btn-primario btn-ver-detalle" data-turno-id="9001">Ver detalle</button>
+            </div>
+
+            <!-- Turno de Ejemplo 2 -->
+            <div class="card turno-item d-flex justify-content-between align-items-center" data-turno-id="9002"
+                style="flex-wrap: wrap; gap: 1rem;">
+                <div class="d-flex align-items-center" style="gap: 1.5rem; min-width: 200px;">
+                    <div style="font-size: 1.25rem; font-weight: 700; color: var(--color-primary); min-width: 80px;">
+                        10:00</div>
+                    <div>
+                        <h3 class="mb-1" style="font-size: 1.1rem;">Paciente: Marta Gómez</h3>
+                        <span class="badge badge-confirmada">Confirmada</span>
+                    </div>
+                </div>
+                <button class="btn btn-primario btn-ver-detalle" data-turno-id="9002">Ver detalle</button>
+            </div>
+
+            <!-- Turno de Ejemplo 3 -->
+            <div class="card turno-item d-flex justify-content-between align-items-center" data-turno-id="9003"
+                style="flex-wrap: wrap; gap: 1rem;">
+                <div class="d-flex align-items-center" style="gap: 1.5rem; min-width: 200px;">
+                    <div style="font-size: 1.25rem; font-weight: 700; color: var(--color-primary); min-width: 80px;">
+                        11:30</div>
+                    <div>
+                        <h3 class="mb-1" style="font-size: 1.1rem;">Paciente: Carlos Ruiz</h3>
+                        <span class="badge badge-cancelada">Cancelada</span>
+                    </div>
+                </div>
+                <button class="btn btn-secundario btn-ver-detalle" data-turno-id="9003">Ver detalle</button>
+            </div>
+
+            <!-- Turno de Ejemplo 4 -->
+            <div class="card turno-item d-flex justify-content-between align-items-center" data-turno-id="9004"
+                style="flex-wrap: wrap; gap: 1rem;">
+                <div class="d-flex align-items-center" style="gap: 1.5rem; min-width: 200px;">
+                    <div style="font-size: 1.25rem; font-weight: 700; color: var(--color-primary); min-width: 80px;">
+                        12:00</div>
+                    <div>
+                        <h3 class="mb-1" style="font-size: 1.1rem;">Paciente: Ana López</h3>
+                        <span class="badge badge-completada">Completada</span>
+                    </div>
+                </div>
+                <button class="btn btn-primario btn-ver-detalle" data-turno-id="9004">Ver detalle</button>
+            </div>
+
+        </div>
+
+        <!-- Mensaje vacío (Oculto) -->
+        <div id="empty-agenda" class="info-box texto-centro oculto mt-4">
+            No tienes citas agendadas para este día.
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+    </footer>
+
+    <!-- Scripts (Vacíos para la integración posterior de JS) -->
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/agenda-medico.js"></script>
+
+</body>
+
+</html>

@@ -1,1 +1,97 @@
-<!-- index.html: Página de inicio de sesión, punto de entrada para todos los roles -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Sistema de Gestión de Turnos</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/forms.css">
+</head>
+
+<body>
+
+    <!-- Navbar Minimalista (Solo logo) -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <span class="logo-icon">🏥</span> Consultorio Médico
+        </div>
+    </nav>
+
+    <!-- Área de Notificaciones -->
+    <div id="notification-area" class="oculto"></div>
+
+    <!-- Spinner Global -->
+    <div id="loading-spinner" class="spinner oculto"></div>
+
+    <!-- Contenido Principal Centrado -->
+    <main class="container-center">
+        <div class="card" style="width: 100%; max-width: 400px;">
+            <div class="texto-centro mb-4">
+                <h1 class="texto-primario mb-1">Iniciar sesión</h1>
+                <p class="texto-muted">Ingresa tus credenciales para continuar</p>
+            </div>
+
+            <!-- Formulario de Login -->
+            <form id="form-login">
+                <!-- Email -->
+                <div class="form-grupo">
+                    <label for="input-email">Correo electrónico</label>
+                    <input type="email" id="input-email" class="form-control" placeholder="ejemplo@correo.com" required>
+                </div>
+
+                <!-- Contraseña con botón ojo -->
+                <div class="form-grupo">
+                    <label for="input-password">Contraseña</label>
+                    <div class="input-grupo">
+                        <input type="password" id="input-password" class="form-control" placeholder="Tu contraseña"
+                            required>
+                        <button type="button" id="btn-toggle-password" class="input-grupo-btn"
+                            aria-label="Mostrar contraseña">👁️</button>
+                    </div>
+                </div>
+
+                <!-- Recordarme -->
+                <div class="form-grupo">
+                    <div class="form-check">
+                        <input type="checkbox" id="checkbox-recordar" class="form-check-input">
+                        <label for="checkbox-recordar" class="form-check-label">Recordarme en este dispositivo</label>
+                    </div>
+                </div>
+
+                <!-- Mensaje de Error (Oculto por defecto) -->
+                <div id="error-credenciales" class="error-box oculto">
+                    Credenciales incorrectas. Por favor, intenta de nuevo.
+                </div>
+
+                <!-- Botón Submit -->
+                <button type="submit" id="btn-login" class="btn btn-primario mt-2" style="width: 100%;">
+                    Ingresar
+                </button>
+            </form>
+
+            <div class="texto-centro mt-3">
+                <a href="register.html">¿No tienes cuenta? Regístrate</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+    </footer>
+
+    <!-- Scripts (Vacíos para la integración posterior de JS) -->
+    <script src="js/ui.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+
+</body>
+
+</html>

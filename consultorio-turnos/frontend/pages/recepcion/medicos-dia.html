@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disponibilidad por Médico - Sistema de Gestión de Turnos</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/forms.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <span class="logo-icon">🏥</span> Consultorio Médico
+        </div>
+        <div class="navbar-user">
+            <div class="user-name">Carla Rivera</div>
+            <span class="badge badge-rol">Recepción</span>
+            <button class="btn btn-secundario" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Cerrar
+                sesión</button>
+        </div>
+    </nav>
+
+    <!-- Área de Notificaciones -->
+    <div id="notification-area" class="oculto"></div>
+
+    <!-- Spinner Global -->
+    <div id="loading-spinner" class="spinner oculto"></div>
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" style="padding: 0 2rem;">
+        <div class="breadcrumb">
+            <a href="dashboard.html">Inicio (RecepciÃ³n)</a>
+            <span class="breadcrumb-separator">&rsaquo;</span>
+            <span class="breadcrumb-active">Disponibilidad por Médico</span>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main>
+        <div class="d-flex justify-content-between align-items-center mb-4" style="flex-wrap: wrap; gap: 1rem;">
+            <h1>Disponibilidad del día por Médico</h1>
+        </div>
+
+        <!-- Filtro Superior -->
+        <div class="card mb-4 d-flex align-items-center" style="gap: 1rem;">
+            <label for="filter-fecha" style="font-weight: 500; margin: 0;">Visualizando disponibilidad para la
+                fecha:</label>
+            <input type="date" id="filter-fecha" class="form-control" style="width: auto;">
+            <button class="btn btn-primario" style="height: 42px;">Actualizar vista</button>
+        </div>
+
+        <div id="empty-medicos-dia" class="info-box texto-centro oculto">
+            No hay médicos registrados para trabajar en la fecha seleccionada.
+        </div>
+
+        <div id="medicos-dia-container" class="grid-3">
+
+            <!-- Medico Card 1 -->
+            <div class="card">
+                <div class="d-flex align-items-center mb-3"
+                    style="gap: 1rem; border-bottom: 1px solid var(--color-border); padding-bottom: 1rem;">
+                    <div style="font-size: 2.5rem;">👨‍⚕️</div>
+                    <div>
+                        <h3 class="card-title mb-1" style="font-size: 1.1rem;">Dr. Roberto Sánchez</h3>
+                        <p class="texto-muted mb-0" style="font-size: 0.9rem;">Cardiología</p>
+                    </div>
+                </div>
+
+                <div class="grid-2 mb-3">
+                    <div class="texto-centro"
+                        style="background: var(--color-bg); padding: 0.5rem; border-radius: var(--radius-sm);">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-text);">12</div>
+                        <div style="font-size: 0.8rem; color: var(--color-muted);">Turnos Asignados</div>
+                    </div>
+                    <div class="texto-centro"
+                        style="background: var(--color-success-light); padding: 0.5rem; border-radius: var(--radius-sm);">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-success);">4</div>
+                        <div style="font-size: 0.8rem; color: var(--color-success);">Disponibles</div>
+                    </div>
+                </div>
+
+                <button class="btn btn-secundario w-100 btn-ver-agenda-medico" data-medico-id="101">Ver agenda del
+                    médico</button>
+            </div>
+
+            <!-- Medico Card 2 -->
+            <div class="card">
+                <div class="d-flex align-items-center mb-3"
+                    style="gap: 1rem; border-bottom: 1px solid var(--color-border); padding-bottom: 1rem;">
+                    <div style="font-size: 2.5rem;">👩‍⚕️</div>
+                    <div>
+                        <h3 class="card-title mb-1" style="font-size: 1.1rem;">Dra. María González</h3>
+                        <p class="texto-muted mb-0" style="font-size: 0.9rem;">Cardiología</p>
+                    </div>
+                </div>
+
+                <div class="grid-2 mb-3">
+                    <div class="texto-centro"
+                        style="background: var(--color-bg); padding: 0.5rem; border-radius: var(--radius-sm);">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-text);">16</div>
+                        <div style="font-size: 0.8rem; color: var(--color-muted);">Turnos Asignados</div>
+                    </div>
+                    <div class="texto-centro"
+                        style="background: var(--color-danger-light); padding: 0.5rem; border-radius: var(--radius-sm);">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-danger);">0</div>
+                        <div style="font-size: 0.8rem; color: var(--color-danger);">Disponibles</div>
+                    </div>
+                </div>
+
+                <button class="btn btn-secundario w-100 btn-ver-agenda-medico" data-medico-id="102">Ver agenda del
+                    médico</button>
+            </div>
+
+            <!-- Medico Card 3 -->
+            <div class="card" style="opacity: 0.7;">
+                <div class="d-flex align-items-center mb-3"
+                    style="gap: 1rem; border-bottom: 1px solid var(--color-border); padding-bottom: 1rem;">
+                    <div style="font-size: 2.5rem;">👨‍⚕️</div>
+                    <div>
+                        <h3 class="card-title mb-1" style="font-size: 1.1rem;">Dr. Luis Romero</h3>
+                        <p class="texto-muted mb-0" style="font-size: 0.9rem;">Neurología</p>
+                    </div>
+                    <span class="badge badge-warning" style="margin-left: auto;">Ausente</span>
+                </div>
+
+                <div class="info-box texto-centro mb-3" style="padding: 0.5rem;">
+                    Día bloqueado por el médico.
+                </div>
+
+                <button class="btn btn-secundario w-100 btn-ver-agenda-medico" data-medico-id="103" disabled>Agenda
+                    bloqueada</button>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/recepcion.js"></script>
+
+</body>
+
+</html>

@@ -1,1 +1,104 @@
-<!-- detalle-cita.html: Página donde el médico ve el detalle básico de una cita: fecha, hora, paciente y estado -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Cita - Sistema de Gestión de Turnos</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/components.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <span class="logo-icon">🏥</span> Consultorio Médico
+        </div>
+        <div class="navbar-user">
+            <div class="user-name">Dr. Roberto Sánchez</div>
+            <span class="badge badge-rol">Médico</span>
+            <button class="btn btn-secundario" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Cerrar
+                sesión</button>
+        </div>
+    </nav>
+
+    <!-- Área de Notificaciones -->
+    <div id="notification-area" class="oculto"></div>
+
+    <!-- Spinner Global -->
+    <div id="loading-spinner" class="spinner oculto"></div>
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" style="padding: 0 2rem;">
+        <div class="breadcrumb">
+            <a href="dashboard.html">Inicio (MÃ©dico)</a>
+            <span class="breadcrumb-separator">&rsaquo;</span>
+            <span class="breadcrumb-active">Detalle de Cita</span>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main class="container-center">
+        <div style="width: 100%; max-width: 600px;">
+            <h1 class="mb-4 texto-centro">Detalle de cita</h1>
+
+            <!-- Card Detalle Central -->
+            <div class="card mb-4" data-turno-id="9001">
+                <div class="mb-4 pb-3"
+                    style="border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div>
+                        <h3 class="card-title mb-1"><span id="detalle-paciente">Juan Pérez</span></h3>
+                        <p class="texto-muted">Información extendida del turno</p>
+                    </div>
+                    <span id="detalle-estado" class="badge badge-estado badge-confirmada">Confirmada</span>
+                </div>
+
+                <div class="grid-2 mb-3">
+                    <div>
+                        <p class="texto-muted mb-1" style="font-size: 0.9rem;">Fecha agendada:</p>
+                        <p style="font-size: 1.1rem; font-weight: 500;"><span id="detalle-fecha">13 de Abril,
+                                2026</span></p>
+                    </div>
+                    <div>
+                        <p class="texto-muted mb-1" style="font-size: 0.9rem;">Hora agendada:</p>
+                        <p style="font-size: 1.1rem; font-weight: 500;"><span id="detalle-hora">09:30</span></p>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div>
+                        <p class="texto-muted mb-1" style="font-size: 0.9rem;">Especialidad:</p>
+                        <p style="font-size: 1.1rem; font-weight: 500;"><span
+                                id="detalle-especialidad">Cardiología</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Acciones -->
+            <div class="d-flex gap-2 justify-content-center mt-4">
+                <button id="btn-volver" class="btn btn-secundario px-4">Volver a mis citas</button>
+                <a href="estado-turno.html" id="btn-marcar-estado" class="btn btn-primario px-4"
+                    style="text-decoration: none;">Marcar estado del turno</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+    </footer>
+
+    <!-- Scripts (Vacíos para la integración posterior de JS) -->
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/agenda-medico.js"></script>
+
+</body>
+
+</html>

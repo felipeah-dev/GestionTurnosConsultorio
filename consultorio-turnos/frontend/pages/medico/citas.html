@@ -1,1 +1,183 @@
-<!-- citas.html: Página donde el médico visualiza el listado completo de sus citas asignadas con sus estados -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citas Asignadas - Sistema de Gestión de Turnos</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/forms.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <span class="logo-icon">🏥</span> Consultorio Médico
+        </div>
+        <div class="navbar-user">
+            <div class="user-name">Dr. Roberto Sánchez</div>
+            <span class="badge badge-rol">Médico</span>
+            <button class="btn btn-secundario" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Cerrar
+                sesión</button>
+        </div>
+    </nav>
+
+    <!-- Área de Notificaciones -->
+    <div id="notification-area" class="oculto"></div>
+
+    <!-- Spinner Global -->
+    <div id="loading-spinner" class="spinner oculto"></div>
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" style="padding: 0 2rem;">
+        <div class="breadcrumb">
+            <a href="dashboard.html">Inicio (MÃ©dico)</a>
+            <span class="breadcrumb-separator">&rsaquo;</span>
+            <span class="breadcrumb-active">Citas Asignadas</span>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main>
+        <h1 class="mb-4">Mis citas asignadas</h1>
+
+        <!-- Filtros -->
+        <div class="filtros-fila">
+            <div class="form-grupo">
+                <label for="filter-estado">Estado</label>
+                <select id="filter-estado" class="form-control">
+                    <option value="todas">Todas</option>
+                    <option value="confirmadas">Confirmadas</option>
+                    <option value="canceladas">Canceladas</option>
+                    <option value="reprogramadas">Reprogramadas</option>
+                </select>
+            </div>
+
+            <div class="form-grupo">
+                <label for="filter-fecha">Fecha específica</label>
+                <input type="date" id="filter-fecha" class="form-control">
+            </div>
+
+            <button id="btn-filtrar" class="btn btn-primario" style="height: 42px;">Filtrar resultados</button>
+        </div>
+
+        <!-- Listado de Citas -->
+        <div id="citas-container" class="grid-2">
+
+            <!-- Cita Item 1 -->
+            <div class="card cita-item" data-turno-id="9001">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="badge badge-estado badge-confirmada">Confirmada</span>
+                </div>
+                <h3 class="card-title mb-1">Paciente: Juan Pérez</h3>
+
+                <div class="mb-2 mt-2">
+                    <div class="d-flex align-items-center gap-1 mb-1">
+                        <span class="texto-muted">📅 <span class="cita-fecha">2026-04-13</span></span>
+                    </div>
+                    <div class="d-flex align-items-center gap-1">
+                        <span class="texto-muted">🕒 <span class="cita-hora">09:30</span></span>
+                    </div>
+                </div>
+
+                <div class="acciones mt-3 pt-3" style="border-top: 1px solid var(--color-border);">
+                    <button class="btn btn-primario btn-ver-detalle w-100" data-turno-id="9001" style="width: 100%;">Ver
+                        detalle</button>
+                </div>
+            </div>
+
+            <!-- Cita Item 2 -->
+            <div class="card cita-item" data-turno-id="9002">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="badge badge-estado badge-confirmada">Confirmada</span>
+                </div>
+                <h3 class="card-title mb-1">Paciente: Marta Gómez</h3>
+
+                <div class="mb-2 mt-2">
+                    <div class="d-flex align-items-center gap-1 mb-1">
+                        <span class="texto-muted">📅 <span class="cita-fecha">2026-04-13</span></span>
+                    </div>
+                    <div class="d-flex align-items-center gap-1">
+                        <span class="texto-muted">🕒 <span class="cita-hora">10:00</span></span>
+                    </div>
+                </div>
+
+                <div class="acciones mt-3 pt-3" style="border-top: 1px solid var(--color-border);">
+                    <button class="btn btn-primario btn-ver-detalle w-100" data-turno-id="9002" style="width: 100%;">Ver
+                        detalle</button>
+                </div>
+            </div>
+
+            <!-- Cita Item 3 -->
+            <div class="card cita-item" data-turno-id="9003">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="badge badge-estado badge-cancelada">Cancelada</span>
+                </div>
+                <h3 class="card-title mb-1" style="color: var(--color-secondary);">Paciente: Carlos Ruiz</h3>
+
+                <div class="mb-2 mt-2">
+                    <div class="d-flex align-items-center gap-1 mb-1">
+                        <span class="texto-muted">📅 <span class="cita-fecha">2026-04-13</span></span>
+                    </div>
+                    <div class="d-flex align-items-center gap-1">
+                        <span class="texto-muted">🕒 <span class="cita-hora">11:30</span></span>
+                    </div>
+                </div>
+
+                <div class="acciones mt-3 pt-3" style="border-top: 1px solid var(--color-border);">
+                    <button class="btn btn-secundario btn-ver-detalle w-100" data-turno-id="9003"
+                        style="width: 100%;">Ver detalle</button>
+                </div>
+            </div>
+
+            <!-- Cita Item 4 -->
+            <div class="card cita-item" data-turno-id="9004">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="badge badge-estado badge-reprogramada">Reprogramada</span>
+                </div>
+                <h3 class="card-title mb-1">Paciente: Sofía Castro</h3>
+
+                <div class="mb-2 mt-2">
+                    <div class="d-flex align-items-center gap-1 mb-1">
+                        <span class="texto-muted">📅 <span class="cita-fecha">2026-04-14</span></span>
+                    </div>
+                    <div class="d-flex align-items-center gap-1">
+                        <span class="texto-muted">🕒 <span class="cita-hora">08:00</span></span>
+                    </div>
+                </div>
+
+                <div class="acciones mt-3 pt-3" style="border-top: 1px solid var(--color-border);">
+                    <button class="btn btn-primario btn-ver-detalle w-100" data-turno-id="9004" style="width: 100%;">Ver
+                        detalle</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Mensaje vacío (Oculto) -->
+        <div id="empty-citas" class="info-box texto-centro oculto mt-4">
+            No se encontraron citas con los filtros aplicados.
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+    </footer>
+
+    <!-- Scripts (Vacíos para la integración posterior de JS) -->
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/agenda-medico.js"></script>
+
+</body>
+
+</html>

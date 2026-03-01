@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditoría del Sistema - Admin</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/forms.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar" style="border-top: 4px solid var(--color-danger);">
+        <div class="navbar-brand">
+            <span class="logo-icon">🏥</span> Consultorio Médico <span
+                style="font-size: 0.8rem; font-weight: normal; margin-left:10px; opacity:0.8;">[Módulo Admin]</span>
+        </div>
+        <div class="navbar-user">
+            <div class="user-name">Admin Principal</div>
+            <span class="badge badge-rol" style="background-color: var(--color-danger); color: white;">Admin</span>
+            <button class="btn btn-secundario" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Cerrar
+                sesión</button>
+        </div>
+    </nav>
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" style="padding: 0 2rem;">
+        <div class="breadcrumb">
+            <a href="dashboard.html">Inicio (Admin)</a>
+            <span class="breadcrumb-separator">&rsaquo;</span>
+            <span class="breadcrumb-active">Auditoría del Sistema</span>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main>
+        <div class="d-flex justify-content-between align-items-center mb-4" style="flex-wrap: wrap; gap: 1rem;">
+            <h1>Bitácora de Auditoría del Sistema</h1>
+            <a href="dashboard.html" class="btn btn-secundario px-4" style="text-decoration: none;">← Volver al
+                Panel</a>
+        </div>
+
+        <!-- Filtros de Auditoría -->
+        <div class="card mb-4" style="padding: 1rem;">
+            <div class="filtros-fila" style="margin: 0;">
+                <div class="form-grupo">
+                    <label for="audi-fecha-desde">Desde</label>
+                    <input type="date" id="audi-fecha-desde" class="form-control" value="2026-04-15">
+                </div>
+
+                <div class="form-grupo">
+                    <label for="audi-fecha-hasta">Hasta</label>
+                    <input type="date" id="audi-fecha-hasta" class="form-control" value="2026-04-15">
+                </div>
+
+                <div class="form-grupo">
+                    <label for="audi-filtro-accion">Tipo Acción</label>
+                    <select id="audi-filtro-accion" class="form-control">
+                        <option value="todas">Todas las acciones</option>
+                        <option value="LOGIN">Autenticación (Login)</option>
+                        <option value="READ">Consulta / Lectura</option>
+                        <option value="CREATE">Creación</option>
+                        <option value="UPDATE">Modificación</option>
+                        <option value="DELETE">Eliminación / Baja</option>
+                    </select>
+                </div>
+
+                <div class="form-grupo">
+                    <label for="audi-filtro-modulo">Módulo</label>
+                    <select id="audi-filtro-modulo" class="form-control">
+                        <option value="todos">Todos los módulos</option>
+                        <option value="USUARIOS">Usuarios</option>
+                        <option value="TURNOS">Turnos</option>
+                        <option value="HORARIOS">Horarios Médicos</option>
+                        <option value="CONFIGURACION">Config. Especialidades</option>
+                    </select>
+                </div>
+
+                <div class="form-grupo" style="align-self: flex-end;">
+                    <button id="btn-buscar-logs" class="btn btn-secundario w-100" style="height: 42px;">Filtrar
+                        Logs</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla de Logs -->
+        <div class="tabla-container">
+            <table class="tabla" style="font-size: 0.9rem;">
+                <thead>
+                    <tr>
+                        <th style="width: 15%">Fecha / Hora</th>
+                        <th style="width: 20%">Usuario Responsable</th>
+                        <th style="width: 15%">Módulo</th>
+                        <th style="width: 10%">Acción</th>
+                        <th style="width: 40%">Detalle del Sistema / Parámetros</th>
+                    </tr>
+                </thead>
+                <tbody id="auditoria-tabla-body">
+                    <tr>
+                        <td style="font-feature-settings: 'tnum';">15/04/2026 14:32:05</td>
+                        <td>
+                            <strong>Carla Rivera</strong>
+                            <div class="texto-muted" style="font-size: 0.8rem;">Recepción</div>
+                        </td>
+                        <td>TURNOS</td>
+                        <td><span class="badge"
+                                style="background-color: var(--color-warning); color: var(--color-bg);">UPDATE</span>
+                        </td>
+                        <td><code
+                                style="background: var(--color-bg); padding: 0.2rem; border-radius: 4px;">REPROGRAMAR_TURNO</code>
+                            Turno ID 4550 pasa del 16/04 10:00 al 18/04 15:30</td>
+                    </tr>
+                    <tr>
+                        <td style="font-feature-settings: 'tnum';">15/04/2026 14:15:10</td>
+                        <td>
+                            <strong>Dr. Roberto Sánchez</strong>
+                            <div class="texto-muted" style="font-size: 0.8rem;">Médico</div>
+                        </td>
+                        <td>TURNOS</td>
+                        <td><span class="badge" style="background-color: var(--color-info); color: white;">UPDATE</span>
+                        </td>
+                        <td><code
+                                style="background: var(--color-bg); padding: 0.2rem; border-radius: 4px;">MARCAR_COMPLETADO</code>
+                            Turno ID 4541 marcado como Atendido.</td>
+                    </tr>
+                    <tr>
+                        <td style="font-feature-settings: 'tnum';">15/04/2026 13:45:00</td>
+                        <td>
+                            <strong>Admin Principal</strong>
+                            <div class="texto-muted" style="font-size: 0.8rem;">Administrador</div>
+                        </td>
+                        <td>HORARIOS</td>
+                        <td><span class="badge" style="background-color: var(--color-info); color: white;">UPDATE</span>
+                        </td>
+                        <td><code
+                                style="background: var(--color-bg); padding: 0.2rem; border-radius: 4px;">MODIFICAR_HORARIO_MEDICO</code>
+                            Médico ID 102 (Martes actualizado de 09:00 a 14:00)</td>
+                    </tr>
+                    <tr>
+                        <td style="font-feature-settings: 'tnum';">15/04/2026 13:30:22</td>
+                        <td>
+                            <strong>Juan Pérez</strong>
+                            <div class="texto-muted" style="font-size: 0.8rem;">Paciente</div>
+                        </td>
+                        <td>AUTENTICACION</td>
+                        <td><span class="badge"
+                                style="background-color: var(--color-success); color: white;">LOGIN</span></td>
+                        <td><code
+                                style="background: var(--color-bg); padding: 0.2rem; border-radius: 4px;">LOGIN_EXITOSO</code>
+                            IP: 190.12.34.55</td>
+                    </tr>
+                    <tr>
+                        <td style="font-feature-settings: 'tnum';">15/04/2026 13:10:45</td>
+                        <td>
+                            <strong>Admin Principal</strong>
+                            <div class="texto-muted" style="font-size: 0.8rem;">Administrador</div>
+                        </td>
+                        <td>CONFIGURACION</td>
+                        <td><span class="badge"
+                                style="background-color: var(--color-danger); color: white;">DELETE</span></td>
+                        <td><code
+                                style="background: var(--color-bg); padding: 0.2rem; border-radius: 4px;">BAJA_ESPECIALIDAD</code>
+                            Especialidad ID 3 (Odontología) desactivada por Admin.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Paginación -->
+        <div id="paginacion-auditoria" class="d-flex justify-content-center gap-2 mt-4">
+            <button class="btn btn-secundario disabled" disabled>« Anterior</button>
+            <button class="btn btn-primario">1</button>
+            <button class="btn btn-secundario">2</button>
+            <button class="btn btn-secundario">3</button>
+            <button class="btn btn-secundario">4</button>
+            <button class="btn btn-secundario">5</button>
+            <button class="btn btn-secundario">Siguiente »</button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+    </footer>
+
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/admin.js"></script>
+
+</body>
+
+</html>

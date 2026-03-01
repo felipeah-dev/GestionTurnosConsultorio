@@ -1,1 +1,147 @@
-<!-- especialidades.html: Página donde el paciente consulta el catálogo de especialidades médicas disponibles -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Especialidades - Sistema de Gestión de Turnos</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/components.css">
+    <link rel="stylesheet" href="../../css/forms.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <span class="logo-icon">🏥</span> Consultorio Médico
+        </div>
+        <div class="navbar-user">
+            <div class="user-name">Juan Pérez</div>
+            <span class="badge badge-rol">Paciente</span>
+            <button class="btn btn-secundario" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Cerrar
+                sesión</button>
+        </div>
+    </nav>
+
+    <!-- Área de Notificaciones -->
+    <div id="notification-area" class="oculto"></div>
+
+    <!-- Spinner Global -->
+    <div id="loading-spinner" class="spinner oculto"></div>
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" style="padding: 0 2rem;">
+        <div class="breadcrumb">
+            <a href="dashboard.html">Inicio (Paciente)</a>
+            <span class="breadcrumb-separator">&rsaquo;</span>
+            <span class="breadcrumb-active">Especialidades</span>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main>
+        <!-- Encabezado y buscador -->
+        <div class="d-flex justify-content-between align-items-center mb-4" style="flex-wrap: wrap; gap: 1rem;">
+            <h1>Especialidades médicas</h1>
+            <div style="min-width: 250px;">
+                <input type="text" id="buscador-especialidades" class="form-control"
+                    placeholder="Buscar especialidad...">
+            </div>
+        </div>
+
+        <!-- Mensaje de no encontrado (Oculto) -->
+        <div id="empty-especialidades" class="info-box texto-centro oculto">
+            No hay especialidades disponibles
+        </div>
+
+        <!-- Grid de Especialidades -->
+        <div id="especialidades-container" class="grid-3">
+
+            <!-- Especialidad Placeholder 1 -->
+            <div class="card especialidad-card" data-especialidad-id="1">
+                <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">❤️</div>
+                <h3 class="card-title texto-centro">Cardiología</h3>
+                <p class="card-subtitle texto-centro">Enfermedades del corazón y aparato circulatorio.</p>
+                <div class="acciones">
+                    <button class="btn btn-primario btn-ver-medicos w-100" data-especialidad-id="1"
+                        style="width: 100%;">Ver médicos</button>
+                </div>
+            </div>
+
+            <!-- Especialidad Placeholder 2 -->
+            <div class="card especialidad-card" data-especialidad-id="2">
+                <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">🧠</div>
+                <h3 class="card-title texto-centro">Neurología</h3>
+                <p class="card-subtitle texto-centro">Trastornos del sistema nervioso y cerebro.</p>
+                <div class="acciones">
+                    <button class="btn btn-primario btn-ver-medicos w-100" data-especialidad-id="2"
+                        style="width: 100%;">Ver médicos</button>
+                </div>
+            </div>
+
+            <!-- Especialidad Placeholder 3 -->
+            <div class="card especialidad-card" data-especialidad-id="3">
+                <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">🦷</div>
+                <h3 class="card-title texto-centro">Odontología</h3>
+                <p class="card-subtitle texto-centro">Salud bucal, dientes y encías.</p>
+                <div class="acciones">
+                    <button class="btn btn-primario btn-ver-medicos w-100" data-especialidad-id="3"
+                        style="width: 100%;">Ver médicos</button>
+                </div>
+            </div>
+
+            <!-- Especialidad Placeholder 4 -->
+            <div class="card especialidad-card" data-especialidad-id="4">
+                <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">👀</div>
+                <h3 class="card-title texto-centro">Oftalmología</h3>
+                <p class="card-subtitle texto-centro">Cuidado integral de la visión y ojos.</p>
+                <div class="acciones">
+                    <button class="btn btn-primario btn-ver-medicos w-100" data-especialidad-id="4"
+                        style="width: 100%;">Ver médicos</button>
+                </div>
+            </div>
+
+            <!-- Especialidad Placeholder 5 -->
+            <div class="card especialidad-card" data-especialidad-id="5">
+                <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">👶</div>
+                <h3 class="card-title texto-centro">Pediatría</h3>
+                <p class="card-subtitle texto-centro">Atención médica para infantes y niños.</p>
+                <div class="acciones">
+                    <button class="btn btn-primario btn-ver-medicos w-100" data-especialidad-id="5"
+                        style="width: 100%;">Ver médicos</button>
+                </div>
+            </div>
+
+            <!-- Especialidad Placeholder 6 -->
+            <div class="card especialidad-card" data-especialidad-id="6">
+                <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">🦴</div>
+                <h3 class="card-title texto-centro">Traumatología</h3>
+                <p class="card-subtitle texto-centro">Lesiones óseas, huesos y articulaciones.</p>
+                <div class="acciones">
+                    <button class="btn btn-primario btn-ver-medicos w-100" data-especialidad-id="6"
+                        style="width: 100%;">Ver médicos</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+    </footer>
+
+    <!-- Scripts (Vacíos para la integración posterior de JS) -->
+    <script src="../../js/ui.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/filtros.js"></script>
+
+</body>
+
+</html>

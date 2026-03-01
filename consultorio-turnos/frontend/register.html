@@ -1,1 +1,118 @@
-<!-- register.html: Formulario de registro exclusivo para nuevos pacientes -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cuenta - Sistema de Gestión de Turnos</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/forms.css">
+</head>
+
+<body>
+
+    <!-- Navbar Minimalista (Solo logo) -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <span class="logo-icon">🏥</span> Consultorio Médico
+        </div>
+    </nav>
+
+    <!-- Área de Notificaciones -->
+    <div id="notification-area" class="oculto"></div>
+
+    <!-- Spinner Global -->
+    <div id="loading-spinner" class="spinner oculto"></div>
+
+    <!-- Contenido Principal Centrado -->
+    <main class="container-center" style="padding: 2rem 1rem;">
+        <div class="card" style="width: 100%; max-width: 500px;">
+            <div class="texto-centro mb-4">
+                <h1 class="texto-primario mb-1">Crear cuenta</h1>
+                <p class="texto-muted">Registro de paciente</p>
+            </div>
+
+            <!-- Formulario de Registro -->
+            <form id="form-register">
+                <!-- Nombre y Apellidos -->
+                <div class="form-grupo">
+                    <label for="input-nombre">Nombre completo</label>
+                    <input type="text" id="input-nombre" class="form-control" placeholder="Ej. Juan Pérez" required>
+                    <div id="error-nombre" class="error-campo oculto">El nombre es requerido</div>
+                </div>
+
+                <!-- Email -->
+                <div class="form-grupo">
+                    <label for="input-email">Correo electrónico</label>
+                    <input type="email" id="input-email" class="form-control" placeholder="ejemplo@correo.com" required>
+                    <div id="error-email" class="error-campo oculto">El correo electrónico no es válido</div>
+                </div>
+
+                <!-- Contraseña con botón ojo -->
+                <div class="form-grupo">
+                    <label for="input-password">Contraseña</label>
+                    <div class="input-grupo">
+                        <input type="password" id="input-password" class="form-control"
+                            placeholder="Mínimo 8 caracteres" required>
+                        <button type="button" id="btn-toggle-password" class="input-grupo-btn"
+                            aria-label="Mostrar contraseña">👁️</button>
+                    </div>
+                    <div id="error-password" class="error-campo oculto">La contraseña debe tener al menos 8 caracteres
+                    </div>
+                </div>
+
+                <!-- Confirmar Contraseña -->
+                <div class="form-grupo">
+                    <label for="input-confirm-password">Confirmar contraseña</label>
+                    <input type="password" id="input-confirm-password" class="form-control"
+                        placeholder="Repite tu contraseña" required>
+                    <div id="error-confirm-password" class="error-campo oculto">Las contraseñas no coinciden</div>
+                </div>
+
+                <!-- Teléfono (2 columnas si se desea, pero aquí se mantiene simple) -->
+                <div class="grid-2">
+                    <div class="form-grupo">
+                        <label for="input-telefono">Teléfono móvil</label>
+                        <input type="tel" id="input-telefono" class="form-control" placeholder="+xx xxxxxxxxxx">
+                        <div id="error-telefono" class="error-campo oculto">Formato de teléfono inválido</div>
+                    </div>
+
+                    <!-- Fecha de Nacimiento -->
+                    <div class="form-grupo">
+                        <label for="input-fecha-nac">Fecha de nacimiento</label>
+                        <input type="date" id="input-fecha-nac" class="form-control" required>
+                        <div id="error-fecha-nac" class="error-campo oculto">Fecha no válida</div>
+                    </div>
+                </div>
+
+                <!-- Botón Submit -->
+                <button type="submit" id="btn-register" class="btn btn-primario mt-3" style="width: 100%;">
+                    Crear cuenta
+                </button>
+            </form>
+
+            <div class="texto-centro mt-3">
+                <a href="index.html">¿Ya tienes cuenta? Inicia sesión</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+    </footer>
+
+    <!-- Scripts (Vacíos para la integración posterior de JS) -->
+    <script src="js/ui.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+
+</body>
+
+</html>
