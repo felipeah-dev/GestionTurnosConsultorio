@@ -7,16 +7,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     const tablaHistorial = document.getElementById('tabla-historial-body');
 
     /**
-     * Carga y renderiza las citas.
+     * Carga y renderiza las citas y el perfil.
      */
     async function initDashboard() {
+        // Personalizar saludo con el nombre real si existe
+        const identity = JSON.parse(localStorage.getItem('user_identity'));
+        if (identity) {
+            const userNameElements = document.querySelectorAll('.user-name, #saludo-paciente span');
+            userNameElements.forEach(el => {
+                el.textContent = `${identity.nombre} ${identity.primer_apellido}`;
+            });
+        }
+
         window.UI.toggleSpinner(true);
         try {
             const citas = await window.API.fetchAppointments();
             renderCitasActivas(citas);
-            // El historial se mantiene estático en el HTML por ahora, 
-            // pero podríamos cargarlo igual si el mock lo tuviera.
         } catch (error) {
+            console.error(error);
             window.UI.showNotification("Error al cargar tus citas", "error");
         } finally {
             window.UI.toggleSpinner(false);
@@ -53,7 +61,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
                 <div class="cita-info">
                     <h3 style="font-size: 1.4rem; margin-bottom: 0.4rem; letter-spacing: -0.02em; font-weight: 700;">
-                        Dr. ${cita.medico.nombre} ${cita.medico.primer_apellido} ${cita.medico.segundo_apellido || ''}
+                        ${typeof cita.medico === 'object'
+                    ? `Dr. ${cita.medico.nombre} ${cita.medico.primer_apellido} ${cita.medico.segundo_apellido || ''}`
+                    : cita.medico}
                     </h3>
                     <p class="texto-primario" style="font-weight: 800; font-size: 0.9rem; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 1px;">${cita.especialidad}</p>
 

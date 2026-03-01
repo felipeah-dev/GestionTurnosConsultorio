@@ -10,6 +10,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const emptyHorarios = document.getElementById('empty-horarios');
     const btnConfirmar = document.getElementById('btn-confirmar-turno');
 
+    // Personalizar saludo con el nombre real si existe
+    const identity = JSON.parse(localStorage.getItem('user_identity'));
+    if (identity) {
+        const userNameElements = document.querySelectorAll('.user-name');
+        userNameElements.forEach(el => {
+            el.textContent = `${identity.nombre} ${identity.primer_apellido}`;
+        });
+    }
+
     let selectedDate = null;
     let selectedSlotId = null;
 
@@ -161,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
             lista.forEach((m) => {
                 const opt = document.createElement('option');
                 opt.value = m.id;
-                opt.textContent = `Dr. ${m.nombre} ${m.primer_apellido}`;
+                opt.textContent = `Dr. ${m.nombre} ${m.primer_apellido} ${m.segundo_apellido || ''}`.trim();
                 opt.dataset.info = JSON.stringify(m);
                 filterMedico.appendChild(opt);
             });
