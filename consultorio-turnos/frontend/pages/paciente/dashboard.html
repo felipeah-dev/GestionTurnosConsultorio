@@ -38,75 +38,164 @@
     <!-- Contenido Principal -->
     <main>
         <div class="mb-4">
-            <h1 id="saludo-paciente">Bienvenido, Juan Pérez</h1>
-            <p class="texto-muted">Aquí puedes gestionar tus citas médicas.</p>
+            <nav class="breadcrumb">
+                <a href="../../index.html">Inicio</a>
+                <span class="breadcrumb-separator">&rsaquo;</span>
+                <span class="breadcrumb-active">Panel de Paciente</span>
+            </nav>
+            <div class="mt-4">
+                <h1 id="saludo-paciente">Bienvenido, <span class="texto-primario">Juan Pérez</span></h1>
+                <p class="texto-muted">Gestiona tus citas médicas y consulta tu disponibilidad con facilidad.</p>
+            </div>
         </div>
 
-        <!-- 3 Tarjetas de Resumen -->
-        <div class="grid-3 mb-4">
-            <!-- Próxima cita -->
-            <div class="card card-cita" id="card-proxima-cita">
-                <h3 class="card-title">Próxima cita</h3>
-                <div class="mb-2">
-                    <span class="badge badge-confirmada">Confirmada</span>
+        <!-- Acciones Principales -->
+        <div class="mb-5 d-flex gap-3" style="margin-bottom: 3.5rem;">
+            <a href="agendar.html" class="btn btn-primario"
+                style="padding: 1.1rem 3rem; font-size: 1.1rem; border-radius: 12px; color: #000; font-weight: 800; box-shadow: 0 10px 25px rgba(12, 235, 235, 0.3);">
+                <span>📅</span> Agendar Nueva Cita
+            </a>
+        </div>
+
+        <!-- Listado de Citas Activas -->
+        <section style="margin-bottom: 5rem;">
+            <div class="d-flex justify-content-between align-items-end mb-4">
+                <div>
+                    <h2 class="section-title" style="margin-bottom: 0;">Mis Citas Activas</h2>
+                    <p style="color: rgba(255,255,255,0.7); margin-top: 5px; font-weight: 500;">Tienes 2 consultas
+                        programadas para esta semana</p>
                 </div>
-                <p><strong>Especialidad:</strong> <span id="proxima-cita-especialidad">Cardiología</span></p>
-                <p><strong>Médico:</strong> <span id="proxima-cita-medico">Dr. Roberto Sánchez</span></p>
-                <p><strong>Fecha:</strong> <span id="proxima-cita-fecha">2026-04-15</span></p>
-                <p><strong>Hora:</strong> <span id="proxima-cita-hora">10:00</span></p>
             </div>
 
-            <!-- Total activas -->
-            <div class="card card-resumen" id="card-total-activas">
-                <h3 class="card-title">Citas Activas</h3>
-                <div class="valor">2</div>
-                <p class="texto-muted mt-1">Próximos compromisos</p>
-            </div>
+            <div id="lista-citas-activas" class="grid-2">
+                <!-- Tarjeta de Cita Refinada -->
+                <div class="card card-cita glass" data-id="1" style="border-left: 5px solid var(--color-primary);">
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <div>
+                            <span class="badge badge-confirmada"
+                                style="font-size: 0.7rem; text-transform: uppercase; font-weight: 800;">CONFIRMADA</span>
+                        </div>
+                        <div class="acciones-cita d-flex gap-2">
+                            <button class="btn btn-secundario glass"
+                                style="padding: 0.5rem; min-width: 40px; border-radius: 8px;"
+                                title="Reprogramar">🔄</button>
+                            <button class="btn btn-peligro"
+                                style="padding: 0.5rem; min-width: 40px; border-radius: 8px;"
+                                title="Cancelar">🗑️</button>
+                        </div>
+                    </div>
+                    <div class="cita-info">
+                        <h3
+                            style="font-size: 1.4rem; margin-bottom: 0.4rem; letter-spacing: -0.02em; font-weight: 700;">
+                            Dr. Roberto Sánchez</h3>
+                        <p class="texto-primario"
+                            style="font-weight: 800; font-size: 0.9rem; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 1px;">
+                            Cardiología</p>
 
-            <!-- Total historial -->
-            <div class="card card-resumen" id="card-total-historial">
-                <h3 class="card-title">Historial Total</h3>
-                <div class="valor">5</div>
-                <p class="texto-muted mt-1">Citas completadas</p>
-            </div>
-        </div>
+                        <div class="d-flex gap-4 mt-2 p-3 glass"
+                            style="border-radius: 12px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1);">
+                            <div class="info-item">
+                                <span
+                                    style="display: block; font-size: 0.75rem; font-weight: 800; letter-spacing: 1.5px; color: var(--color-primary); margin-bottom: 6px; text-shadow: 0 0 10px rgba(12, 235, 235, 0.4);">FECHA</span>
+                                <span style="font-weight: 700; font-size: 1.1rem; color: #FFFFFF;">15 Abr, 2026</span>
+                            </div>
+                            <div class="info-item"
+                                style="border-left: 1px solid rgba(255,255,255,0.15); padding-left: 1.5rem;">
+                                <span
+                                    style="display: block; font-size: 0.75rem; font-weight: 800; letter-spacing: 1.5px; color: var(--color-primary); margin-bottom: 6px; text-shadow: 0 0 10px rgba(12, 235, 235, 0.4);">HORA</span>
+                                <span style="font-weight: 700; font-size: 1.1rem; color: #FFFFFF;">10:00 AM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- Accesos Rápidos -->
-        <h2>Accesos Rápidos</h2>
-        <div class="grid-4 mt-3">
-            <a href="agendar.html" id="btn-ir-agendar" class="card card-resumen texto-primario"
-                style="text-decoration: none;">
-                <div style="font-size: 2rem; margin-bottom: 0.5rem;">📅</div>
-                <span style="font-weight: 500;">Agendar nueva cita</span>
-            </a>
-            <a href="mis-citas.html" id="btn-ir-mis-citas" class="card card-resumen texto-primario"
-                style="text-decoration: none;">
-                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🕒</div>
-                <span style="font-weight: 500;">Mis citas activas</span>
-            </a>
-            <a href="historial.html" id="btn-ir-historial" class="card card-resumen texto-primario"
-                style="text-decoration: none;">
-                <div style="font-size: 2rem; margin-bottom: 0.5rem;">📁</div>
-                <span style="font-weight: 500;">Historial de citas</span>
-            </a>
-            <a href="especialidades.html" id="btn-ir-especialidades" class="card card-resumen texto-primario"
-                style="text-decoration: none;">
-                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🩺</div>
-                <span style="font-weight: 500;">Ver especialidades</span>
-            </a>
-        </div>
+                <!-- Segunda Cita -->
+                <div class="card card-cita glass" data-id="2" style="border-left: 5px solid #FFD700;">
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <div>
+                            <span class="badge badge-reprogramada"
+                                style="font-size: 0.7rem; text-transform: uppercase; font-weight: 800;">REPROGRAMADA</span>
+                        </div>
+                        <div class="acciones-cita d-flex gap-2">
+                            <button class="btn btn-secundario glass"
+                                style="padding: 0.5rem; min-width: 40px; border-radius: 8px;"
+                                title="Reprogramar">🔄</button>
+                            <button class="btn btn-peligro"
+                                style="padding: 0.5rem; min-width: 40px; border-radius: 8px;"
+                                title="Cancelar">🗑️</button>
+                        </div>
+                    </div>
+                    <div class="cita-info">
+                        <h3
+                            style="font-size: 1.4rem; margin-bottom: 0.4rem; letter-spacing: -0.02em; font-weight: 700;">
+                            Dra. Laura Montes</h3>
+                        <p class="texto-primario"
+                            style="font-weight: 800; font-size: 0.9rem; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 1px;">
+                            Dermatología</p>
+
+                        <div class="d-flex gap-4 mt-2 p-3 glass"
+                            style="border-radius: 12px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1);">
+                            <div class="info-item">
+                                <span
+                                    style="display: block; font-size: 0.75rem; font-weight: 800; letter-spacing: 1.5px; color: var(--color-primary); margin-bottom: 6px; text-shadow: 0 0 10px rgba(12, 235, 235, 0.4);">FECHA</span>
+                                <span style="font-weight: 700; font-size: 1.1rem; color: #FFFFFF;">22 Abr, 2026</span>
+                            </div>
+                            <div class="info-item"
+                                style="border-left: 1px solid rgba(255,255,255,0.15); padding-left: 1.5rem;">
+                                <span
+                                    style="display: block; font-size: 0.75rem; font-weight: 800; letter-spacing: 1.5px; color: var(--color-primary); margin-bottom: 6px; text-shadow: 0 0 10px rgba(12, 235, 235, 0.4);">HORA</span>
+                                <span style="font-weight: 700; font-size: 1.1rem; color: #FFFFFF;">03:30 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Historial de Citas -->
+        <section style="margin-bottom: 4rem;">
+            <h2 class="section-title mb-4">Historial de Consultas</h2>
+            <div class="table-container glass"
+                style="padding: 1rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2);">
+                <table class="tabla">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Médico</th>
+                            <th>Especialidad</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-historial-body">
+                        <tr>
+                            <td>10 Feb, 2026</td>
+                            <td>Dra. Elena Gómez</td>
+                            <td>Pediatría</td>
+                            <td><span class="badge badge-completada">Atendida</span></td>
+                        </tr>
+                        <tr>
+                            <td>15 Ene, 2026</td>
+                            <td>Dr. Carlos Ruiz</td>
+                            <td>Medicina General</td>
+                            <td><span class="badge badge-completada">Atendida</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+        <div class="container">
+            <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+        </div>
     </footer>
 
-    <!-- Scripts (Vacíos para la integración posterior de JS) -->
+    <!-- Scripts -->
     <script src="../../js/ui.js"></script>
     <script src="../../js/api.js"></script>
-    <script src="../../js/auth.js"></script>
-
+    <script src="../../js/dashboard-paciente.js"></script>
 </body>
 
 </html>

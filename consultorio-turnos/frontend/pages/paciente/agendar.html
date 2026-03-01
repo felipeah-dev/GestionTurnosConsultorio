@@ -36,139 +36,147 @@
 
     <!-- Spinner Global -->
     <div id="loading-spinner" class="spinner oculto"></div>
-    <!-- Breadcrumb -->
-    <nav aria-label="breadcrumb" style="padding: 0 2rem;">
-        <div class="breadcrumb">
-            <a href="dashboard.html">Inicio (Paciente)</a>
-            <span class="breadcrumb-separator">&rsaquo;</span>
-            <span class="breadcrumb-active">Agendar Cita</span>
-        </div>
-    </nav>
 
     <!-- Contenido Principal -->
     <main>
-        <h1 class="mb-4">Agendar cita</h1>
-
-        <!-- Sección de Filtros -->
-        <div class="filtros-fila">
-            <div class="form-grupo">
-                <label for="filter-especialidad">Especialidad</label>
-                <select id="filter-especialidad" class="form-control">
-                    <option value="" disabled selected>Selecciona una especialidad</option>
-                    <option value="1" data-especialidad-id="1">Cardiología</option>
-                    <option value="2" data-especialidad-id="2">Neurología</option>
-                    <option value="3" data-especialidad-id="3">Odontología</option>
-                </select>
+        <div class="mb-4">
+            <nav class="breadcrumb">
+                <a href="dashboard.html">Inicio</a>
+                <span class="breadcrumb-separator">&rsaquo;</span>
+                <span class="breadcrumb-active">Agendar Cita</span>
+            </nav>
+            <div class="mt-4">
+                <h1 class="mb-1">Agendar Nueva Cita</h1>
+                <p class="texto-muted">Selecciona una especialidad y médico para ver la disponibilidad.</p>
             </div>
-
-            <div class="form-grupo">
-                <label for="filter-medico">Médico</label>
-                <select id="filter-medico" class="form-control" disabled>
-                    <option value="" disabled selected>Primero selecciona una especialidad</option>
-                    <option value="101" data-medico-id="101">Dr. Roberto Sánchez</option>
-                    <option value="102" data-medico-id="102">Dra. María González</option>
-                </select>
-            </div>
-
-            <button id="btn-buscar-disponibilidad" class="btn btn-primario" style="height: 42px;">Buscar
-                disponibilidad</button>
         </div>
 
-        <div class="grid-2">
-            <!-- Sección Calendario -->
-            <div class="calendario-wrapper">
-                <div class="calendar-header">
-                    <button id="calendar-prev" class="btn-icon" aria-label="Mes anterior">←</button>
-                    <h3 id="calendar-month-label">Abril 2026</h3>
-                    <button id="calendar-next" class="btn-icon" aria-label="Mes siguiente">→</button>
+        <!-- Sección de Filtros Glass Refinada -->
+        <div class="card glass mb-5" style="padding: 2rem;">
+            <div class="row" style="display: flex; gap: 2rem; align-items: flex-end; flex-wrap: wrap;">
+                <div class="form-grupo" style="flex: 1; min-width: 250px;">
+                    <label
+                        style="font-size: 0.75rem; font-weight: 800; letter-spacing: 1.5px; display: block; text-transform: uppercase; color: var(--color-primary); margin-bottom: 0.5rem; text-shadow: 0 0 10px rgba(12, 235, 235, 0.3);">1.
+                        Especialidad Médica</label>
+                    <div class="input-glow-wrapper" style="position: relative;">
+                        <select id="filter-especialidad" class="form-control glass"
+                            style="width: 100%; padding: 0.8rem 1rem; border-radius: 10px;">
+                            <option value="" disabled selected>Selecciona una opción...</option>
+                            <option value="1">Cardiología</option>
+                            <option value="2">Neurología</option>
+                            <option value="3">Odontología</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="calendar-grid-header">
-                    <div>Dom</div>
-                    <div>Lun</div>
-                    <div>Mar</div>
-                    <div>Mié</div>
-                    <div>Jue</div>
-                    <div>Vie</div>
-                    <div>Sáb</div>
+                <div class="form-grupo" style="flex: 1; min-width: 250px;">
+                    <label
+                        style="font-size: 0.75rem; font-weight: 800; letter-spacing: 1.5px; display: block; text-transform: uppercase; color: var(--color-primary); margin-bottom: 0.5rem; text-shadow: 0 0 10px rgba(12, 235, 235, 0.3);">2.
+                        Médico Especialista</label>
+                    <select id="filter-medico" class="form-control glass" disabled
+                        style="width: 100%; padding: 0.8rem 1rem; border-radius: 10px;">
+                        <option value="" disabled selected>Selecciona médico</option>
+                    </select>
                 </div>
 
-                <div id="calendar-container" class="calendar-container">
-                    <!-- Días del mes anterior (placeholders) -->
-                    <div class="calendar-empty">29</div>
-                    <div class="calendar-empty">30</div>
-                    <div class="calendar-empty">31</div>
-
-                    <!-- Días del mes actual -->
-                    <div class="calendar-day calendar-day-disabled" data-fecha="2026-04-01">1</div>
-                    <div class="calendar-day calendar-day-disabled" data-fecha="2026-04-02">2</div>
-                    <div class="calendar-day calendar-day-disabled" data-fecha="2026-04-03">3</div>
-                    <div class="calendar-day calendar-day-disabled" data-fecha="2026-04-04">4</div>
-                    <div class="calendar-day calendar-day-disabled" data-fecha="2026-04-05">5</div>
-                    <div class="calendar-day calendar-day-disabled" data-fecha="2026-04-06">6</div>
-                    <div class="calendar-day calendar-day-disabled" data-fecha="2026-04-07">7</div>
-                    <div class="calendar-day calendar-day-disabled" data-fecha="2026-04-08">8</div>
-                    <div class="calendar-day calendar-day-disabled" data-fecha="2026-04-09">9</div>
-                    <div class="calendar-day calendar-day-today" data-fecha="2026-04-10">10</div>
-                    <div class="calendar-day" data-fecha="2026-04-11">11</div>
-                    <div class="calendar-day" data-fecha="2026-04-12">12</div>
-                    <div class="calendar-day calendar-day-active" data-fecha="2026-04-13">13</div>
-                    <div class="calendar-day" data-fecha="2026-04-14">14</div>
-                    <div class="calendar-day" data-fecha="2026-04-15">15</div>
-                    <!-- (Sandro rellenará el resto con JS) -->
-                    <div class="calendar-day" data-fecha="2026-04-16">16</div>
-                    <div class="calendar-day" data-fecha="2026-04-17">17</div>
-                    <div class="calendar-day" data-fecha="2026-04-18">18</div>
-                    <div class="calendar-day" data-fecha="2026-04-19">19</div>
-                    <div class="calendar-day" data-fecha="2026-04-20">20</div>
-                    <div class="calendar-day" data-fecha="2026-04-21">21</div>
-                    <div class="calendar-day" data-fecha="2026-04-22">22</div>
-                    <div class="calendar-empty">23</div>
-                    <div class="calendar-empty">24</div>
-                    <div class="calendar-empty">25</div>
-                </div>
-            </div>
-
-            <!-- Sección Horarios -->
-            <!-- Quitamos 'oculto' para que se vea el diseño, JS lo ocultará por defecto -->
-            <div id="horarios-section" class="card">
-                <h3 class="card-title mb-3">Horarios disponibles para: <span class="texto-primario"
-                        id="horarios-fecha-label">13 de Abril, 2026</span></h3>
-
-                <div id="empty-horarios" class="info-box oculto">
-                    No hay horarios disponibles para esta fecha.
-                </div>
-
-                <div id="horarios-container" class="horarios-grid">
-                    <!-- Horarios Placeholders -->
-                    <button class="horario-btn horario-btn-disabled" data-horario-id="5000" data-hora="09:00"
-                        data-medico-id="101" data-fecha="2026-04-13" disabled>
-                        09:00
-                    </button>
-                    <button class="horario-btn" data-horario-id="5001" data-hora="09:30" data-medico-id="101"
-                        data-fecha="2026-04-13">
-                        09:30
-                    </button>
-                    <button class="horario-btn" data-horario-id="5002" data-hora="10:00" data-medico-id="101"
-                        data-fecha="2026-04-13">
-                        10:00
-                    </button>
-                    <button class="horario-btn horario-btn-disabled" data-horario-id="5003" data-hora="10:30"
-                        data-medico-id="101" data-fecha="2026-04-13" disabled>
-                        10:30
-                    </button>
-                    <button class="horario-btn activo" data-horario-id="5004" data-hora="11:00" data-medico-id="101"
-                        data-fecha="2026-04-13">
-                        11:00
-                    </button>
-                    <button class="horario-btn" data-horario-id="5005" data-hora="11:30" data-medico-id="101"
-                        data-fecha="2026-04-13">
-                        11:30
+                <div class="form-grupo" style="flex: 0 0 auto;">
+                    <label
+                        style="visibility: hidden; font-size: 0.75rem; margin-bottom: 0.5rem; display: block;">&nbsp;</label>
+                    <button id="btn-buscar-disponibilidad" class="btn btn-primario"
+                        style="height: 48px; padding: 0 2rem; border-radius: 10px; font-weight: 800; color: #000; box-shadow: 0 10px 20px rgba(12, 235, 235, 0.25);">
+                        <span>🔍</span> Buscar Horarios
                     </button>
                 </div>
             </div>
         </div>
+        <br>
+        <div class="grid-2-fixed"
+            style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: stretch; margin-bottom: 5rem;">
+            <!-- Sección Calendario Glass -->
+            <div class="card glass" style="padding: 2.5rem; border-radius: 24px;">
+                <h3 class="mb-4"
+                    style="font-size: 1.2rem; font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;">
+                    <span>📅</span> Selecciona el Día
+                </h3>
 
+                <div class="calendar-header mb-4">
+                    <div class="d-flex justify-content-between align-items-center p-3 glass"
+                        style="border-radius: 15px; background: rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.1);">
+                        <button id="calendar-prev" class="btn btn-secundario glass"
+                            style="padding: 0.5rem 1rem; border-radius: 10px; font-weight: 800;">&larr;</button>
+                        <h3 id="calendar-month-label"
+                            style="font-size: 1.1rem; margin-bottom: 0; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--color-primary);">
+                            ABRIL 2026</h3>
+                        <button id="calendar-next" class="btn btn-secundario glass"
+                            style="padding: 0.5rem 1rem; border-radius: 10px; font-weight: 800;">&rarr;</button>
+                    </div>
+                </div>
+
+                <div class="calendar-grid-header mb-3"
+                    style="display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.5); font-weight: 800; letter-spacing: 1px;">
+                    <div>DOM</div>
+                    <div>LUN</div>
+                    <div>MAR</div>
+                    <div>MIÉ</div>
+                    <div>JUE</div>
+                    <div>VIE</div>
+                    <div>SÁB</div>
+                </div>
+
+                <div id="calendar-container" class="calendar-container"
+                    style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px;">
+                    <!-- Los días se generan dinámicamente -->
+                    <div class="calendar-day glass"
+                        style="aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; border-radius: 12px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                        10</div>
+                    <div class="calendar-day active"
+                        style="aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer; border-radius: 12px; background: var(--color-primary); color: #000; font-weight: 800; box-shadow: 0 0 25px rgba(12, 235, 235, 0.4); border: none;">
+                        11</div>
+                    <div class="calendar-day glass"
+                        style="aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; border-radius: 12px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                        12</div>
+                </div>
+            </div>
+
+            <!-- Sección Horarios Glass -->
+            <div id="horarios-section" class="card glass" style="padding: 2.5rem; border-radius: 24px;">
+                <h3 class="mb-4"
+                    style="font-size: 1.2rem; font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;">
+                    <span>🕒</span> Horarios Disponibles
+                </h3>
+
+                <p class="mb-4" style="color: rgba(255,255,255,0.7); font-weight: 500;">
+                    Disponibilidad para el <span class="texto-primario" id="horarios-fecha-label"
+                        style="font-weight: 800;">11 de Abril</span>
+                </p>
+
+                <div id="empty-horarios" class="info-box glass oculto"
+                    style="background: rgba(0,0,0,0.1); padding: 3rem 2rem; text-align: center; border-radius: 15px; border: 1px dashed rgba(255,255,255,0.2);">
+                    <p class="texto-muted" style="margin-bottom: 0;">No hay horarios para esta fecha.</p>
+                </div>
+
+                <div id="horarios-container" class="horarios-grid d-flex flex-wrap gap-3">
+                    <button class="btn btn-secundario glass"
+                        style="min-width: 100px; padding: 1rem; border-radius: 12px; font-weight: 600;">09:00
+                        AM</button>
+                    <button class="btn btn-primario"
+                        style="min-width: 100px; padding: 1rem; border-radius: 12px; font-weight: 800; color: #000; box-shadow: 0 0 20px rgba(12, 235, 235, 0.3);">10:00
+                        AM</button>
+                    <button class="btn btn-secundario glass"
+                        style="min-width: 100px; padding: 1rem; border-radius: 12px; font-weight: 600;">11:30
+                        AM</button>
+                </div>
+                <br>
+                <div class="mt-5 pt-4" style="border-top: 1px solid rgba(255,255,255,0.15);">
+                    <button id="btn-confirmar-turno" class="btn btn-primario w-100" disabled
+                        style="padding: 1.25rem; font-size: 1.1rem; border-radius: 15px; font-weight: 800; color: #000; text-transform: uppercase; letter-spacing: 1px;">
+                        Confirmar Reservación
+                    </button>
+                    <p class="texto-muted texto-centro mt-3" style="font-size: 0.85rem; color: rgba(255,255,255,0.5);">
+                        Se enviará un recordatorio automático.</p>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- Footer -->
@@ -176,11 +184,10 @@
         <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
     </footer>
 
-    <!-- Scripts (Vacíos para la integración posterior de JS) -->
+    <!-- Scripts -->
     <script src="../../js/ui.js"></script>
     <script src="../../js/api.js"></script>
-    <script src="../../js/calendario.js"></script>
-    <script src="../../js/filtros.js"></script>
+    <script src="../../js/agendar-paciente.js"></script>
 
 </body>
 

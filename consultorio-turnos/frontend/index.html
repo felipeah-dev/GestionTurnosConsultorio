@@ -31,60 +31,73 @@
     <div id="loading-spinner" class="spinner oculto"></div>
 
     <!-- Contenido Principal Centrado -->
-    <main class="container-center">
-        <div class="card" style="width: 100%; max-width: 400px;">
-            <div class="texto-centro mb-4">
-                <h1 class="texto-primario mb-1">Iniciar sesión</h1>
-                <p class="texto-muted">Ingresa tus credenciales para continuar</p>
+    <main class="container-center"
+        style="min-height: calc(100vh - 120px); display: flex; align-items: center; justify-content: center;">
+        <div class="card glass"
+            style="width: 100%; max-width: 420px; padding: 3rem; border-radius: 20px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);">
+            <div class="texto-centro mb-5">
+                <div class="logo-circle mb-3"
+                    style="width: 70px; height: 70px; background: var(--color-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 0 20px var(--color-primary-hover);">
+                    <span style="font-size: 2rem;">🛡️</span>
+                </div>
+                <h1 class="texto-primario mb-1" style="font-size: 1.75rem; font-weight: 800; letter-spacing: -0.5px;">
+                    Panel Médico</h1>
+                <p class="texto-muted" style="color: rgba(255,255,255,0.7);">Bienvenido de nuevo, paciente.</p>
             </div>
 
             <!-- Formulario de Login -->
             <form id="form-login">
                 <!-- Email -->
-                <div class="form-grupo">
-                    <label for="input-email">Correo electrónico</label>
-                    <input type="email" id="input-email" class="form-control" placeholder="ejemplo@correo.com" required>
+                <div class="form-grupo mb-4">
+                    <label class="mb-2"
+                        style="font-size: 0.75rem; letter-spacing: 1px; font-weight: 700; text-transform: uppercase;">Cuenta
+                        de Correo</label>
+                    <input type="email" id="input-email" class="form-control glass" placeholder="ejemplo@correo.com"
+                        required style="padding: 0.8rem 1.25rem; border-radius: 12px;">
                 </div>
 
-                <!-- Contraseña con botón ojo -->
-                <div class="form-grupo">
-                    <label for="input-password">Contraseña</label>
+                <!-- Contraseña -->
+                <div class="form-grupo mb-4">
+                    <label class="mb-2"
+                        style="font-size: 0.75rem; letter-spacing: 1px; font-weight: 700; text-transform: uppercase;">Contraseña</label>
                     <div class="input-grupo">
-                        <input type="password" id="input-password" class="form-control" placeholder="Tu contraseña"
-                            required>
-                        <button type="button" id="btn-toggle-password" class="input-grupo-btn"
-                            aria-label="Mostrar contraseña">👁️</button>
+                        <input type="password" id="input-password" class="form-control glass"
+                            placeholder="Tu contraseña secret" required
+                            style="padding: 0.8rem 1.25rem; border-radius: 12px 0 0 12px;">
+                        <button type="button" id="btn-toggle-password" class="input-grupo-btn glass"
+                            aria-label="Mostrar contraseña"
+                            style="border-radius: 0 12px 12px 0; border-left: none;">👁️</button>
                     </div>
                 </div>
 
                 <!-- Recordarme -->
-                <div class="form-grupo">
+                <div class="form-grupo mb-4">
                     <div class="form-check">
-                        <input type="checkbox" id="checkbox-recordar" class="form-check-input">
-                        <label for="checkbox-recordar" class="form-check-label">Recordarme en este dispositivo</label>
+                        <input type="checkbox" id="checkbox-recordar" class="form-check-input glass">
+                        <label for="checkbox-recordar" class="form-check-label" style="font-size: 0.9rem;">Recordar mi
+                            sesión</label>
                     </div>
                 </div>
 
-                <!-- Mensaje de Error (Oculto por defecto) -->
-                <div id="error-credenciales" class="error-box oculto">
-                    Credenciales incorrectas. Por favor, intenta de nuevo.
-                </div>
-
                 <!-- Botón Submit -->
-                <button type="submit" id="btn-login" class="btn btn-primario mt-2" style="width: 100%;">
-                    Ingresar
+                <button type="submit" id="btn-login" class="btn btn-primario mt-3"
+                    style="width: 100%; padding: 1rem; border-radius: 12px; font-weight: 700; font-size: 1rem; color: #000; box-shadow: 0 10px 15px -3px rgba(12, 235, 235, 0.3);">
+                    Iniciar Sesión
                 </button>
             </form>
 
-            <div class="texto-centro mt-3">
-                <a href="register.html">¿No tienes cuenta? Regístrate</a>
+            <div class="texto-centro mt-5" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
+                <p class="mt-4" style="font-size: 0.9rem; color: rgba(255,255,255,0.6);">¿Aún no tienes cuenta? <a
+                        href="register.html" class="texto-primario" style="font-weight: 600;">Regístrate aquí</a></p>
             </div>
         </div>
     </main>
 
     <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+        <div class="container">
+            <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+        </div>
     </footer>
 
     <!-- Scripts (Vacíos para la integración posterior de JS) -->

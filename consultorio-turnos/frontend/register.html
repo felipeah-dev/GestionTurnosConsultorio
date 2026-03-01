@@ -31,81 +31,98 @@
     <div id="loading-spinner" class="spinner oculto"></div>
 
     <!-- Contenido Principal Centrado -->
-    <main class="container-center" style="padding: 2rem 1rem;">
-        <div class="card" style="width: 100%; max-width: 500px;">
-            <div class="texto-centro mb-4">
-                <h1 class="texto-primario mb-1">Crear cuenta</h1>
-                <p class="texto-muted">Registro de paciente</p>
+    <main class="container-center"
+        style="min-height: calc(100vh - 120px); display: flex; align-items: center; justify-content: center; padding: 3rem 1rem;">
+        <div class="card glass" style="width: 100%; max-width: 600px; padding: 3rem; border-radius: 20px;">
+            <div class="texto-centro mb-5">
+                <h1 class="texto-primario mb-1" style="font-size: 1.75rem; font-weight: 800;">Únete a nosotros</h1>
+                <p class="texto-muted" style="color: rgba(255,255,255,0.7);">Registro de paciente rápido y sencillo</p>
             </div>
 
             <!-- Formulario de Registro -->
             <form id="form-register">
-                <!-- Nombre y Apellidos -->
-                <div class="form-grupo">
-                    <label for="input-nombre">Nombre completo</label>
-                    <input type="text" id="input-nombre" class="form-control" placeholder="Ej. Juan Pérez" required>
-                    <div id="error-nombre" class="error-campo oculto">El nombre es requerido</div>
-                </div>
-
-                <!-- Email -->
-                <div class="form-grupo">
-                    <label for="input-email">Correo electrónico</label>
-                    <input type="email" id="input-email" class="form-control" placeholder="ejemplo@correo.com" required>
-                    <div id="error-email" class="error-campo oculto">El correo electrónico no es válido</div>
-                </div>
-
-                <!-- Contraseña con botón ojo -->
-                <div class="form-grupo">
-                    <label for="input-password">Contraseña</label>
-                    <div class="input-grupo">
-                        <input type="password" id="input-password" class="form-control"
-                            placeholder="Mínimo 8 caracteres" required>
-                        <button type="button" id="btn-toggle-password" class="input-grupo-btn"
-                            aria-label="Mostrar contraseña">👁️</button>
+                <div class="grid-2" style="gap: 1.5rem;">
+                    <!-- Nombre -->
+                    <div class="form-grupo mb-0">
+                        <label class="mb-2"
+                            style="font-size: 0.7rem; letter-spacing: 1px; font-weight: 700; text-transform: uppercase;">Nombre
+                            Completo</label>
+                        <input type="text" id="input-nombre" class="form-control glass" placeholder="Ej. Juan Pérez"
+                            required style="padding: 0.75rem 1rem; border-radius: 10px;">
+                        <div id="error-nombre" class="error-campo oculto">El nombre es requerido</div>
                     </div>
-                    <div id="error-password" class="error-campo oculto">La contraseña debe tener al menos 8 caracteres
+
+                    <!-- Email -->
+                    <div class="form-grupo mb-0">
+                        <label class="mb-2"
+                            style="font-size: 0.7rem; letter-spacing: 1px; font-weight: 700; text-transform: uppercase;">Correo
+                            Electrónico</label>
+                        <input type="email" id="input-email" class="form-control glass" placeholder="ejemplo@correo.com"
+                            required style="padding: 0.75rem 1rem; border-radius: 10px;">
+                        <div id="error-email" class="error-campo oculto">El correo electrónico no es válido</div>
                     </div>
-                </div>
 
-                <!-- Confirmar Contraseña -->
-                <div class="form-grupo">
-                    <label for="input-confirm-password">Confirmar contraseña</label>
-                    <input type="password" id="input-confirm-password" class="form-control"
-                        placeholder="Repite tu contraseña" required>
-                    <div id="error-confirm-password" class="error-campo oculto">Las contraseñas no coinciden</div>
-                </div>
+                    <!-- Contraseña -->
+                    <div class="form-grupo mb-0">
+                        <label class="mb-2"
+                            style="font-size: 0.7rem; letter-spacing: 1px; font-weight: 700; text-transform: uppercase;">Contraseña</label>
+                        <input type="password" id="input-password" class="form-control glass"
+                            placeholder="Min. 8 caracteres" required
+                            style="padding: 0.75rem 1rem; border-radius: 10px;">
+                        <div id="error-password" class="error-campo oculto">La contraseña debe tener al menos 8
+                            caracteres
+                        </div>
+                    </div>
 
-                <!-- Teléfono (2 columnas si se desea, pero aquí se mantiene simple) -->
-                <div class="grid-2">
-                    <div class="form-grupo">
-                        <label for="input-telefono">Teléfono móvil</label>
-                        <input type="tel" id="input-telefono" class="form-control" placeholder="+xx xxxxxxxxxx">
+                    <!-- Confirmar Contraseña -->
+                    <div class="form-grupo mb-0">
+                        <label class="mb-2"
+                            style="font-size: 0.7rem; letter-spacing: 1px; font-weight: 700; text-transform: uppercase;">Confirmar</label>
+                        <input type="password" id="input-confirm-password" class="form-control glass"
+                            placeholder="Repite contraseña" required
+                            style="padding: 0.75rem 1rem; border-radius: 10px;">
+                        <div id="error-confirm-password" class="error-campo oculto">Las contraseñas no coinciden</div>
+                    </div>
+
+                    <!-- Teléfono -->
+                    <div class="form-grupo mb-0">
+                        <label class="mb-2"
+                            style="font-size: 0.7rem; letter-spacing: 1px; font-weight: 700; text-transform: uppercase;">Teléfono</label>
+                        <input type="tel" id="input-telefono" class="form-control glass" placeholder="+XX XXX XXX XXX"
+                            style="padding: 0.75rem 1rem; border-radius: 10px;">
                         <div id="error-telefono" class="error-campo oculto">Formato de teléfono inválido</div>
                     </div>
 
                     <!-- Fecha de Nacimiento -->
-                    <div class="form-grupo">
-                        <label for="input-fecha-nac">Fecha de nacimiento</label>
-                        <input type="date" id="input-fecha-nac" class="form-control" required>
+                    <div class="form-grupo mb-0">
+                        <label class="mb-2"
+                            style="font-size: 0.7rem; letter-spacing: 1px; font-weight: 700; text-transform: uppercase;">Fecha
+                            Nacimiento</label>
+                        <input type="date" id="input-fecha-nac" class="form-control glass" required
+                            style="padding: 0.75rem 1rem; border-radius: 10px;">
                         <div id="error-fecha-nac" class="error-campo oculto">Fecha no válida</div>
                     </div>
                 </div>
 
                 <!-- Botón Submit -->
-                <button type="submit" id="btn-register" class="btn btn-primario mt-3" style="width: 100%;">
-                    Crear cuenta
+                <button type="submit" id="btn-register" class="btn btn-primario mt-5"
+                    style="width: 100%; padding: 1rem; border-radius: 12px; font-weight: 700; font-size: 1rem; color: #000;">
+                    Crear mi cuenta
                 </button>
             </form>
 
-            <div class="texto-centro mt-3">
-                <a href="index.html">¿Ya tienes cuenta? Inicia sesión</a>
+            <div class="texto-centro mt-5" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
+                <p class="mt-4" style="font-size: 0.9rem; color: rgba(255,255,255,0.6);">¿Ya tienes una cuenta? <a
+                        href="index.html" class="texto-primario" style="font-weight: 600;">Inicia sesión</a></p>
             </div>
         </div>
     </main>
 
     <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+        <div class="container">
+            <p>&copy; 2026 Sistema de Gestión de Turnos para Consultorio Médico.</p>
+        </div>
     </footer>
 
     <!-- Scripts (Vacíos para la integración posterior de JS) -->

@@ -16,11 +16,12 @@ label {
     font-size: 0.85rem;
 }
 
-/* Labels dentro de cards/filtros: texto oscuro */
-.card label,
-.filtros-fila label,
-.modal-contenido label {
-    color: var(--color-text);
+/* Labels en fondos glass: texto blanco */
+.glass label,
+.card.glass label,
+.filtros-fila.glass label {
+    color: #FFFFFF;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .form-control,
@@ -58,9 +59,32 @@ input:focus,
 select:focus,
 textarea:focus {
     outline: 0;
-    border-color: #0cebeb;
+    border-color: var(--color-primary);
     box-shadow: 0 0 0 3px rgba(12, 235, 235, 0.2);
-    background-color: #FFFFFF;
+}
+
+/* Glass Variant for Inputs */
+.form-control.glass {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #FFFFFF;
+}
+
+/* Fix para opciones de selectores en modo Glass */
+.form-control.glass option {
+    background-color: #1E293B;
+    /* Azul oscuro perlado para contraste */
+    color: #FFFFFF;
+    padding: 10px;
+}
+
+.form-control.glass::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.form-control.glass:focus {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-primary);
 }
 
 /* Estado de disabled */
