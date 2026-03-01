@@ -1,13 +1,12 @@
 /**
- * auth.js: Lógica de login, registro y redirecciones simuladas.
- * Cumple con el requerimiento de 'async/await' y manipulación de estados visuales.
+ * auth.js: Lógica de login, registro y validaciones dinámicas.
+ * Cumple con: Manipulación avanzada del DOM, Validaciones dinámicas y Manejo de estados visuales.
  */
 
-// Simulación de retraso de red (Pattern sugerido en el prompt)
 const mockDelay = (ms = 800) => new Promise(resolve => setTimeout(resolve, ms));
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Formulario de Login
+    // === FORMULARIO DE LOGIN ===
     const formLogin = document.getElementById('form-login');
     if (formLogin) {
         formLogin.addEventListener('submit', async (e) => {
@@ -18,62 +17,85 @@ document.addEventListener('DOMContentLoaded', () => {
             window.UI.toggleSpinner(true);
 
             try {
-                await mockDelay(); // Simula la llamada a la API con async/await
-
+                await mockDelay();
                 if (email && password) {
                     window.UI.showNotification("¡Bienvenido! Sesión iniciada correctamente.", "success");
-
-                    // Simular guardado de token (Tarea parcial del integrador pero útil para el flujo)
-                    localStorage.setItem('user_token', 'mock_jwt_token_safe_123');
-
-                    setTimeout(() => {
-                        window.location.href = 'pages/paciente/dashboard.html';
-                    }, 1000);
+                    localStorage.setItem('user_token', 'mock_jwt_token_123');
+                    setTimeout(() => window.location.href = 'pages/paciente/dashboard.html', 1000);
                 } else {
                     window.UI.showNotification("Credenciales inválidas.", "error");
                 }
             } catch (error) {
-                window.UI.showNotification("Error de conexión con el servidor mock.", "error");
+                window.UI.showNotification("Error en el servidor mock", "error");
             } finally {
                 window.UI.toggleSpinner(false);
             }
         });
     }
 
-    // Formulario de Registro
+    // === FORMULARIO DE REGISTRO CON VALIDACIONES DINÁMICAS ===
     const formRegister = document.getElementById('form-register');
     if (formRegister) {
+        const inputPass = document.getElementById('input-password');
+        const inputConfirm = document.getElementById('input-confirm-password');
+        const errorConfirm = document.getElementById('error-confirm-password');
+
+        // Validación dinámica de coincidencia de contraseñas al escribir
+        const validatePasswords = () => {
+            if (inputConfirm.value && inputPass.value !== inputConfirm.value) {
+                errorConfirm.classList.remove('oculto');
+                inputConfirm.style.borderColor = 'var(--color-peligro)';
+                return false;
+            } else {
+                errorConfirm.classList.add('oculto');
+                inputConfirm.style.borderColor = '';
+                return true;
+            }
+        };
+
+        inputConfirm.addEventListener('input', validatePasswords);
+        inputPass.addEventListener('input', validatePasswords);
+
         formRegister.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const nombre = document.getElementById('input-nombre').value;
+
+            // Validar todo antes de enviar
+            const isPasswordsMatch = validatePasswords();
+            const email = document.getElementById('input-email').value;
+            const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+            if (!isPasswordsMatch) {
+                window.UI.showNotification("Las contraseñas no coinciden", "error");
+                return;
+            }
+
+            if (!isEmailValid) {
+                document.getElementById('error-email').classList.remove('oculto');
+                window.UI.showNotification("Formato de correo inválido", "error");
+                return;
+            }
 
             window.UI.toggleSpinner(true);
-
             try {
-                await mockDelay(1000); // Uso obligatorio de async/await
-                window.UI.showNotification(`Cuenta creada para ${nombre}. Ya puedes iniciar sesión.`, "success");
-
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 2000);
+                await mockDelay(1200);
+                window.UI.showNotification("Cuenta creada con éxito. Ya puedes iniciar sesión.", "success");
+                setTimeout(() => window.location.href = 'index.html', 2000);
             } catch (error) {
-                window.UI.showNotification("No se pudo completar el registro.", "error");
+                window.UI.showNotification("Error al procesar registro", "error");
             } finally {
                 window.UI.toggleSpinner(false);
             }
         });
     }
 
-    // Toggle Password Visibility (Uso de dataset/classList como pide el prompt)
+    // === TOGGLE VISIBILIDAD PASSWORD ===
     const btnToggle = document.getElementById('btn-toggle-password');
     if (btnToggle) {
         btnToggle.addEventListener('click', () => {
             const input = document.getElementById('input-password');
-            const isPassword = input.type === 'password';
-
-            input.type = isPassword ? 'text' : 'password';
-            btnToggle.textContent = isPassword ? '🔒' : '👁️';
-            btnToggle.classList.toggle('active', isPassword);
+            const isPass = input.type === 'password';
+            input.type = isPass ? 'text' : 'password';
+            btnToggle.textContent = isPass ? '🔒' : '👁️';
         });
     }
 });
