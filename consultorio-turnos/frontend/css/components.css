@@ -411,23 +411,46 @@
 }
 
 /* ==========================================================================
-   Breadcrumb
+   Breadcrumb (Glassmorphism / Premium)
    ========================================================================== */
 .breadcrumb {
     display: flex;
     gap: 0.5rem;
     align-items: center;
-    margin-bottom: 1.5rem;
-    font-size: 0.875rem;
-    color: var(--color-text-light);
+    margin: 1.5rem auto 0 auto;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.75);
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 100%;
+    max-width: 1280px;
+    box-shadow: var(--shadow-sm);
 }
 
 .breadcrumb a {
-    color: var(--color-primary);
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.breadcrumb a:hover {
+    color: #FFFFFF;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
 .breadcrumb-separator {
-    color: var(--color-secondary);
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.8rem;
+    margin: 0 0.25rem;
+}
+
+.breadcrumb-active {
+    color: #FFFFFF;
+    font-weight: 600;
 }
 
 /* ==========================================================================
