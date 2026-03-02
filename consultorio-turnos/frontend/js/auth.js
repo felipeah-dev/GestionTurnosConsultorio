@@ -24,43 +24,43 @@ document.addEventListener('DOMContentLoaded', () => {
             window.UI.toggleSpinner(true);
 
             //Cambio 5 - Mitzy: Llamada real al backend para login con manejo de token e identidad
-        try {
-            const response = await fetch("http://localhost:4000/api/auth/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ email, password })
-            });
+            try {
+                const response = await fetch("http://localhost:4000/api/auth/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ email, password })
+                });
 
-            const data = await response.json();
+                const data = await response.json();
 
-            if (!response.ok) {
-                throw new Error(data.error || "Credenciales inválidas");
+                if (!response.ok) {
+                    throw new Error(data.error || "Credenciales inválidas");
+                }
+
+                // Guardar token REAL
+                localStorage.setItem("token", data.token);
+
+                // Guardar identidad EXACTA como pide el proyecto
+                const userIdentity = {
+                    nombre: data.nombre,
+                    primer_apellido: data.primer_apellido
+                };
+
+                localStorage.setItem("user_identity", JSON.stringify(userIdentity));
+
+                window.UI.showNotification("¡Bienvenido!", "success");
+
+                setTimeout(() => {
+                    window.location.href = 'pages/paciente/dashboard.html';
+                }, 1000);
+
+            } catch (error) {
+                window.UI.showNotification(error.message, "error");
+            } finally {
+                window.UI.toggleSpinner(false);
             }
-
-            // Guardar token REAL
-            localStorage.setItem("token", data.token);
-
-            // Guardar identidad EXACTA como pide el proyecto
-            const userIdentity = {
-                nombre: data.nombre,
-                primer_apellido: data.primer_apellido
-            };
-
-            localStorage.setItem("user_identity", JSON.stringify(userIdentity));
-
-            window.UI.showNotification("¡Bienvenido!", "success");
-
-            setTimeout(() => {
-                window.location.href = 'pages/paciente/dashboard.html';
-            }, 1000);
-
-        } catch (error) {
-            window.UI.showNotification(error.message, "error");
-        } finally {
-            window.UI.toggleSpinner(false);
-        }
         });
     }
 
@@ -191,10 +191,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Guardar token REAL
                 localStorage.setItem("token", data.token);
 
-                // Guardar identidad 
+                // Guardar identidad (Back devuelve newUser)
+                const identityData = data.newUser || data;
                 const userIdentity = {
-                    nombre: data.nombre,
-                    primer_apellido: data.primer_apellido // backend no lo devuelve, pero se adapto el backend para que lo devuelva
+                    nombre: identityData.nombre,
+                    primer_apellido: identityData.primer_apellido
                 };
 
                 localStorage.setItem("user_identity", JSON.stringify(userIdentity));

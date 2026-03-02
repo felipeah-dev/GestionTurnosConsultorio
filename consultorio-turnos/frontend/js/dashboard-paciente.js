@@ -3,11 +3,11 @@
  */
 
 // cambio 9? - mitzy: proteccion de rutas (redirección si no está autenticado)
-  const token = localStorage.getItem("token");
+const token = localStorage.getItem("token");
 
-  if (!token) {
+if (!token) {
     window.location.href = "index.html";
-  }
+}
 
 document.addEventListener('DOMContentLoaded', async () => {
     const listaCitas = document.getElementById('lista-citas-activas');
@@ -29,7 +29,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.UI.toggleSpinner(true);
         try {
             const citas = await window.API.fetchAppointments();
-            renderCitasActivas(citas);
+
+            // Filtrar citas activas (Confirmadas o Reprogramadas)
+            const citasActivas = citas.filter(c => ['CONFIRMADO', 'REPROGRAMADO'].includes(c.estado));
+            // Filtrar historial (Canceladas o Atendidas)
+            const historial = citas.filter(c => ['CANCELADO', 'ATENDIDA'].includes(c.estado));
+
+            renderCitasActivas(citasActivas);
+            renderHistorial(historial);
         } catch (error) {
             console.error(error);
             window.UI.showNotification("Error al cargar tus citas", "error");
@@ -44,8 +51,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (citas.length === 0) {
             listaCitas.innerHTML = '<div class="card glass w-100"><p class="texto-centro">No tienes citas programadas.</p></div>';
+            // Actualizar contador visual si existe
+            const contador = document.querySelector('.mis-citas-activas p');
+            if (contador) contador.textContent = "No tienes consultas programadas para esta semana";
             return;
         }
+
+        // Actualizar contador visual
+        const contador = document.querySelector('section h2 + p');
+        if (contador) contador.textContent = `Tienes ${citas.length} ${citas.length === 1 ? 'consulta programada' : 'consultas programadas'} para esta semana`;
 
         citas.forEach(cita => {
             const card = document.createElement('div');
@@ -68,9 +82,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
                 <div class="cita-info">
                     <h3 style="font-size: 1.4rem; margin-bottom: 0.4rem; letter-spacing: -0.02em; font-weight: 700;">
-                        ${typeof cita.medico === 'object'
-                    ? `Dr. ${cita.medico.nombre} ${cita.medico.primer_apellido} ${cita.medico.segundo_apellido || ''}`
-                    : cita.medico}
+                        Dr. ${cita.nombre} ${cita.primer_apellido} ${cita.segundo_apellido || ''}
                     </h3>
                     <p class="texto-primario" style="font-weight: 800; font-size: 0.9rem; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 1px;">${cita.especialidad}</p>
 
@@ -88,48 +100,59 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
             `;
 
-            // Cambio 13? - mitzy: Agregar eventos a botones
-           card.querySelector('.btn-cancelar').addEventListener('click', async () => {
-             if (!confirm("¿Estás seguro de cancelar esta cita?")) return;
+            // Confirmación de cancelación mejorada
+            card.querySelector('.btn-cancelar').addEventListener('click', async () => {
+                if (!confirm(`¿Estás seguro de cancelar tu cita con el Dr. ${cita.nombre} ${cita.primer_apellido}?`)) return;
+
                 try {
                     window.UI.toggleSpinner(true);
-
                     await window.API.updateAppointment(cita.turno_id, "CANCELADO");
-
-                    window.UI.showNotification("Cita cancelada correctamente", "success");
-
-                    initDashboard(); // recargar lista
+                    window.UI.showNotification("Cita cancelada. Ahora puedes verla en tu historial.", "success");
+                    initDashboard();
                 } catch (error) {
-                    console.error(error);
                     window.UI.showNotification(error.message, "error");
                 } finally {
                     window.UI.toggleSpinner(false);
                 }
             });
-            //cambio 15? - mitzy: reprogramar cita
-            card.querySelector('.btn-reprogramar').addEventListener('click', async () => {
-                try {
-                    window.UI.toggleSpinner(true);
 
-                    await window.API.updateAppointment(cita.turno_id, "REPROGRAMADO");
-
-                    window.UI.showNotification("Cita marcada como reprogramada", "success");
-
-                    initDashboard(); // recargar citas
-                } catch (error) {
-                    console.error(error);
-                    window.UI.showNotification(error.message, "error");
-                } finally {
-                    window.UI.toggleSpinner(false);
-                }
+            // Reprogramar cita
+            card.querySelector('.btn-reprogramar').addEventListener('click', () => {
+                window.location.href = `agendar.html?reprogramar=${cita.turno_id}`;
             });
 
             listaCitas.appendChild(card);
         });
     }
 
+    function renderHistorial(citas) {
+        if (!tablaHistorial) return;
+        tablaHistorial.innerHTML = '';
+
+        if (citas.length === 0) {
+            tablaHistorial.innerHTML = '<tr><td colspan="4" class="texto-centro">No hay historial disponible.</td></tr>';
+            return;
+        }
+
+        citas.forEach(cita => {
+            const tr = document.createElement('tr');
+            const badgeClass = cita.estado === 'CANCELADO' ? 'badge-peligro' : 'badge-completada';
+
+            tr.innerHTML = `
+                <td>${formatFecha(cita.fecha)}</td>
+                <td>Dr. ${cita.nombre} ${cita.primer_apellido}</td>
+                <td>${cita.especialidad}</td>
+                <td><span class="badge ${badgeClass}">${cita.estado}</span></td>
+            `;
+            tablaHistorial.appendChild(tr);
+        });
+    }
+
     function formatFecha(fechaStr) {
-        const fecha = new Date(fechaStr + 'T00:00:00');
+        // El backend suele devolver la fecha como "YYYY-MM-DD" o "ISOString"
+        // Forzamos el parseo tomando solo la parte de la fecha si es necesario
+        const isoFecha = fechaStr.includes('T') ? fechaStr.split('T')[0] : fechaStr;
+        const fecha = new Date(isoFecha + 'T12:00:00'); // T12:00:00 evita desfases por zona horaria
         const opciones = { day: 'numeric', month: 'short', year: 'numeric' };
         return fecha.toLocaleDateString('es-ES', opciones).replace('.', '');
     }

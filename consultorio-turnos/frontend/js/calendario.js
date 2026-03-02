@@ -102,6 +102,22 @@ class Calendario {
         this.render();
     }
 
+    /**
+     * Selecciona una fecha programáticamente (para pre-selección al reprogramar)
+     * @param {string} dateStr - Fecha en formato YYYY-MM-DD
+     */
+    selectDate(dateStr) {
+        const [year, month, day] = dateStr.split('-').map(Number);
+        // Navegar al mes correcto
+        this.viewDate = new Date(year, month - 1, 1);
+        this.selectedDate = dateStr;
+        this.render();
+        // Disparar callback para cargar slots de esa fecha
+        if (this.onDateSelected) {
+            this.onDateSelected(dateStr);
+        }
+    }
+
     formatDate(date) {
         return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
     }

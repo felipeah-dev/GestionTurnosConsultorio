@@ -65,11 +65,11 @@ async function createAppointment(data) {
 }
 
 //cambio 14? - mitzy: reprogramar cita
-async function updateAppointment(id, estado) {
+async function updateAppointment(id, estado, extraData = {}) {
     const response = await fetch(`${BASE_URL}/turnos/${id}`, {
         method: "PATCH",
         headers: getAuthHeaders(),
-        body: JSON.stringify({ estado })
+        body: JSON.stringify({ estado, ...extraData })
     });
 
     if (!response.ok) {
@@ -80,10 +80,24 @@ async function updateAppointment(id, estado) {
     return response.json();
 }
 
+async function fetchAppointmentById(id) {
+    const response = await fetch(`${BASE_URL}/turnos/${id}`, {
+        method: "GET",
+        headers: getAuthHeaders()
+    });
+
+    if (!response.ok) {
+        throw new Error("Error al obtener los detalles de la cita");
+    }
+
+    return response.json();
+}
+
 // Exportar funciones
 window.API = {
     fetchAvailability,
     fetchAppointments,
     createAppointment,
-    updateAppointment
+    updateAppointment,
+    fetchAppointmentById
 };

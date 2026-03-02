@@ -24,9 +24,10 @@
             <span class="logo-icon">🏥</span> Consultorio Médico
         </div>
         <div class="navbar-user">
-            <div class="user-name">Juan Pérez</div>
+            <div class="user-name">-</div>
             <span class="badge badge-rol">Paciente</span>
-            <button class="btn btn-secundario" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Cerrar
+            <button id="btn-logout" class="btn btn-secundario"
+                style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Cerrar
                 sesión</button>
         </div>
     </nav>
@@ -61,10 +62,7 @@
                     <div class="input-glow-wrapper" style="position: relative;">
                         <select id="filter-especialidad" class="form-control glass"
                             style="width: 100%; padding: 0.8rem 1rem; border-radius: 10px;">
-                            <option value="" disabled selected>Selecciona una opción...</option>
-                            <option value="1">Cardiología</option>
-                            <option value="2">Neurología</option>
-                            <option value="3">Odontología</option>
+                            <option value="" disabled selected>Cargando especialidades...</option>
                         </select>
                     </div>
                 </div>
