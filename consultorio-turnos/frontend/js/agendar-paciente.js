@@ -1,6 +1,14 @@
 /**
  * agendar-paciente.js: Lógica para la página de agendar citas.
  */
+// Cambio 8? - mitzy: proteccion de rutas (redirección si no está autenticado)
+
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    window.location.href = "../../index.html";
+  }
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const calendarMonthLabel = 'calendar-month-label';
@@ -44,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const opciones = { day: 'numeric', month: 'long' };
         horariosFechaLabel.textContent = dateObj.toLocaleDateString('es-ES', opciones);
 
-        // Cargar horarios desde la API simulada
+        // Cargar horarios disponibles para la fecha y médico seleccionado
         window.UI.toggleSpinner(true);
         try {
             const data = await window.API.fetchAvailability(fecha, medicoId);
@@ -129,13 +137,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 hora: horaSeleccionada
             });
 
-            if (result.success) {
-                window.UI.showNotification(result.message, "success");
-                // Redirigir al dashboard tras un breve delay
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html';
-                }, 2000);
-            }
+            // Cambio 12? - mitzy: Mostrar mensaje de éxito y redirigir al dashboard
+            window.UI.showNotification(result.message || "Turno reservado correctamente", "success");
+
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 2000);
         } catch (error) {
             window.UI.showNotification("Error al reservar el turno", "error");
         } finally {
@@ -143,37 +150,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Filtros (Simulados para habilitar médico al elegir especialidad)
-    filterEspecialidad.addEventListener('change', () => {
-        if (filterEspecialidad.value) {
-            filterMedico.disabled = false;
+    // cambio 11? - mitzy: cargar médicos dinámicamente al seleccionar especialidad
+    filterEspecialidad.addEventListener('change', async () => {
+        if (!filterEspecialidad.value) return;
+
+        filterMedico.disabled = false;
+        filterMedico.innerHTML = '<option value="" disabled selected>Cargando...</option>';
+
+        try {
+            const response = await fetch(
+                `http://localhost:4000/api/medicos?especialidad_id=${filterEspecialidad.value}`
+            );
+
+            const medicos = await response.json();
+
             filterMedico.innerHTML = '<option value="" disabled selected>Selecciona médico</option>';
 
-            // Mock de médicos según especialidad (Sincronizado con seed.sql)
-            const medicos = {
-                "1": [
-                    { id: 1, nombre: "Alberto", primer_apellido: "García", segundo_apellido: "Mora" },
-                    { id: 5, nombre: "Sergio", primer_apellido: "López", segundo_apellido: "Torres" }
-                ],
-                "2": [
-                    { id: 2, nombre: "Elena", primer_apellido: "Rodríguez", segundo_apellido: "Sanz" }
-                ],
-                "3": [
-                    { id: 3, nombre: "Carlos", primer_apellido: "Martínez", segundo_apellido: "Ruiz" }
-                ],
-                "4": [
-                    { id: 4, nombre: "Lucía", primer_apellido: "Fernández", segundo_apellido: "" }
-                ]
-            };
-
-            const lista = medicos[filterEspecialidad.value] || [];
-            lista.forEach((m) => {
+            medicos.forEach((m) => {
                 const opt = document.createElement('option');
                 opt.value = m.id;
                 opt.textContent = `Dr. ${m.nombre} ${m.primer_apellido} ${m.segundo_apellido || ''}`.trim();
                 opt.dataset.info = JSON.stringify(m);
                 filterMedico.appendChild(opt);
             });
+
+        } catch (error) {
+            window.UI.showNotification("Error al cargar médicos", "error");
         }
     });
 

@@ -2,6 +2,13 @@
  * dashboard-paciente.js: Lógica para el panel principal del paciente.
  */
 
+// cambio 9? - mitzy: proteccion de rutas (redirección si no está autenticado)
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    window.location.href = "index.html";
+  }
+
 document.addEventListener('DOMContentLoaded', async () => {
     const listaCitas = document.getElementById('lista-citas-activas');
     const tablaHistorial = document.getElementById('tabla-historial-body');
@@ -43,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         citas.forEach(cita => {
             const card = document.createElement('div');
             card.className = 'card card-cita glass';
-            card.dataset.id = cita.public_id;
+            card.dataset.id = cita.turno_id;
             card.style.borderLeft = `5px solid ${cita.estado === 'CONFIRMADO' ? 'var(--color-primary)' : '#FFD700'}`;
 
             card.innerHTML = `
@@ -81,9 +88,40 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
             `;
 
-            // Agregar eventos a botones
-            card.querySelector('.btn-cancelar').addEventListener('click', () => {
-                window.UI.showNotification("Solicitud de cancelación enviada", "info");
+            // Cambio 13? - mitzy: Agregar eventos a botones
+           card.querySelector('.btn-cancelar').addEventListener('click', async () => {
+             if (!confirm("¿Estás seguro de cancelar esta cita?")) return;
+                try {
+                    window.UI.toggleSpinner(true);
+
+                    await window.API.updateAppointment(cita.turno_id, "CANCELADO");
+
+                    window.UI.showNotification("Cita cancelada correctamente", "success");
+
+                    initDashboard(); // recargar lista
+                } catch (error) {
+                    console.error(error);
+                    window.UI.showNotification(error.message, "error");
+                } finally {
+                    window.UI.toggleSpinner(false);
+                }
+            });
+            //cambio 15? - mitzy: reprogramar cita
+            card.querySelector('.btn-reprogramar').addEventListener('click', async () => {
+                try {
+                    window.UI.toggleSpinner(true);
+
+                    await window.API.updateAppointment(cita.turno_id, "REPROGRAMADO");
+
+                    window.UI.showNotification("Cita marcada como reprogramada", "success");
+
+                    initDashboard(); // recargar citas
+                } catch (error) {
+                    console.error(error);
+                    window.UI.showNotification(error.message, "error");
+                } finally {
+                    window.UI.toggleSpinner(false);
+                }
             });
 
             listaCitas.appendChild(card);
@@ -97,4 +135,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     initDashboard();
+});
+
+// cambio 10? - mitzy: cerrar sesión
+document.getElementById("btn-logout")?.addEventListener("click", () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user_identity");
+    window.location.href = "../../index.html";
 });

@@ -35,12 +35,9 @@ async function fetchAvailability(fecha, medicoId) {
  Cambio 3 - Mitzy: Obtener citas del paciente
  */
 async function fetchAppointments() {
-    const token = localStorage.getItem("token");
-
     const response = await fetch(`${BASE_URL}/paciente/turnos`, {
-        headers: {
-            "Authorization": `Bearer ${token}`
-        }
+        method: "GET",
+        headers: getAuthHeaders()
     });
 
     if (!response.ok) {
@@ -67,9 +64,26 @@ async function createAppointment(data) {
     return response.json();
 }
 
+//cambio 14? - mitzy: reprogramar cita
+async function updateAppointment(id, estado) {
+    const response = await fetch(`${BASE_URL}/turnos/${id}`, {
+        method: "PATCH",
+        headers: getAuthHeaders(),
+        body: JSON.stringify({ estado })
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Error al actualizar turno");
+    }
+
+    return response.json();
+}
+
 // Exportar funciones
 window.API = {
     fetchAvailability,
     fetchAppointments,
-    createAppointment
+    createAppointment,
+    updateAppointment
 };

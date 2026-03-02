@@ -3,7 +3,6 @@
  * Cumple con: Manipulación avanzada del DOM, Validaciones dinámicas y Manejo de estados visuales.
  */
 
-const mockDelay = (ms = 800) => new Promise(resolve => setTimeout(resolve, ms));
 
 document.addEventListener('DOMContentLoaded', () => {
     // === AUTO-CONFIGURACIÓN DE FECHAS (Validación Básica de Front Inicial) ===
