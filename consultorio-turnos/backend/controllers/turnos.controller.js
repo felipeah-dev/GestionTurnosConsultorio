@@ -1,6 +1,6 @@
 // turnos.controller.js: Lógica para crear, cancelar y reprogramar turnos con transacciones atómicas para evitar doble reserva
 import pool from '../db/connection.js';
-import { isFranjaOcupada, createTurno, getTurnosByPaciente, getTurnoByPublicId, updateEstadoTurno } from '../models/turno.model.js';
+import { isFranjaOcupada, createTurno, getTurnosByPaciente, getTurnoByPublicId, updateEstadoTurno, getTurnoDetailsByPublicId } from '../models/turno.model.js';
 
 // POST /api/turnos
 export const crearTurno = async (req, res) => {
