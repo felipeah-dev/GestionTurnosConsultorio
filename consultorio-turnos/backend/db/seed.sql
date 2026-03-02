@@ -12,6 +12,7 @@ INSERT INTO especialidades (nombre, descripcion) VALUES
 ('Dermatología', 'Cuidado de la piel, cabello y uñas.')
 ON CONFLICT (nombre) DO NOTHING;
 
+
 -- 3. MÉDICOS (Ejemplos)
 INSERT INTO medicos (nombre, primer_apellido, segundo_apellido, especialidad_id, telefono, activo) VALUES 
 ('Alberto', 'García', 'Mora', 1, '555-0101', true),      -- Cardiología
