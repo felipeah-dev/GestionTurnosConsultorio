@@ -7,7 +7,7 @@ import pool from '../db/connection.js';
  */
 export const getMedicosByEspecialidad = async (especialidad_id) => {
     const { rows } = await pool.query(
-        `SELECT m.medico_id AS "id", m.nombre || ' ' || m.primer_apellido AS "nombre", e.nombre AS "especialidad"
+        `SELECT m.medico_id AS "id", m.nombre, m.primer_apellido, m.segundo_apellido, e.nombre AS "especialidad"
          FROM medicos m
          JOIN especialidades e ON e.especialidad_id = m.especialidad_id
          WHERE m.especialidad_id = $1

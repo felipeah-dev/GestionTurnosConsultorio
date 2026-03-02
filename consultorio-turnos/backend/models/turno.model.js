@@ -40,18 +40,20 @@ export const createTurno = async ({ paciente_id, medico_id, especialidad_id, fec
 export const getTurnosByPaciente = async (paciente_id) => {
     const { rows } = await pool.query(
         `SELECT
-       t.public_id                                        AS "turno_id",
-       m.nombre || ' ' || m.primer_apellido              AS "medico",
-       e.nombre                                           AS "especialidad",
-       t.fecha,
-       fh.hora_inicio                                     AS "hora",
-       t.estado
-     FROM turnos t
-     JOIN medicos m       ON m.medico_id       = t.medico_id
-     JOIN especialidades e ON e.especialidad_id = t.especialidad_id
-     JOIN franjas_horarias fh ON fh.franja_id  = t.franja_id
-     WHERE t.paciente_id = $1
-     ORDER BY t.fecha DESC, fh.hora_inicio DESC`,
+        t.public_id                                        AS "turno_id",
+        m.nombre,
+        m.primer_apellido,
+        m.segundo_apellido,
+        e.nombre                                           AS "especialidad",
+        t.fecha,
+        fh.hora_inicio                                     AS "hora",
+        t.estado
+      FROM turnos t
+      JOIN medicos m       ON m.medico_id       = t.medico_id
+      JOIN especialidades e ON e.especialidad_id = t.especialidad_id
+      JOIN franjas_horarias fh ON fh.franja_id  = t.franja_id
+      WHERE t.paciente_id = $1
+      ORDER BY t.fecha DESC, fh.hora_inicio DESC`,
         [paciente_id]
     );
     return rows;
@@ -71,15 +73,46 @@ export const getTurnoByPublicId = async (public_id) => {
 };
 
 /**
+ * Obtiene los detalles completos de un turno (IDs para pre-selección)
+ */
+export const getTurnoDetailsByPublicId = async (public_id) => {
+    const { rows } = await pool.query(
+        `SELECT 
+            t.public_id AS "turno_id",
+            t.paciente_id,
+            t.medico_id,
+            t.especialidad_id,
+            t.fecha,
+            t.franja_id,
+            t.estado
+         FROM turnos t
+         WHERE t.public_id = $1`,
+        [public_id]
+    );
+    return rows[0];
+};
+
+/**
  * Actualiza el estado de un turno
  */
-export const updateEstadoTurno = async (turno_id, estado) => {
-    const { rows } = await pool.query(
-        `UPDATE turnos
-     SET estado = $1
-     WHERE turno_id = $2
-     RETURNING public_id, estado`,
-        [estado, turno_id]
-    );
+export const updateEstadoTurno = async (turno_id, estado, fecha = null, franja_id = null) => {
+    let query;
+    let params;
+
+    if (fecha && franja_id) {
+        query = `UPDATE turnos 
+                 SET estado = $1, fecha = $2, franja_id = $3 
+                 WHERE turno_id = $4 
+                 RETURNING public_id, estado, fecha, franja_id`;
+        params = [estado, fecha, franja_id, turno_id];
+    } else {
+        query = `UPDATE turnos 
+                 SET estado = $1 
+                 WHERE turno_id = $2 
+                 RETURNING public_id, estado`;
+        params = [estado, turno_id];
+    }
+
+    const { rows } = await pool.query(query, params);
     return rows[0];
 };

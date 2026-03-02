@@ -109,10 +109,42 @@ export const actualizarEstadoTurno = async (req, res) => {
             }
         }
 
-        const actualizado = await updateEstadoTurno(turno.turno_id, estado);
-        res.status(200).json({ mensaje: 'Estado actualizado', turno: actualizado });
+        const actualizado = await updateEstadoTurno(
+            turno.turno_id,
+            estado,
+            req.body.fecha || null,
+            req.body.franja_id || null
+        );
+        res.status(200).json({ mensaje: 'Cita actualizada exitosamente', turno: actualizado });
     } catch (error) {
         console.error('[actualizarEstadoTurno]', error);
         res.status(500).json({ error: 'Error al actualizar el turno' });
+    }
+};
+
+// GET /api/turnos/:id
+export const obtenerDetalleTurno = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const turno = await getTurnoDetailsByPublicId(id);
+
+        if (!turno) {
+            return res.status(404).json({ error: 'Turno no encontrado' });
+        }
+
+        // Verificar pertenencia (a menos que sea admin)
+        const { rows } = await pool.query(
+            `SELECT usuario_id FROM usuarios WHERE public_id = $1`,
+            [req.user.uuid]
+        );
+
+        if (rows[0].usuario_id !== turno.paciente_id && req.user.rol !== 1) {
+            return res.status(403).json({ error: 'No tienes permiso para ver este turno' });
+        }
+
+        res.status(200).json(turno);
+    } catch (error) {
+        console.error('[obtenerDetalleTurno]', error);
+        res.status(500).json({ error: 'Error al consultar el detalle del turno' });
     }
 };
