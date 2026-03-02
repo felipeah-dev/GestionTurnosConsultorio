@@ -5,7 +5,7 @@ export const authorizeRoles = (...rolesPermitidos) => {
             return res.status(401).json({ error: 'No autenticado' });
         }
 
-        if (!rolesPermitidos.includes(req.user.rol)) {
+        if (!rolesPermitidos.includes(Number(req.user.rol))) {
             return res.status(403).json({ error: 'No tienes permisos para realizar esta acción' });
         }
 

@@ -24,28 +24,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
             window.UI.toggleSpinner(true);
 
-            try {
-                await mockDelay();
-                if (email && password) {
-                    window.UI.showNotification("¡Bienvenido! Sesión iniciada correctamente.", "success");
+            //Cambio 5 - Mitzy: Llamada real al backend para login con manejo de token e identidad
+        try {
+            const response = await fetch("http://localhost:4000/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password })
+            });
 
-                    // Simular guardado de token e identidad del usuario
-                    localStorage.setItem('user_token', 'mock_jwt_token_123');
-                    localStorage.setItem('user_identity', JSON.stringify({
-                        nombre: "Juan",
-                        primer_apellido: "Pérez",
-                        segundo_apellido: "García"
-                    }));
+            const data = await response.json();
 
-                    setTimeout(() => window.location.href = 'pages/paciente/dashboard.html', 1000);
-                } else {
-                    window.UI.showNotification("Credenciales inválidas.", "error");
-                }
-            } catch (error) {
-                window.UI.showNotification("Error en el servidor mock", "error");
-            } finally {
-                window.UI.toggleSpinner(false);
+            if (!response.ok) {
+                throw new Error(data.error || "Credenciales inválidas");
             }
+
+            // Guardar token REAL
+            localStorage.setItem("token", data.token);
+
+            // Guardar identidad EXACTA como pide el proyecto
+            const userIdentity = {
+                nombre: data.nombre,
+                primer_apellido: data.primer_apellido
+            };
+
+            localStorage.setItem("user_identity", JSON.stringify(userIdentity));
+
+            window.UI.showNotification("¡Bienvenido!", "success");
+
+            setTimeout(() => {
+                window.location.href = 'pages/paciente/dashboard.html';
+            }, 1000);
+
+        } catch (error) {
+            window.UI.showNotification(error.message, "error");
+        } finally {
+            window.UI.toggleSpinner(false);
+        }
         });
     }
 
@@ -149,12 +165,49 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             window.UI.toggleSpinner(true);
+
+            //Cambio 6 - Mitzy: Llamada real al backend para registro con manejo de respuestas
             try {
-                await mockDelay(1200);
-                window.UI.showNotification(`Cuenta creada para ${nombre} ${primerApellido}. Ya puedes iniciar sesión.`, "success");
-                setTimeout(() => window.location.href = 'index.html', 2000);
+                const response = await fetch("http://localhost:4000/api/auth/register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        nombre,
+                        primer_apellido: primerApellido,
+                        segundo_apellido: segundoApellido,
+                        email,
+                        password,
+                        telefono,
+                        fecha_nacimiento: document.getElementById('input-fecha-nac').value
+                    })
+                });
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || "Credenciales inválidas");
+                }
+
+                // Guardar token REAL
+                localStorage.setItem("token", data.token);
+
+                // Guardar identidad 
+                const userIdentity = {
+                    nombre: data.nombre,
+                    primer_apellido: data.primer_apellido // backend no lo devuelve, pero se adapto el backend para que lo devuelva
+                };
+
+                localStorage.setItem("user_identity", JSON.stringify(userIdentity));
+
+                window.UI.showNotification("¡Bienvenido! Sesión iniciada correctamente.", "success");
+
+                setTimeout(() => {
+                    window.location.href = 'pages/paciente/dashboard.html';
+                }, 1000);
+
             } catch (error) {
-                window.UI.showNotification("Error al procesar registro", "error");
+                window.UI.showNotification(error.message, "error");
             } finally {
                 window.UI.toggleSpinner(false);
             }

@@ -58,6 +58,7 @@ export const login = async (req, res) => {
     res.status(200).json({
         token,
         nombre: user.nombre,
+        primer_apellido: user.primer_apellido, // cambio 7 - mitzy: Se agrego para que el frontend lo pueda resivir
         email: user.email,
         rol: user.role_id
     });
