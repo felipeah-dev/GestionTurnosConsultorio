@@ -188,22 +188,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     throw new Error(data.error || "Credenciales inválidas");
                 }
 
-                // Guardar token REAL
-                localStorage.setItem("token", data.token);
-
-                // Guardar identidad (Back devuelve newUser)
-                const identityData = data.newUser || data;
-                const userIdentity = {
-                    nombre: identityData.nombre,
-                    primer_apellido: identityData.primer_apellido
-                };
-
-                localStorage.setItem("user_identity", JSON.stringify(userIdentity));
-
-                window.UI.showNotification("¡Bienvenido! Sesión iniciada correctamente.", "success");
+                window.UI.showNotification("¡Cuenta creada! Inicia sesion para continuar.", "success");
 
                 setTimeout(() => {
-                    window.location.href = 'pages/paciente/dashboard.html';
+                    window.location.href = 'index.html';
                 }, 1000);
 
             } catch (error) {
