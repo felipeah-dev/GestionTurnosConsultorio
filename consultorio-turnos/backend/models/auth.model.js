@@ -9,7 +9,7 @@ export const findUserByEmail = async (email) => {
 export const createUser = async (user) => {
     const query = `
         INSERT INTO usuarios(email, password_hash, nombre, primer_apellido, segundo_apellido, role_id, telefono, fecha_nacimiento) 
-        VALUES ($1, $2, $3, $4, $5, 1, $6, $7)
+        VALUES ($1, $2, $3, $4, $5, 2, $6, $7)
         RETURNING email, nombre, primer_apellido, public_id`;
 
     const resultado = await pool.query(query, [

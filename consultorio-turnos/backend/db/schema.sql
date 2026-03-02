@@ -20,6 +20,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
     nombre VARCHAR(100) NOT NULL,
     primer_apellido VARCHAR(100) NOT NULL,
     segundo_apellido VARCHAR(100), -- Opcional
+    telefono VARCHAR(20),
+    fecha_nacimiento DATE,
     role_id BIGINT NOT NULL REFERENCES roles(role_id),
     created_at TIMESTAMPTZ DEFAULT now()
 );
