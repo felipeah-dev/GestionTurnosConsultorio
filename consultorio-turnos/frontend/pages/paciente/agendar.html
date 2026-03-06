@@ -106,7 +106,7 @@
                             style="padding: 0.5rem 1rem; border-radius: 10px; font-weight: 800;">&larr;</button>
                         <h3 id="calendar-month-label"
                             style="font-size: 1.1rem; margin-bottom: 0; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--color-primary);">
-                            ABRIL 2026</h3>
+                            ---</h3>
                         <button id="calendar-next" class="btn btn-secundario glass"
                             style="padding: 0.5rem 1rem; border-radius: 10px; font-weight: 800;">&rarr;</button>
                     </div>
@@ -126,15 +126,6 @@
                 <div id="calendar-container" class="calendar-container"
                     style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px;">
                     <!-- Los días se generan dinámicamente -->
-                    <div class="calendar-day glass"
-                        style="aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; border-radius: 12px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
-                        10</div>
-                    <div class="calendar-day active"
-                        style="aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer; border-radius: 12px; background: var(--color-primary); color: #000; font-weight: 800; box-shadow: 0 0 25px rgba(12, 235, 235, 0.4); border: none;">
-                        11</div>
-                    <div class="calendar-day glass"
-                        style="aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; border-radius: 12px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
-                        12</div>
                 </div>
             </div>
 
@@ -147,7 +138,7 @@
 
                 <p class="mb-4" style="color: rgba(255,255,255,0.7); font-weight: 500;">
                     Disponibilidad para el <span class="texto-primario" id="horarios-fecha-label"
-                        style="font-weight: 800;">11 de Abril</span>
+                        style="font-weight: 800;">selecciona un día</span>
                 </p>
 
                 <div id="empty-horarios" class="info-box glass oculto"
@@ -156,15 +147,7 @@
                 </div>
 
                 <div id="horarios-container" class="horarios-grid d-flex flex-wrap gap-3">
-                    <button class="btn btn-secundario glass"
-                        style="min-width: 100px; padding: 1rem; border-radius: 12px; font-weight: 600;">09:00
-                        AM</button>
-                    <button class="btn btn-primario"
-                        style="min-width: 100px; padding: 1rem; border-radius: 12px; font-weight: 800; color: #000; box-shadow: 0 0 20px rgba(12, 235, 235, 0.3);">10:00
-                        AM</button>
-                    <button class="btn btn-secundario glass"
-                        style="min-width: 100px; padding: 1rem; border-radius: 12px; font-weight: 600;">11:30
-                        AM</button>
+                    <!-- Los horarios se cargan dinámicamente -->
                 </div>
                 <br>
                 <div class="mt-5 pt-4" style="border-top: 1px solid rgba(255,255,255,0.15);">
@@ -187,6 +170,7 @@
     <!-- Scripts -->
     <script src="../../js/ui.js"></script>
     <script src="../../js/api.js"></script>
+    <script src="../../js/calendario.js"></script>
     <script src="../../js/agendar-paciente.js"></script>
 
 </body>

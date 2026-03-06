@@ -14,7 +14,7 @@ ON CONFLICT (nombre) DO NOTHING;
 
 
 -- 3. MÉDICOS (Ejemplos)
-INSERT INTO medicos (nombre, primer_apellido, segundo_apellido, especialidad_id, telefono, activo) VALUES
+INSERT INTO medicos (nombre, primer_apellido, segundo_apellido, especialidad_id, telefono, activo) VALUES 
 ('Alberto', 'García', 'Mora', 1, '555-0101', true),      -- Cardiología
 ('Elena', 'Rodríguez', 'Sanz', 2, '555-0102', true),    -- Neurología
 ('Carlos', 'Martínez', 'Ruiz', 3, '555-0103', true),     -- Pediatría

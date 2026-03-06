@@ -80,10 +80,13 @@
 }
 
 .calendar-day {
-    background-color: var(--color-bg-white);
-    border: 1px solid transparent;
+    background-color: rgba(255, 255, 255, 0.05);
+    /* Sutil glass */
+    border: 1px solid rgba(255, 255, 255, 0.1);
     cursor: pointer;
     transition: var(--transition);
+    color: #FFFFFF;
+    /* Forzar blanco para los números */
 }
 
 .calendar-day:hover:not(.calendar-day-disabled) {

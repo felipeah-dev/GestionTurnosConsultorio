@@ -45,11 +45,29 @@
                     <!-- Nombre -->
                     <div class="form-grupo mb-0">
                         <label class="mb-2"
-                            style="font-size: 0.7rem; letter-spacing: 1px; font-weight: 700; text-transform: uppercase;">Nombre
-                            Completo</label>
-                        <input type="text" id="input-nombre" class="form-control glass" placeholder="Ej. Juan Pérez"
-                            required style="padding: 0.75rem 1rem; border-radius: 10px;">
+                            style="font-size: 0.7rem; letter-spacing: 1px; font-weight: 700; text-transform: uppercase;">Nombre</label>
+                        <input type="text" id="input-nombre" class="form-control glass" placeholder="Ej. Juan" required
+                            style="padding: 0.75rem 1rem; border-radius: 10px;">
                         <div id="error-nombre" class="error-campo oculto">El nombre es requerido</div>
+                    </div>
+
+                    <!-- Primer Apellido -->
+                    <div class="form-grupo mb-0">
+                        <label class="mb-2"
+                            style="font-size: 0.7rem; letter-spacing: 1px; font-weight: 700; text-transform: uppercase;">1er
+                            Apellido</label>
+                        <input type="text" id="input-primer-apellido" class="form-control glass" placeholder="Ej. Pérez"
+                            required style="padding: 0.75rem 1rem; border-radius: 10px;">
+                        <div id="error-primer-apellido" class="error-campo oculto">El primer apellido es requerido</div>
+                    </div>
+
+                    <!-- Segundo Apellido -->
+                    <div class="form-grupo mb-0">
+                        <label class="mb-2"
+                            style="font-size: 0.7rem; letter-spacing: 1px; font-weight: 700; text-transform: uppercase;">2do
+                            Apellido (Opcional)</label>
+                        <input type="text" id="input-segundo-apellido" class="form-control glass"
+                            placeholder="Ej. García" style="padding: 0.75rem 1rem; border-radius: 10px;">
                     </div>
 
                     <!-- Email -->
@@ -69,9 +87,8 @@
                         <input type="password" id="input-password" class="form-control glass"
                             placeholder="Min. 8 caracteres" required
                             style="padding: 0.75rem 1rem; border-radius: 10px;">
-                        <div id="error-password" class="error-campo oculto">La contraseña debe tener al menos 8
-                            caracteres
-                        </div>
+                        <div id="error-password" class="error-campo oculto">Debe tener 8+ caracteres, una mayúscula y un
+                            número</div>
                     </div>
 
                     <!-- Confirmar Contraseña -->
@@ -87,9 +104,13 @@
                     <!-- Teléfono -->
                     <div class="form-grupo mb-0">
                         <label class="mb-2"
-                            style="font-size: 0.7rem; letter-spacing: 1px; font-weight: 700; text-transform: uppercase;">Teléfono</label>
-                        <input type="tel" id="input-telefono" class="form-control glass" placeholder="+XX XXX XXX XXX"
-                            style="padding: 0.75rem 1rem; border-radius: 10px;">
+                            style="font-size: 0.7rem; letter-spacing: 1px; font-weight: 700; text-transform: uppercase;">Teléfono
+                            (Opcional)</label>
+                        <div class="position-relative d-flex align-items-center">
+                            <span class="position-absolute ps-3" style="opacity: 0.6; font-weight: 700;">+</span>
+                            <input type="tel" id="input-telefono" class="form-control glass" placeholder="52 123 4567"
+                                style="padding: 0.75rem 1rem 0.75rem 2.2rem; border-radius: 10px; width: 100%;">
+                        </div>
                         <div id="error-telefono" class="error-campo oculto">Formato de teléfono inválido</div>
                     </div>
 

@@ -1,8 +1,8 @@
 // auth.controller.js: Lógica de registro, login y logout: validación de credenciales, creación de JWT y gestión de sesiones
 import 'dotenv/config';
 import jwt from 'jsonwebtoken';
-import {createUser, findUserByEmail} from "../models/auth.model.js";
-import {checkPassword, hashPassword} from "../utils/auth.js";
+import { createUser, findUserByEmail } from "../models/auth.model.js";
+import { checkPassword, hashPassword } from "../utils/auth.js";
 
 export const registro = async (req, res) => {
     const { nombre, primer_apellido, segundo_apellido, email, password, telefono, fecha_nacimiento } = req.body;
